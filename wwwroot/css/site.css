@@ -1,0 +1,31 @@
+* {
+    font-family: 'Oswald', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+#icons i {
+    font-size: 30px;
+}
+
+#icons a {
+    margin-left: 50px;
+    margin-right: 10px;
+}
+#search{
+    width:300px;
+}
+#SearchButton {
+    padding: 5px 10px;
+    font-size: 14px; 
+}
+#SearchButton i {
+    color: #212529; 
+}
+
+.navbar-brand{
+    font-size:28px;
+}
+#navbarContent {
+    margin-left: 20px;
+}
