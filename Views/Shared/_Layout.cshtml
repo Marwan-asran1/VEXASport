@@ -16,31 +16,36 @@
     <header>
         <nav class="navbar navbar-expand-lg bg-dark">
             <div class="container-fluid">
-                <!-- Logo -->
+                
                 <a class="navbar-brand text-light" asp-controller="Home" asp-action="Index">VEXASPORT</a>
 
-                <!-- Mobile Button -->
+                
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent"
                         aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
-                <!-- Navbar Content -->
+                
                 <div class="collapse navbar-collapse" id="navbarContent">
-                    <!-- Left Side: Links -->
+                    
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
                             <a class="nav-link text-light" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-light" asp-controller="Home" asp-action="Categories">Categories</a>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link text-light" asp-controller="Home" asp-action="#" data-bs-toggle="dropdown" aria-expanded="false">Categories</a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" asp-controller="Home" asp-action="Categories">All</a></li>
+                                <li><a class="dropdown-item" asp-controller="Home" asp-action="Men">Men</a></li>
+                                <li><a class="dropdown-item" asp-controller="Home" asp-action="Women">Women</a></li>
+                            </ul>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-light" asp-controller="Home" asp-action="Contact">Contact Us</a>
                         </li>
                     </ul>
 
-                    <!-- Right Side: Search + Icons -->
+                    
                     <form  class="d-flex me-1 " role="search">
                         
                         <input id="search" class="form-control me-2" type="search" placeholder="Search..." />
@@ -50,24 +55,31 @@
                         
                     </form>
 
-                    <div id="icons" class="d-flex ">
-                        <a class="text-light me-3 " asp-controller="Home" asp-action="Profile"><i id="c" class="fa-regular fa-user"></i></a>
-                        <a class="text-light " asp-controller="Home" asp-action="Cart"><i class="fa-solid fa-basket-shopping"></i></a>
-                    </div>
+                    <ul  class="icons">
+                        <li class="nav-item dropdown">
+                            <a class="text-light me-3 dropdown-item " asp-controller="Home" asp-action="#" data-bs-toggle="dropdown" aria-expanded="false"><i id="c" class="fa-regular fa-user"></i></a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" asp-controller="Home" asp-action="Login">Login</a></li>
+                                <li><a class="dropdown-item" asp-controller="Home" asp-action="Profile">Profile</a></li>
+                                <li><a class="dropdown-item" asp-controller="Home" asp-action="#">Log Out</a></li>
+                            </ul>
+                            </li>
+                        <li><a class="text-light " asp-controller="Home" asp-action="Cart"><i class="fa-solid fa-basket-shopping"></i></a></li>
+                    </ul>
                 </div>
             </div>
         </nav>
 
     </header>
-    <div class="container">
+    <div class="content-wrapper">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted bg-dark">
+    <footer class="fixed-footer border-top footer text-muted bg-dark">
         <div class="container">
-            &copy; 2025 - VEXASPORT -All Rights Reserved
+            &copy; 2025 - VEXASPORT - All Rights Reserved
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

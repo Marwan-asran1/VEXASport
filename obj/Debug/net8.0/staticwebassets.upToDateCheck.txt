@@ -2,6 +2,8 @@ wwwroot\css\bootstrap.min.css
 wwwroot\css\site.css
 wwwroot\css\Special_Gothic_Condensed_One.zip
 wwwroot\favicon.ico
+wwwroot\images\mainhome - Copy.png
+wwwroot\images\T1-men.jpg
 wwwroot\js\site.js
 wwwroot\lib\bootstrap\dist\css\bootstrap.css
 wwwroot\lib\bootstrap\dist\css\bootstrap.css.map

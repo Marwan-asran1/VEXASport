@@ -21,6 +21,14 @@
       "PackagePath": "staticwebassets\\favicon.ico"
     },
     {
+      "Id": "C:\\Users\\kareemgamal\\source\\repos\\VEXA\\wwwroot\\images\\T1-men.jpg",
+      "PackagePath": "staticwebassets\\images\\T1-men.jpg"
+    },
+    {
+      "Id": "C:\\Users\\kareemgamal\\source\\repos\\VEXA\\wwwroot\\images\\mainhome - Copy.png",
+      "PackagePath": "staticwebassets\\images\\mainhome - Copy.png"
+    },
+    {
       "Id": "C:\\Users\\kareemgamal\\source\\repos\\VEXA\\wwwroot\\js\\site.js",
       "PackagePath": "staticwebassets\\js\\site.js"
     },

@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "UWLDWOhqqEa82PCtItyt1IKOz/Q4y8yooRf5V1BsDTc=",
+  "Hash": "kH34PzGxIO8uV2Uc0oSq+RkaMvylgssTvZHENGN9XzE=",
   "Source": "VEXA",
   "BasePath": "_content/VEXA",
   "Mode": "Default",
@@ -94,8 +94,8 @@
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
-      "Fingerprint": "k3b120yaz3",
-      "Integrity": "kC8eGfbDJ4WgzFMkIXXXSWbl+YP9BPTJwkjRkkHfapM=",
+      "Fingerprint": "xta1od9drw",
+      "Integrity": "FSkOrw1z+ckLr6o7Xlm0e/wA1HRPjZ0DMIm48MJvERY=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\css\\site.css"
@@ -141,6 +141,48 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\favicon.ico"
+    },
+    {
+      "Identity": "C:\\Users\\kareemgamal\\source\\repos\\VEXA\\wwwroot\\images\\mainhome - Copy.png",
+      "SourceId": "VEXA",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\kareemgamal\\source\\repos\\VEXA\\wwwroot\\",
+      "BasePath": "_content/VEXA",
+      "RelativePath": "images/mainhome - Copy#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "2yu33ano7j",
+      "Integrity": "anpNOUta9psZAzKtSDTp+Ctietxy7oahwn5kPEFJmjE=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\mainhome - Copy.png"
+    },
+    {
+      "Identity": "C:\\Users\\kareemgamal\\source\\repos\\VEXA\\wwwroot\\images\\T1-men.jpg",
+      "SourceId": "VEXA",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\kareemgamal\\source\\repos\\VEXA\\wwwroot\\",
+      "BasePath": "_content/VEXA",
+      "RelativePath": "images/T1-men#[.{fingerprint}]?.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "43zvvg3zsp",
+      "Integrity": "oI1k3Z6GKFvRG9oh2Z3oOA6TJUBEg6+SOsodCzymKDk=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\T1-men.jpg"
     },
     {
       "Identity": "C:\\Users\\kareemgamal\\source\\repos\\VEXA\\wwwroot\\js\\site.js",
@@ -1455,7 +1497,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "442"
+          "Value": "5114"
         },
         {
           "Name": "Content-Type",
@@ -1463,11 +1505,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"kC8eGfbDJ4WgzFMkIXXXSWbl+YP9BPTJwkjRkkHfapM=\""
+          "Value": "\"FSkOrw1z+ckLr6o7Xlm0e/wA1HRPjZ0DMIm48MJvERY=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 22 Apr 2025 23:15:14 GMT"
+          "Value": "Wed, 30 Apr 2025 16:44:03 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -1477,12 +1519,12 @@
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-kC8eGfbDJ4WgzFMkIXXXSWbl+YP9BPTJwkjRkkHfapM="
+          "Value": "sha256-FSkOrw1z+ckLr6o7Xlm0e/wA1HRPjZ0DMIm48MJvERY="
         }
       ]
     },
     {
-      "Route": "css/site.k3b120yaz3.css",
+      "Route": "css/site.xta1od9drw.css",
       "AssetFile": "C:\\Users\\kareemgamal\\source\\repos\\VEXA\\wwwroot\\css\\site.css",
       "Selectors": [],
       "ResponseHeaders": [
@@ -1492,7 +1534,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "442"
+          "Value": "5114"
         },
         {
           "Name": "Content-Type",
@@ -1500,11 +1542,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"kC8eGfbDJ4WgzFMkIXXXSWbl+YP9BPTJwkjRkkHfapM=\""
+          "Value": "\"FSkOrw1z+ckLr6o7Xlm0e/wA1HRPjZ0DMIm48MJvERY=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 22 Apr 2025 23:15:14 GMT"
+          "Value": "Wed, 30 Apr 2025 16:44:03 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -1514,7 +1556,7 @@
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "k3b120yaz3"
+          "Value": "xta1od9drw"
         },
         {
           "Name": "label",
@@ -1522,7 +1564,7 @@
         },
         {
           "Name": "integrity",
-          "Value": "sha256-kC8eGfbDJ4WgzFMkIXXXSWbl+YP9BPTJwkjRkkHfapM="
+          "Value": "sha256-FSkOrw1z+ckLr6o7Xlm0e/wA1HRPjZ0DMIm48MJvERY="
         }
       ]
     },
@@ -1687,6 +1729,170 @@
         {
           "Name": "integrity",
           "Value": "sha256-Jtxf9L+5ITKRc1gIRl4VbUpGkRNfOBXjYTdhJD4facM="
+        }
+      ]
+    },
+    {
+      "Route": "images/mainhome - Copy.2yu33ano7j.png",
+      "AssetFile": "C:\\Users\\kareemgamal\\source\\repos\\VEXA\\wwwroot\\images\\mainhome - Copy.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "2097275"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"anpNOUta9psZAzKtSDTp+Ctietxy7oahwn5kPEFJmjE=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 25 Apr 2025 22:17:48 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "2yu33ano7j"
+        },
+        {
+          "Name": "label",
+          "Value": "images/mainhome - Copy.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-anpNOUta9psZAzKtSDTp+Ctietxy7oahwn5kPEFJmjE="
+        }
+      ]
+    },
+    {
+      "Route": "images/mainhome - Copy.png",
+      "AssetFile": "C:\\Users\\kareemgamal\\source\\repos\\VEXA\\wwwroot\\images\\mainhome - Copy.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "2097275"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"anpNOUta9psZAzKtSDTp+Ctietxy7oahwn5kPEFJmjE=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 25 Apr 2025 22:17:48 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-anpNOUta9psZAzKtSDTp+Ctietxy7oahwn5kPEFJmjE="
+        }
+      ]
+    },
+    {
+      "Route": "images/T1-men.43zvvg3zsp.jpg",
+      "AssetFile": "C:\\Users\\kareemgamal\\source\\repos\\VEXA\\wwwroot\\images\\T1-men.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "209435"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"oI1k3Z6GKFvRG9oh2Z3oOA6TJUBEg6+SOsodCzymKDk=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 29 Apr 2025 20:53:11 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "43zvvg3zsp"
+        },
+        {
+          "Name": "label",
+          "Value": "images/T1-men.jpg"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-oI1k3Z6GKFvRG9oh2Z3oOA6TJUBEg6+SOsodCzymKDk="
+        }
+      ]
+    },
+    {
+      "Route": "images/T1-men.jpg",
+      "AssetFile": "C:\\Users\\kareemgamal\\source\\repos\\VEXA\\wwwroot\\images\\T1-men.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "209435"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"oI1k3Z6GKFvRG9oh2Z3oOA6TJUBEg6+SOsodCzymKDk=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 29 Apr 2025 20:53:11 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-oI1k3Z6GKFvRG9oh2Z3oOA6TJUBEg6+SOsodCzymKDk="
         }
       ]
     },

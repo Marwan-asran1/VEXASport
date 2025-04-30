@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("VEXA")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+697f18463b7fd9e80fb1a3a3eae11eec2557c55f")]
 [assembly: System.Reflection.AssemblyProductAttribute("VEXA")]
 [assembly: System.Reflection.AssemblyTitleAttribute("VEXA")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

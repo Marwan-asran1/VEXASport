@@ -80,3 +80,4 @@ C:\Users\kareemgamal\source\repos\VEXA\obj\Debug\net8.0\refint\VEXA.dll
 C:\Users\kareemgamal\source\repos\VEXA\obj\Debug\net8.0\VEXA.pdb
 C:\Users\kareemgamal\source\repos\VEXA\obj\Debug\net8.0\VEXA.genruntimeconfig.cache
 C:\Users\kareemgamal\source\repos\VEXA\obj\Debug\net8.0\ref\VEXA.dll
+C:\Users\kareemgamal\source\repos\VEXA\obj\Debug\net8.0\VEXA.sourcelink.json
