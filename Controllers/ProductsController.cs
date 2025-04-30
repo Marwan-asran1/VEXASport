@@ -2,11 +2,17 @@
 
 namespace VEXA.Controllers
 {
-    public class WomenController : Controller
+    public class ProductsController : Controller
     {
+        public IActionResult Men()
+        {
+            return View();
+        }
+
         public IActionResult Women()
         {
             return View();
         }
+
     }
 }
