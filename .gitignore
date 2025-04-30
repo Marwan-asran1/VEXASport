@@ -12,7 +12,10 @@ CHECKLIST.md
 .vscode/
 
 obj/*
-
+.vs/
+obj/
+bin/*
+bin/Debug/*
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 
