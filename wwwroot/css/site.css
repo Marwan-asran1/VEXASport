@@ -215,7 +215,7 @@ login-form .form-control:valid{
     padding: 20px;
     max-width: 1200px;
     margin: 0 auto;   /*efteker en el auto btcenter elelement*/
-    
+    cursor:pointer;
 }
 
 
@@ -276,5 +276,35 @@ login-form .form-control:valid{
         color: #212529;
     }
     .profile-container{
+        display:flex;
+        flex-direction:column;
+        margin:20px;
+    }
+    .first-container{
+        display:flex;
+        flex-direction:column;
+        background-color:azure;
+        border-radius:7px;
+        width:500px;
+        height:120px;
+        margin:20px;
+        padding:10px;
 
     }
+    .header-row{
+        display:flex;
+        align-items:center;
+        gap:8px;
+    }
+    .first-container h4{
+        margin:0;
+    }
+.first-container button {
+    cursor: pointer;
+    background: none;
+    border: none;
+    outline: none;
+}
+.first-container p{
+    margin-top:10px;
+}
