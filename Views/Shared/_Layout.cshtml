@@ -35,13 +35,13 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link text-light" asp-controller="Home" asp-action="#" data-bs-toggle="dropdown" aria-expanded="false">Categories</a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" asp-controller="Home" asp-action="Categories">All</a></li>
-                                <li><a class="dropdown-item" asp-controller="Home" asp-action="Men">Men</a></li>
-                                <li><a class="dropdown-item" asp-controller="Home" asp-action="Women">Women</a></li>
+                                <li><a class="dropdown-item" asp-controller="Categories" asp-action="Categories">All</a></li>
+                                <li><a class="dropdown-item" asp-controller="Men" asp-action="Men">Men</a></li>
+                                <li><a class="dropdown-item" asp-controller="Women" asp-action="Women">Women</a></li>
                             </ul>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-light" asp-controller="Home" asp-action="Contact">Contact Us</a>
+                            <a class="nav-link text-light" asp-controller="ContactUs" asp-action="Contact">Contact Us</a>
                         </li>
                     </ul>
 
@@ -59,12 +59,12 @@
                         <li class="nav-item dropdown">
                             <a class="text-light me-3 dropdown-item " asp-controller="Home" asp-action="#" data-bs-toggle="dropdown" aria-expanded="false"><i id="c" class="fa-regular fa-user"></i></a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" asp-controller="Home" asp-action="Login">Login</a></li>
-                                <li><a class="dropdown-item" asp-controller="Home" asp-action="Profile">Profile</a></li>
-                                <li><a class="dropdown-item" asp-controller="Home" asp-action="#">Log Out</a></li>
+                                <li><a class="dropdown-item" asp-controller="Validation" asp-action="Login">Login</a></li>
+                                <li><a class="dropdown-item" asp-controller="Profile" asp-action="Profile">Profile</a></li>
+                                <li><a class="dropdown-item" asp-controller="Validation" asp-action="#">Log Out</a></li>
                             </ul>
                             </li>
-                        <li><a class="text-light " asp-controller="Home" asp-action="Cart"><i class="fa-solid fa-basket-shopping"></i></a></li>
+                        <li><a class="text-light " asp-controller="Cart" asp-action="Cart"><i class="fa-solid fa-basket-shopping"></i></a></li>
                     </ul>
                 </div>
             </div>
