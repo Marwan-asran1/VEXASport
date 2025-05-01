@@ -1,3 +1,3 @@
 ﻿function OpenFromImg(productId) {
-    window.location.href = '/Home/T1MEN';
+    window.location.href = '/Men/T1MEN';
 }

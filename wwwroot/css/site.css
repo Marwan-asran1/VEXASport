@@ -49,10 +49,27 @@ main {
     margin-left: 10px;
     margin-right: 20px;
 }
-
-#search {
-    width: 300px;
+.cart-icon{
+    position:relative;
+    display:flex;
 }
+    .cart-icon .cart-item-count{
+        position:absolute;
+        top:0;
+        right:-6px;
+        width:20px;
+        height:20px;
+        background:red;
+        border-radius:50%;
+        font-size:12px;
+        color:azure;
+        line-height:20px;
+        text-align:center;
+        display:none;
+    }
+    #search {
+        width: 300px;
+    }
 
 #SearchButton {
     padding: 5px 10px;
@@ -278,6 +295,8 @@ login-form .form-control:valid{
     .profile-container{
         display:flex;
         flex-direction:column;
+        justify-content:center;
+        align-items:center;
         margin:20px;
     }
     .first-container{
@@ -308,3 +327,105 @@ login-form .form-control:valid{
 .first-container p{
     margin-top:10px;
 }
+
+.first-container textarea {
+    margin:10px 0;
+    border-radius: 5px;
+    height: 150px;
+    padding: 12px 20px;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    background-color: #f8f8f8;
+    font-size: 16px;
+    resize: none;
+    
+}
+    
+.T1-container {
+        display: flex;
+}
+.T1-img {
+    width: 50%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top:-80px;
+    margin-bottom:-70px;
+}
+.T1-img img{
+    max-width:100%;
+    max-height:500px;
+    object-fit:cover;
+}
+.T1-Details{
+    width:50%;
+    padding:30px;
+    display:flex;
+    flex-direction:column;
+}
+.T1-describtion ,.T1-header{
+    padding:10px;
+    border-bottom:1px solid rgba(0, 0, 0, 0.1);
+}
+.T1-sizes{
+    padding:10px;
+}
+.T1-header h1{
+    font-size:24px;
+    margin-bottom:10px;
+
+}
+.T1-header price{
+    font-size:24px;
+    font-weight:bold;
+    margin-bottom:20px;
+
+}
+.T1-describtion p{
+    
+    margin-bottom:15px;
+}
+
+.T1-sizes h3 {
+    margin-bottom: 20px;
+}
+.sizes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 0px;
+}
+.size {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #002630;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.2s ease;
+}
+    .size:hover {
+        border-color: #888;
+    }
+     .selected {
+        background-color: #333;
+        color: white;
+        border-color: #333;
+    }
+.bb {
+    
+    background-color: #333;
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: background-color 0.2s ease;
+}
+    .bb:hover {
+        background-color: #555;
+    }

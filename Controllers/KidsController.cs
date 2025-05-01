@@ -2,14 +2,11 @@
 
 namespace VEXA.Controllers
 {
-    public class CartController : Controller
+    public class KidsController : Controller
     {
-       
-        public IActionResult Cart()
+        public IActionResult Kids()
         {
             return View();
         }
-
-
     }
 }

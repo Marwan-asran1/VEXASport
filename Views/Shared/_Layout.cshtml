@@ -35,9 +35,16 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link text-light" asp-action="#" data-bs-toggle="dropdown" aria-expanded="false">Categories</a>
                             <ul class="dropdown-menu">
+
                                 <li><a class="dropdown-item" asp-controller="Products" asp-action="AllProducts">All</a></li>
                                 <li><a class="dropdown-item" asp-controller="Products" asp-action="men">Men</a></li>
                                 <li><a class="dropdown-item" asp-controller="Products" asp-action="women">Women</a></li>
+
+                                <li><a class="dropdown-item" asp-controller="Categories" asp-action="Categories">All</a></li>
+                                <li><a class="dropdown-item" asp-controller="Men" asp-action="Men">Men</a></li>
+                                <li><a class="dropdown-item" asp-controller="Women" asp-action="Women">Women</a></li>
+                                <li><a class="dropdown-item" asp-controller="Kids" asp-action="Kids">Kids</a></li>
+
                             </ul>
                         </li>
                         <li class="nav-item">
@@ -64,7 +71,10 @@
                                 <li><a class="dropdown-item" asp-controller="Validation" asp-action="#">Log Out</a></li>
                             </ul>
                             </li>
-                        <li><a class="text-light " asp-controller="Cart" asp-action="Cart"><i class="fa-solid fa-basket-shopping"></i></a></li>
+                        <li><a class="cart-icon text-light " asp-controller="Cart" asp-action="Cart">
+                            <i class="fa-solid fa-basket-shopping"></i>
+                            <span class="cart-items-count"></span>
+                            </a></li>
                     </ul>
                 </div>
             </div>
