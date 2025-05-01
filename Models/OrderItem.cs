@@ -27,17 +27,6 @@ namespace VEXA
 
         [Required]
         public decimal UnitPrice { get; set; }
-
-        public int? SizeId { get; set; }
-
-        [NotMapped]
-        public Size Size { get; set; }
-
-        public int? ColorId { get; set; }
-
-        [NotMapped]
-        public Color Color { get; set; }
-
         public decimal TotalPrice => Quantity * UnitPrice;
     }
 }
