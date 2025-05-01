@@ -31,6 +31,8 @@ namespace VEXA
                 }
             }
 
+           
+
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
             {
@@ -88,7 +90,20 @@ namespace VEXA
                 context.Categories.AddRange(cat1, cat2, cat3);
             }
 
+           
+            
             context.SaveChanges();
+
+
+            
+                
+
+                
+                int productCount = context.Products.Count();
+                Console.WriteLine($"Number of products: {productCount}");
+
+                
+           
         }
     }
 }
