@@ -18,10 +18,10 @@ namespace VEXA.Models
         public DbSet<Payment> Payments { get; set; }
 
 
-        protected override void OnConfiguring(DbContextOptionsBuilder options)
-        {
-            options.UseSqlServer(@"Server=LAPTOP-QEAT6LTR\SQLEXPRESS;Database=YourDB;Trusted_Connection=True;TrustServerCertificate=True;");
-        }
+      protected override void OnConfiguring(DbContextOptionsBuilder options)
+{
+    options.UseSqlServer(@"Server=DESKTOP-3EI8N5R\MSSQLSERVER01;Database=Vexa;Trusted_Connection=True;TrustServerCertificate=True;");
+}
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
