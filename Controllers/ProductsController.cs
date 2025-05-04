@@ -27,12 +27,17 @@ namespace VEXA.Controllers
         public IActionResult BottomsW()
         {
             return View("Women/BottomsW");
+        } 
+        public IActionResult T1MEN()
+        {
+            return View();
         }
 
         public IActionResult AllProducts()
         {
             return View();
         }
+
 
     }
 }
