@@ -29,13 +29,13 @@ namespace VEXA.Controllers
             if (existingUser != null)
             {
             
-                return RedirectToAction("Home/Index.cshtml"); 
+                return RedirectToAction("Index","Home"); 
             }
             else
             {
                 // Login failed
                 ViewBag.ErrorMessage = "Invalid username or password.";
-                return View("Login");
+                return View("User/Login");
             }
         }
     }

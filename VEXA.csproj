@@ -16,7 +16,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Views\Categories\" />
+    <Folder Include="Data\" />
+    <Folder Include="Views\Products\Kids\Bottoms\" />
+    <Folder Include="Views\Products\Kids\Tops\" />
   </ItemGroup>
 
 </Project>

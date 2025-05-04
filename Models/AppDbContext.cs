@@ -9,6 +9,9 @@ namespace VEXA.Models
 {
     public class AppDbContext : DbContext
     {
+        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
+        {
+        }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<User> Users { get; set; }
@@ -20,7 +23,7 @@ namespace VEXA.Models
 
       protected override void OnConfiguring(DbContextOptionsBuilder options)
 {
-    options.UseSqlServer(@"Server=DESKTOP-3EI8N5R\MSSQLSERVER01;Database=Vexa;Trusted_Connection=True;TrustServerCertificate=True;");
+    options.UseSqlServer("Server=db18623.public.databaseasp.net; Database=db18623; User Id=db18623; Password=k_8J3oM=K%b2; Encrypt=True; TrustServerCertificate=True; MultipleActiveResultSets=True; ");
 }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
