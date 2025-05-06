@@ -12,10 +12,21 @@
         <div class="product-description">
             <p class="D">@Model.Description</p>
             <p><strong>Category:</strong> @if (Model.Category != null && Model.Category.Name != null) {@Model.Category.Name}else{<text>uncategorized</text> }</p>
-            <p><strong>In Stock:</strong> @Model.StockQuantity</p>
+
         </div>
+<<<<<<< HEAD
         <button onclick="addToCart(@Model.Id)" class="add-to-cart-btn ">
             Add To Cart
         </button>
     </div>
 </div>
+=======
+        <form asp-action="AddToCart" asp-controller="Cart" method="post">
+            <input type="hidden" name="id" value="@Model.Id" />
+           
+            <button type="submit" class="add-to-cart-btn">Add to cart</button>
+        </form>
+    </div>
+
+```
+>>>>>>> admin controller/view and linking to database

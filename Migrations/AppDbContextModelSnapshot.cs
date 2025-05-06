@@ -189,10 +189,20 @@ namespace VEXA.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
+
                     b.Property<int>("Size")
                         .HasColumnType("int");
 
-                    b.Property<int>("StockQuantity")
+                    b.Property<int>("StockQuantity");
+
+                    b.Property<int>("StockL")
+                        .HasColumnType("int");
+
+                    b.Property<int>("StockM")
+                        .HasColumnType("int");
+
+                    b.Property<int>("StockS")
+
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -211,18 +221,27 @@ namespace VEXA.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Address")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Gender")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Password")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("RegistrationDate")
@@ -426,15 +445,15 @@ namespace VEXA.Migrations
             modelBuilder.Entity("VEXA.Review", b =>
                 {
                     b.HasOne("VEXA.Models.Product", "Product")
-                        .WithMany("Reviews")
+                        .WithMany()
                         .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("VEXA.Models.User", "User")
                         .WithMany("Reviews")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Product");
@@ -459,8 +478,6 @@ namespace VEXA.Migrations
             modelBuilder.Entity("VEXA.Models.Product", b =>
                 {
                     b.Navigation("OrderItems");
-
-                    b.Navigation("Reviews");
                 });
 
             modelBuilder.Entity("VEXA.Models.User", b =>

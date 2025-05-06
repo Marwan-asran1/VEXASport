@@ -1,40 +1,39 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using VEXA.Models;
-using VEXA.Helper;
 using Microsoft.EntityFrameworkCore;
-
 
 namespace VEXA.Controllers
 {
     public class ProductsController : Controller
     {
         private readonly AppDbContext _context;
+
         public ProductsController(AppDbContext context)
         {
             _context = context;
         }
-        
         public IActionResult Details(int id)
         {
             var product = _context.Products
-                .Include(p => p.Category) 
+                .Include(p => p.Category)
                 .FirstOrDefault(p => p.Id == id);
 
-            if (product == null) { return NotFound(); }
+            if (product == null)
+                return NotFound();
 
-            return View("Details/Details",product);
+            return View("Details/Details", product);
         }
+
         public IActionResult Men()
         {
             var menP = _context.Products.Where(p => p.CategoryId == 1).ToList();
-            return View("Men/men",menP);
+            return View("Men/men", menP);
         }
-        
-        
+
         public IActionResult Women()
         {
-            var womenP=_context.Products.Where(p => p.CategoryId == 2).ToList();
-            return View("Women/women",womenP);
+            var womenP = _context.Products.Where(p => p.CategoryId == 2).ToList();
+            return View("Women/women", womenP);
         }
 
         public IActionResult AllProducts()
@@ -45,6 +44,30 @@ namespace VEXA.Controllers
             return View(products);
         }
 
+        [HttpPost]
+        public IActionResult CreateProduct(Product p)
+        {
+          
+                _context.Products.Add(p);
+                _context.SaveChanges();
+                return RedirectToAction("Products", "Admin");
+        }
+        
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeleteProduct(int id)
+        {
+            var product = _context.Products.Find(id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            _context.Products.Remove(product);
+            _context.SaveChanges();
+
+            return RedirectToAction("Products", "Admin");
+        }
 
     }
 }
