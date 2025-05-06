@@ -17,11 +17,11 @@ namespace VEXA.Models
         public string? ImageUrl { get; set; }
         public DateTime CreatedDate { get; set; } = DateTime.UtcNow;
 
-        public string? Size { get; set; } = "S,M,L";
+        //public string? Size { get; set; } = "S,M,L";
 
         
-        public List<string> SizeList =>
-            Size?.Split(',').Select(s => s.Trim()).ToList() ?? new List<string> { "S", "M", "L" };
+        //public List<string> SizeList =>
+        //    Size?.Split(',').Select(s => s.Trim()).ToList() ?? new List<string> { "S", "M", "L" };
 
         public int CategoryId { get; set; }
         public Category? Category { get; set; }

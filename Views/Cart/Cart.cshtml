@@ -21,19 +21,19 @@
                         <img src="~/@item.ImageFileName" />
                         <div class="itemdetails">
                             <p>@item.Product.Name</p>
-                            <span class="itemsize">Size: @item.Size</span>
+                            @* <span class="itemsize">Size: @item.Size</span> *@
                         </div>
                     </div>
                     <span class="itemprice">EGP @item.Product.Price</span>
                     <div class="quantity">
                         <input type="number" class="qty" value="@item.Quantity" data-price="@item.Product.Price" min="1" />
                         <input type="hidden" name="productId" value="@item.ProductId" />
-                        <input type="hidden" name="size" value="@item.Size" />
+                        @* <input type="hidden" name="size" value="@item.Size" /> *@
                     </div>
                     <span class="totalprice">EGP @(item.Product.Price * item.Quantity)</span>
                     <form asp-action="RemoveFromCart" method="post">
                         <input type="hidden" name="ProductId" value="@item.ProductId" />
-                        <input type="hidden" name="size" value="@item.Size" />
+                        @* <input type="hidden" name="size" value="@item.Size" /> *@
                         <button class="remove" type="submit">
                             <i class="fa-solid fa-xmark"></i>
                         </button>

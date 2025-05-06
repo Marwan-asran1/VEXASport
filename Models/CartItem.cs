@@ -11,7 +11,7 @@ namespace VEXA.Models
         public Product Product { get; set; }
         public string ImageFileName { get; set; }
 
-        public string Size { get; set; }
+        //public string Size { get; set; }
 
         public int Quantity { get; set; }
 

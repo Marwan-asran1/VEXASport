@@ -7,6 +7,11 @@ namespace VEXA.Controllers
 {
     public class CartController : Controller
     {
+        private readonly AppDbContext _context;
+        public CartController(AppDbContext context)
+        {
+            _context = context;
+        }
         public IActionResult Cart()
         {
             List<CartItem> cart = HttpContext.Session.GetObjectFromJson<List<CartItem>>("Cart");
@@ -17,11 +22,11 @@ namespace VEXA.Controllers
             return View(cart);
         }
 
-        public IActionResult RemoveFromCart(int productId, string size)
+        public IActionResult RemoveFromCart(int productId/*, string size*/)
         {
             var cart = HttpContext.Session.GetObjectFromJson<List<CartItem>>("Cart");
             if (cart == null) { cart = new List<CartItem>(); }
-            var removeitem = cart.FirstOrDefault(x => x.ProductId == productId && x.Size == size);
+            var removeitem = cart.FirstOrDefault(x => x.ProductId == productId /*&& x.Size == size*/);
             if (removeitem != null)
             {
                 cart.Remove(removeitem);
@@ -30,28 +35,29 @@ namespace VEXA.Controllers
             return RedirectToAction("Cart");
         }
 
-        public IActionResult AddToCart(Product product, string size, int quantity = 1)
+        public IActionResult AddToCart(int id/*, string size="M"*/)
         {
-            var cart = HttpContext.Session.GetObjectFromJson<List<CartItem>>("Cart") ?? new List<CartItem>();
-            var existItem = cart.FirstOrDefault(x => x.ProductId == product.Id && x.Size == size);
-
-            if (existItem != null)
-            {
-                existItem.Quantity += quantity;
+            var product = _context.Products.FirstOrDefault(p => p.Id == id);
+            if (product == null) { 
+                return NotFound();
+            }
+            var cart = HttpContext.Session.GetObjectFromJson<List<CartItem>>("Cart");
+            if (cart == null) { cart = new List<CartItem>(); }
+            var exitItem = cart.FirstOrDefault(item => item.ProductId == product.Id/* && item.Size==size*/);
+            if (exitItem != null) {
+                exitItem.Quantity++;
             }
             else
             {
                 cart.Add(new CartItem
                 {
                     ProductId = product.Id,
-                    Size = size,
+                    //Size = size,
                     Product = product,
-                    Quantity = quantity,
+                    Quantity = 1,
                     ImageFileName = product.ImageUrl
                 });
             }
-
-            
             HttpContext.Session.SetObjectAsJson("Cart", cart);
             return RedirectToAction("Cart");
         }
@@ -62,7 +68,7 @@ namespace VEXA.Controllers
             var cart = HttpContext.Session.GetObjectFromJson<List<CartItem>>("Cart");
             if (cart == null) { return Json(new { success = false }); }
 
-            var item = cart.FirstOrDefault(x => x.ProductId == model.ProductId && x.Size == model.Size);
+            var item = cart.FirstOrDefault(x => x.ProductId == model.ProductId/* && x.Size == model.Size*/);
             if (item != null)
             {
                 item.Quantity = model.Quantity;
@@ -78,7 +84,7 @@ namespace VEXA.Controllers
     public class UpdateCartItemModel
     {
         public int ProductId { get; set; }
-        public string Size { get; set; }
+        //public string Size { get; set; }
         public int Quantity { get; set; }
     }
 }

@@ -13,36 +13,12 @@ namespace VEXA.Controllers
         {
             _context = context;
         }
-        public IActionResult AddToCart(int id,string size="M")
-        {
-           var product = _context.Products.FirstOrDefault(p => p.Id == id);
-            if (product == null) { 
-                return NotFound();
-            }
-            var cart = HttpContext.Session.GetObjectFromJson<List<CartItem>>("Cart");
-            if (cart == null) { cart = new List<CartItem>(); }
-            var exitItem = cart.FirstOrDefault(item => item.ProductId == product.Id && item.Size==size);
-            if (exitItem != null) {
-                exitItem.Quantity++;
-            }
-            else
-            {
-                cart.Add(new CartItem
-                {
-                    ProductId = product.Id,
-                    Size = size,
-                    Product = product,
-                    Quantity = 1,
-                    ImageFileName = product.ImageUrl
-                });
-            }
-            HttpContext.Session.SetObjectAsJson("Cart", cart);
-            return RedirectToAction("Cart","Cart");
-        }
+        
+        
         public IActionResult Details(int id)
         {
             var product = _context.Products
-                .Include(p => p.Category)  // Include the Category for display
+                .Include(p => p.Category) 
                 .FirstOrDefault(p => p.Id == id);
 
             if (product == null) { return NotFound(); }

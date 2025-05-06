@@ -17,16 +17,16 @@
         </div>
         <form asp-action="AddToCart" asp-controller="Products" method="post">
             <input type="hidden" name="id" value="@Model.Id" />
-            <div class="T1-sizes">
+            @* <div class="T1-sizes">
                 <h3>Select Size</h3>
-                <div class="sizes">
+                 <div class="sizes">
                     @foreach (var size in Model.SizeList)
                     {
                         <div class="size" data-size="@size">@size</div>
                     }
-                </div>
+                </div> 
                 <input type="hidden" name="size" id="selectedSize" required />
-            </div>
+            </div> *@
             <button type="submit" class="add-to-cart-btn">Add to cart</button>
         </form>
     </div>
