@@ -1,5 +1,70 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@{
+    ViewData["Title"] = "Shopping Cart";
+}
+@model List<VEXA.Models.CartItem>
+
+<div class="cartpage">
+    @if (Model.Count == 0)
+    {
+        <div class="empty-cart">
+            <h2>Your cart is empty</h2>
+            <a href="/Products/AllProducts" class="continue-shopping">Continue Shopping</a>
+        </div>
+    }
+    else
+    {
+        <div class="cartitems">
+            @foreach (var item in Model)
+            {
+                <div class="cartitem">
+                    <div class="productincart">
+                        <img src="~/@item.ImageFileName" />
+                        <div class="itemdetails">
+                            <p>@item.Product.Name</p>
+                            <span class="itemsize">Size: @item.Size</span>
+                        </div>
+                    </div>
+                    <span class="itemprice">EGP @item.Product.Price</span>
+                    <div class="quantity">
+                        <input type="number" class="qty" value="@item.Quantity" data-price="@item.Product.Price" min="1" />
+                        <input type="hidden" name="productId" value="@item.ProductId" />
+                        <input type="hidden" name="size" value="@item.Size" />
+                    </div>
+                    <span class="totalprice">EGP @(item.Product.Price * item.Quantity)</span>
+                    <form asp-action="RemoveFromCart" method="post">
+                        <input type="hidden" name="ProductId" value="@item.ProductId" />
+                        <input type="hidden" name="size" value="@item.Size" />
+                        <button class="remove" type="submit">
+                            <i class="fa-solid fa-xmark"></i>
+                        </button>
+                    </form>
+                </div>
+            }
+        </div>
+
+        <div class="cart-total">
+            <h3>Cart Total</h3>
+            <p>Subtotal <span class="subtotal">EGP @Model.Sum(item => item.Product.Price * item.Quantity)</span></p>
+            <p>Delivery Fee <span>Free</span></p>
+            <p>Grand Total <span class="grandtotal">EGP @Model.Sum(item => item.Product.Price * item.Quantity)</span></p>
+            <button class="checkout-btn">Proceed to Checkout</button>
+        </div>
+    }
+</div>
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            
+            updateTotals();
+
+           
+            document.querySelectorAll('.qty').forEach(function(input) {
+                input.addEventListener('change', function() {
+                    updateTotals();
+                    sendQuantityUpdate(this);
+                });
+            });
+        });
+    </script>
 }
