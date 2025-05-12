@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     ViewData["title"] = "All Products";
 }
 @model IEnumerable<VEXA.Models.Product>
@@ -9,7 +8,7 @@
     @foreach(var product in Model){
         <div id="product-@product.Id" class="product">
             <img id="img-@product.Id" onclick="location.href='/Products/Details/@product.Id'" 
-                 src="~/@product.ImageUrl" alt="@product.Name" />
+                 src="@product.ImageUrl" alt="@product.Name" />
             <h4>@product.Name</h4>
             <div class="info">
                 <p id="price-@product.Id" class="price">@product.Price EGP</p>
@@ -21,5 +20,3 @@
     }
 </div>
 ```
-
-   

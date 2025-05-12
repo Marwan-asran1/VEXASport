@@ -3,28 +3,53 @@
 }
 
 <div class="profile-container">
-    <div class="first-container">
-        <div class="header-row">
-            <h4>Name:</h4>
-            <button><i class="fa-solid fa-pencil"></i></button>
-        </div>
-        <p></p>
+    <div class="profile-header">
+        
+        <h2>My Profile</h2>
     </div>
-    <div class="first-container">
-        <div class="header-row">
-            <h4>Email:</h4>
-            <button><i class="fa-solid fa-pencil"></i></button>
+    <div class="profile-content">
+        <div class="profile-section">
+            <div class="profile-field">
+                <div class="field-header">
+                    <i class="fa-solid fa-user"></i>
+                    <h4>Name</h4>
+                    <button class="edit-btn" data-field="name">
+                        <i class="fa-solid fa-pencil"></i>
+                    </button>
+                </div>
+                <div class="field-content">
+                    <p class="field-value">Kareem Gamal</p>
+                    <input type="text" class="field-input" style="display: none;" />
+                </div>
+            </div>
+
+            <div class="profile-field">
+                <div class="field-header">
+                    <i class="fa-solid fa-envelope"></i>
+                    <h4>Email</h4>
+                    <button class="edit-btn" data-field="email">
+                        <i class="fa-solid fa-pencil"></i>
+                    </button>
+                </div>
+                <div class="field-content">
+                    <p class="field-value">kareemgamal@gmail.com</p>
+                    <input type="email" class="field-input" style="display: none;" />
+                </div>
+            </div>
+
+            <div class="profile-field">
+                <div class="field-header">
+                    <i class="fa-solid fa-location-dot"></i>
+                    <h4>Address</h4>
+                    <button class="edit-btn" data-field="address">
+                        <i class="fa-solid fa-pencil"></i>
+                    </button>
+                </div>
+                <div class="field-content">
+                    <p class="field-value">51 Cairo Egypt</p>
+                    <textarea class="field-input" style="display: none;" rows="3"></textarea>
+                </div>
+            </div>
         </div>
-        <p></p>
-    </div>
-    <div class="first-container">
-        <div class="header-row">
-            <h4>Address:</h4>
-            <button><i class="fa-solid fa-pencil"></i></button>
-        </div>
-        <textarea id="AddressArea" name="message" rows="1" cols="60"
-                  placeholder="Add your address here..."
-                  maxlength="500" required>
-</textarea>
     </div>
 </div>

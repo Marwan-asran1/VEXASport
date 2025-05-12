@@ -18,7 +18,7 @@
             {
                 <div class="cartitem">
                     <div class="productincart">
-                        <img src="~/@item.ImageFileName" />
+                        <img src="@item.ImageFileName" />
                         <div class="itemdetails">
                             <p>@item.Product.Name</p>
                             @* <span class="itemsize">Size: @item.Size</span> *@
@@ -30,7 +30,7 @@
                         <input type="hidden" name="productId" value="@item.ProductId" />
                         @* <input type="hidden" name="size" value="@item.Size" /> *@
                     </div>
-                    <span class="totalprice">EGP @(item.Product.Price * item.Quantity)</span>
+                    <span class="totalprice"></span>
                     <form asp-action="RemoveFromCart" method="post">
                         <input type="hidden" name="ProductId" value="@item.ProductId" />
                         @* <input type="hidden" name="size" value="@item.Size" /> *@
@@ -44,27 +44,11 @@
 
         <div class="cart-total">
             <h3>Cart Total</h3>
-            <p>Subtotal <span class="subtotal">EGP @Model.Sum(item => item.Product.Price * item.Quantity)</span></p>
+            <p>Subtotal <span class="subtotal"></span></p>
             <p>Delivery Fee <span>Free</span></p>
-            <p>Grand Total <span class="grandtotal">EGP @Model.Sum(item => item.Product.Price * item.Quantity)</span></p>
+            <p>Grand Total <span class="grandtotal"></span></p>
             <button class="checkout-btn">Proceed to Checkout</button>
         </div>
     }
 </div>
 
-@section Scripts {
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            
-            updateTotals();
-
-           
-            document.querySelectorAll('.qty').forEach(function(input) {
-                input.addEventListener('change', function() {
-                    updateTotals();
-                    sendQuantityUpdate(this);
-                });
-            });
-        });
-    </script>
-}

@@ -1,9 +1,8 @@
-﻿
-@model VEXA.Models.Product
+﻿@model VEXA.Models.Product
 
 <div class="product-details-container">
     <div class="product-image">
-        <img src="~/@Model.ImageUrl" alt="@Model.Name" />
+        <img src="@Model.ImageUrl" alt="@Model.Name" />
     </div>
     <div class="product-details">
         <div class="product-header">
@@ -12,10 +11,10 @@
         </div>
         <div class="product-description">
             <p>@Model.Description</p>
-            <p><strong>Category:</strong> @(Model.Category?.Name ?? "Uncategorized")</p>
+            <p><strong>Category:</strong> @if (Model.Category != null && Model.Category.Name != null) {@Model.Category.Name}else{<text>uncategorized</text> }</p>
             <p><strong>In Stock:</strong> @Model.StockQuantity</p>
         </div>
-        <form asp-action="AddToCart" asp-controller="Products" method="post">
+        <form asp-action="AddToCart" asp-controller="Cart" method="post">
             <input type="hidden" name="id" value="@Model.Id" />
             @* <div class="T1-sizes">
                 <h3>Select Size</h3>

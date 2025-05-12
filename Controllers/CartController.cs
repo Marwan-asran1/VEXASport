@@ -63,7 +63,7 @@ namespace VEXA.Controllers
         }
 
         [HttpPost]
-        public IActionResult UpdateQuantity([FromBody] UpdateCartItemModel model)
+        public IActionResult UpdateQuantity([FromBody] UpdateCartItem model)
         {
             var cart = HttpContext.Session.GetObjectFromJson<List<CartItem>>("Cart");
             if (cart == null) { return Json(new { success = false }); }
@@ -81,10 +81,5 @@ namespace VEXA.Controllers
     }
 
     
-    public class UpdateCartItemModel
-    {
-        public int ProductId { get; set; }
-        //public string Size { get; set; }
-        public int Quantity { get; set; }
-    }
+
 }

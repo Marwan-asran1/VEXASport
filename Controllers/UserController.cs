@@ -22,18 +22,18 @@ namespace VEXA.Controllers
         [HttpPost]
         public IActionResult Verify(User user)
         {
-            // Check if the user exists in the database
+          
             var existingUser = _context.Users
                 .FirstOrDefault(u => u.Email == user.Email && u.Password == user.Password);
 
             if (existingUser != null)
             {
-            
+                HttpContext.Session.SetInt32("UserId", existingUser.Id);
                 return RedirectToAction("Index","Home"); 
             }
             else
             {
-                // Login failed
+               
                 ViewBag.ErrorMessage = "Invalid username or password.";
                 return View("User/Login");
             }

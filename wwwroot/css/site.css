@@ -1,4 +1,5 @@
-﻿* {
+﻿/* Global Styles */
+* {
     font-family: 'Oswald', sans-serif;
     margin: 0;
     padding: 0;
@@ -23,6 +24,8 @@ body {
     flex: 1 0 auto;
     padding-bottom:40px;
 }
+
+/* Navigation Bar Styles */
 nav.navbar {
     position: fixed;
     top: 0;
@@ -30,9 +33,11 @@ nav.navbar {
     right:0;
     z-index: 1030;
 }
+
 main {
     padding-top: 70px;
 }
+
 .icons{
     margin-top:10px;
     display:flex;
@@ -89,7 +94,7 @@ main {
 }
 
 .fixed-footer {
-    flex-shrink: 0;
+    
     height: 60px;
     line-height: 60px;
     background-color: #212529;
@@ -99,29 +104,25 @@ main {
     margin-top:auto;
 }
 
+/* Home Page Styles */
 .homebody {
     display: flex;
     justify-content: center;
+    flex-direction: column;
     align-items: center;
-    height: calc(100vh - 60px);
+    min-height: 100vh;
     width: 100%;
-    padding: 0 20px;
-    margin:-35px auto;
-
+    padding: 1px 0 0 ;
 }
 
 .home-container {
-    background-image: url('../images/mainhome - copy.png');
+    background-image: url('../images/home-2.webp');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    width: 80%;
-    height: 80%;
-    max-width: 1200px;
-    max-height: 800px;
+    width: 100%;
+    height: 85vh;
     position: relative;
-    border-radius: 5px;
-    
 }
 
 .homebtn {
@@ -132,7 +133,7 @@ main {
 
 .shop-now-btn {
     padding: 10px 30px;
-    font-size: 18px;
+    font-size: 25px;
     font-weight: bold;
     text-transform: uppercase;
     background-color: white;
@@ -149,13 +150,94 @@ main {
         color: white;
     }
 
-.login-container {
+.productsInMain{
+    width:100%;
+    padding:20px;
+}
+    .productsInMain .product-container {
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+        flex-wrap: wrap;
+    }
+.explorecategories{
+    margin:20px;
+}
+.HomeCategories {
+    margin: 20px;
+    display: flex;
+    justify-content: space-around;
+    gap: 30px;
+    align-items: center;
+}
+.category-item {
+    position: relative;/*ashan tzbot ma3 el absolute*/
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    text-decoration: none;
+    display: block;
+}
+
+    .category-item:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+    }
+
+    .category-item img {
+        width: 350px;
+        height: 500px;
+        object-fit: cover;
+        display: block;
+        transition: transform 0.5s ease;
+        
+    }
+
+    .category-item:hover img {
+        transform: scale(1.05);/*bt3mel zoom*/
+    }
+
+.category-name {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.3);
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: calc(100vh - 120px);
+    opacity: 0;
+    transition: opacity 0.3s ease;
     
 }
+
+.category-item:hover .category-name {
+    opacity: 1;
+}
+
+.category-name h2 {
+    color: white;
+    font-size: 2.5rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    transform: translateY(20px);
+    transition: transform 0.3s ease;
+}
+
+.category-item:hover .category-name h2 {
+    transform: translateY(0);
+}
+        /* Login Page Styles */
+        .login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: calc(100vh - 120px);
+        }
 .login-formbox {
     background-color: white;
     border-radius: 8px;
@@ -220,10 +302,13 @@ login-form .form-control:valid{
     .loginbtn:hover {
         background-color: #343a40;
     }
+
+/* Shop/Products Page Styles */
 .Cat-Title {
     margin:20px;
     text-align: center;
 }
+
 .product-container {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -234,11 +319,20 @@ login-form .form-control:valid{
     margin: 0 auto;   /*efteker en el auto btcenter elelement*/
     cursor:pointer;
 }
-
+.product-container-pluse {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 25px;
+    justify-content: center;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto; /*efteker en el auto btcenter elelement*/
+    cursor: pointer;
+}
 
 .product {
     background-color: aliceblue;
-    border-radius: 10px;
+    border-radius: 30px;
     padding: 15px;
     text-align: center;
     box-shadow: 0 4px 5px rgba(0,0,0,0.1);
@@ -257,7 +351,7 @@ login-form .form-control:valid{
         width: 250px;
         height: 300px;
         border: 1px solid black;
-        border-radius: 10px;
+        border-radius: 40px;
         object-fit: cover; 
     }
 
@@ -292,58 +386,12 @@ login-form .form-control:valid{
         background-color:darkgrey ;
         color: #212529;
     }
-    .profile-container{
-        display:flex;
-        flex-direction:column;
-        justify-content:center;
-        align-items:center;
-        margin:20px;
-    }
-    .first-container{
-        display:flex;
-        flex-direction:column;
-        background-color:azure;
-        border-radius:7px;
-        width:500px;
-        height:120px;
-        margin:20px;
-        padding:10px;
 
-    }
-    .header-row{
-        display:flex;
-        align-items:center;
-        gap:8px;
-    }
-    .first-container h4{
-        margin:0;
-    }
-.first-container button {
-    cursor: pointer;
-    background: none;
-    border: none;
-    outline: none;
-}
-.first-container p{
-    margin-top:10px;
-}
-
-.first-container textarea {
-    margin:10px 0;
-    border-radius: 5px;
-    height: 150px;
-    padding: 12px 20px;
-    border: 2px solid #ccc;
-    border-radius: 4px;
-    background-color: #f8f8f8;
-    font-size: 16px;
-    resize: none;
-    
-}
-
+/* Product Details Page Styles */
 .product-details-container {
     display: flex;
 }
+
 .product-image {
     width: 50%;
     height: 100vh;
@@ -369,14 +417,16 @@ login-form .form-control:valid{
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
-.product-header h1 {
-    font-size: 24px;
+.product-details .product-header h1 {
+    font-size: 30px;
     margin-bottom: 10px;
 }
-.product-header price {
+.product-details .product-header p {
     font-size: 24px;
     font-weight: bold;
-    margin-bottom: 20px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    color:#00105c;
 }
 .product-description p {
     margin-bottom: 15px;
@@ -427,6 +477,7 @@ login-form .form-control:valid{
     }
 
 
+/* Shopping Cart Page Styles */
 .cartpage {
     max-width: 1200px;
     margin: 20px auto;
@@ -535,4 +586,109 @@ login-form .form-control:valid{
 
 .checkout-btn:hover {
     background-color: #343a40;
+}
+
+/* Profile Page Styles */
+.profile-container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.profile-header {
+    text-align: center;
+    margin: 15px;
+}
+    .profile-header h2{
+        padding:5px;
+        align-items:center;
+        text-align:center;
+    }
+    .profile-content {
+        padding: 20px;
+    }
+
+.profile-section {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.profile-field {
+    background: #f8f9fa;
+    border-radius: 10px;
+    padding: 20px;
+    transition: all 0.3s ease;
+}
+
+    .profile-field:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+.field-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+    .field-header i {
+        font-size: 20px;
+        color: #212529;
+    }
+
+    .field-header h4 {
+        margin: 0;
+        flex-grow: 1;
+        font-size: 18px;
+        color: #212529;
+    }
+
+.edit-btn {
+    background: none;
+    border: none;
+    color: #6c757d;
+    cursor: pointer;
+    padding: 5px;
+    transition: all 0.3s ease;
+}
+
+    .edit-btn:hover {
+        color: #212529;
+        transform: scale(1.1);
+    }
+
+.field-content {
+    padding: 10px 0;
+}
+
+.field-value {
+    margin: 0;
+    color: #495057;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+.field-input {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #dee2e6;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+    .field-input:focus {
+        border-color: #212529;
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(33, 37, 41, 0.1);
+    }
+
+textarea.field-input {
+    resize: vertical;
+    min-height: 100px;
 }

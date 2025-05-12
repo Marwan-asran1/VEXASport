@@ -2,31 +2,21 @@
 	ViewData["Title"] = "Category-Women";
 }
 
+@model IEnumerable<VEXA.Models.Product>
 
 <h1 class="Cat-Title">Women</h1>
 <div class="product-container">
-	<div id="P1-T-M" class="product">
-		<img src="~/images/t1-men.jpg" />
-		<h4>product describtion</h4>
-		<div class="info">
-			<p id="P1-T-M-price" class="price">500EGP</p>
-			<button class="addCart"><i class="fa-solid fa-basket-shopping"></i></button>
+	@foreach (var product in Model)
+	{
+		<div id="@product.Id" class="product">
+			<img src="@product.ImageUrl" onclick="location.href='/Products/Details/@product.Id'" />
+			<h4>@product.Name</h4>
+			<div class="info">
+				<p id="product-@product.Id" class="price">@product.Price EGP</p>
+				<a asp-action="AddToCart" asp-controller="Cart" asp-route-id="@product.Id" asp-route-size="M" class="addCart">
+					<i class="fa-solid fa-basket-shopping"></i>
+				</a>
+			</div>
 		</div>
-	</div>
-	<div id="P1-T-M" class="product">
-		<img src="~/images/t1-men.jpg" />
-		<h4>product describtion</h4>
-		<div class="info">
-			<p id="P1-T-M-price" class="price">500EGP</p>
-			<button class="addCart"><i class="fa-solid fa-basket-shopping"></i></button>
-		</div>
-	</div>
-	<div id="P1-T-M" class="product">
-		<img src="~/images/t1-men.jpg" />
-		<h4>product describtion</h4>
-		<div class="info">
-			<p id="P1-T-M-price" class="price">500EGP</p>
-			<button class="addCart"><i class="fa-solid fa-basket-shopping"></i></button>
-		</div>
-	</div>
+	}
 </div>
