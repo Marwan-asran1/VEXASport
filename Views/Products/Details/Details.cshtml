@@ -10,24 +10,12 @@
             <p class="price">EGP @Model.Price</p>
         </div>
         <div class="product-description">
-            <p>@Model.Description</p>
+            <p class="D">@Model.Description</p>
             <p><strong>Category:</strong> @if (Model.Category != null && Model.Category.Name != null) {@Model.Category.Name}else{<text>uncategorized</text> }</p>
             <p><strong>In Stock:</strong> @Model.StockQuantity</p>
         </div>
-        <form asp-action="AddToCart" asp-controller="Cart" method="post">
-            <input type="hidden" name="id" value="@Model.Id" />
-            @* <div class="T1-sizes">
-                <h3>Select Size</h3>
-                 <div class="sizes">
-                    @foreach (var size in Model.SizeList)
-                    {
-                        <div class="size" data-size="@size">@size</div>
-                    }
-                </div> 
-                <input type="hidden" name="size" id="selectedSize" required />
-            </div> *@
-            <button type="submit" class="add-to-cart-btn">Add to cart</button>
-        </form>
+        <button onclick="addToCart(@Model.Id)" class="add-to-cart-btn ">
+            Add To Cart
+        </button>
     </div>
 </div>
-```

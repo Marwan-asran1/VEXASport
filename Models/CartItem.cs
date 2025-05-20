@@ -9,15 +9,22 @@ namespace VEXA.Models
 
         public int ProductId { get; set; }
         public Product Product { get; set; }
-        public string ImageFileName { get; set; }
 
         //public string Size { get; set; }
 
         public int Quantity { get; set; }
 
-        public string UserId { get; set; }
+        public int UserId { get; set; }
         public User User { get; set; }
 
-        public decimal TotalPrice => Product?.Price * Quantity ?? 0;
+        public decimal TotalPrice
+        {
+            get
+            {
+                if (Product == null)
+                    return 0;
+                return Product.Price * Quantity;
+            }
+        }
     }
 } 

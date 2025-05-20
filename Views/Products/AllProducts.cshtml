@@ -12,9 +12,9 @@
             <h4>@product.Name</h4>
             <div class="info">
                 <p id="price-@product.Id" class="price">@product.Price EGP</p>
-                <a asp-action="AddToCart" asp-controller="Cart" asp-route-id="@product.Id" asp-route-size="M" class="addCart">
+                <button type="button" onclick="addToCart(@product.Id)" class="addCart">
                     <i class="fa-solid fa-basket-shopping"></i>
-                </a>
+                </button>
             </div>
         </div>
     }

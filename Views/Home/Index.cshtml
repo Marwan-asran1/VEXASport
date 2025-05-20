@@ -2,13 +2,16 @@
     ViewData["Title"] = "Home";
 }
 <div class="homebody">
+    <div class="home-hook">
+        <h5>YOUR JOURNY STARTS HERE. GEAR UP WITH VEXASPORTS</h5>
+    </div>
     <div class="home-container">
         <div class="homebtn">
             <a href="/Products/AllProducts" class="shop-now-btn">Shop Now</a>
         </div>
     </div>
     <div class="productsInMain">
-        <h3 class="Cat-Title">EXPLORE BEST OF MEN CLOTHES</h3>
+        <h2 class="Cat-Title">EXPLORE BEST OF MEN CLOTHES</h2>
         <div class="product-container-pluse">
             @foreach(var product in Model){
                 <div id="@product.Id" class="product">
@@ -16,24 +19,25 @@
                     <h4>@product.Name</h4>
                     <div class="info">
                         <p id="product-@product.Id" class="price">@product.Price EGP</p>
-                        <a asp-action="AddToCart" asp-controller="Cart" asp-route-id="@product.Id" asp-route-size="M" class="addCart">
+                        <button type="button" onclick="addToCart(@product.Id)" class="addCart ">
                             <i class="fa-solid fa-basket-shopping"></i>
-                        </a>
+                        </button>
                     </div>
                 </div>
             }
         </div>
     </div>
-    <h3 class="explorecategories">EXPLORE CATEGORIES</h3>
+    <h2 class="Cat-Title">EXPLORE CATEGORIES</h2>
     <div class="HomeCategories">
         <div class="category-item" onclick="location.href='/Products/Women'">
-            <img src="~/images/women.jpg" />
+			<img src="~/images/women2.jpg" />
             <div class="category-name">
                 <h2>Women</h2>
             </div>
         </div>
-        <div class="category-item" onclick="location.href='/Products/Men'">
-            <img src="~/images/men.webp" />
+		<div class="category-item" onclick="location.href='/Products/Men'">
+			<img src="~/images/men1.jpg" />
+            
             <div class="category-name">
                 <h2>Men</h2>
             </div>

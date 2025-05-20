@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/font-awesome-line-awesome/css/all.min.css">
     <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
 </head>
-<body>
+<body class="d-flex flex-column min-vh-100">
     <header>
         <nav class="navbar navbar-expand-lg bg-dark">
             <div class="container-fluid">
@@ -67,8 +67,8 @@
                             </ul>
                             </li>
                         <li><a class="cart-icon text-light " asp-controller="Cart" asp-action="Cart">
-                            <i class="fa-solid fa-basket-shopping"></i>
-                            <span class="cart-items-count"></span>
+                                <i class="fa-solid fa-cart-shopping"></i>
+                            <span class="CartCounter"></span>
                             </a></li>
                     </ul>
                 </div>
@@ -76,13 +76,13 @@
         </nav>
 
     </header>
-    <div class="content-wrapper">
+    <div class="content-wrapper flex-fill">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="fixed-footer border-top footer text-muted bg-dark">
+    <footer class="custom-footer border-top footer text-muted bg-dark">
         <div class="container">
             &copy; 2025 - VEXASPORT - All Rights Reserved
         </div>

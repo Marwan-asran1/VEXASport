@@ -43,9 +43,9 @@ namespace VEXA.Controllers
             }
             var cart = HttpContext.Session.GetObjectFromJson<List<CartItem>>("Cart");
             if (cart == null) { cart = new List<CartItem>(); }
-            var exitItem = cart.FirstOrDefault(item => item.ProductId == product.Id/* && item.Size==size*/);
-            if (exitItem != null) {
-                exitItem.Quantity++;
+            var existItem = cart.FirstOrDefault(item => item.ProductId == product.Id/* && item.Size==size*/);
+            if (existItem != null) {
+                existItem.Quantity++;
             }
             else
             {
@@ -54,24 +54,29 @@ namespace VEXA.Controllers
                     ProductId = product.Id,
                     //Size = size,
                     Product = product,
-                    Quantity = 1,
-                    ImageFileName = product.ImageUrl
+                    Quantity = 1
                 });
             }
             HttpContext.Session.SetObjectAsJson("Cart", cart);
-            return RedirectToAction("Cart");
+            int totalItemsInCart=cart.Sum(x => x.Quantity);
+            return Json(new {
+                success = true,
+                cartcounter=totalItemsInCart,
+            });
         }
-
         [HttpPost]
-        public IActionResult UpdateQuantity([FromBody] UpdateCartItem model)
+        public IActionResult UpdateQuantity(int productId, int quantity)
         {
             var cart = HttpContext.Session.GetObjectFromJson<List<CartItem>>("Cart");
-            if (cart == null) { return Json(new { success = false }); }
+            if (cart == null)
+            {
+                return Json(new { success = false });
+            }
 
-            var item = cart.FirstOrDefault(x => x.ProductId == model.ProductId/* && x.Size == model.Size*/);
+            var item = cart.FirstOrDefault(x => x.ProductId == productId);
             if (item != null)
             {
-                item.Quantity = model.Quantity;
+                item.Quantity = quantity;
                 HttpContext.Session.SetObjectAsJson("Cart", cart);
                 return Json(new { success = true });
             }

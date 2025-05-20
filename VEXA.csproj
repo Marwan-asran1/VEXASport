@@ -8,9 +8,17 @@
 
   <ItemGroup>
     <Compile Remove="Data\**" />
+    <Compile Remove="Views\Products\Kids\Bottoms\**" />
+    <Compile Remove="Views\Products\Kids\Tops\**" />
     <Content Remove="Data\**" />
+    <Content Remove="Views\Products\Kids\Bottoms\**" />
+    <Content Remove="Views\Products\Kids\Tops\**" />
     <EmbeddedResource Remove="Data\**" />
+    <EmbeddedResource Remove="Views\Products\Kids\Bottoms\**" />
+    <EmbeddedResource Remove="Views\Products\Kids\Tops\**" />
     <None Remove="Data\**" />
+    <None Remove="Views\Products\Kids\Bottoms\**" />
+    <None Remove="Views\Products\Kids\Tops\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -20,11 +28,6 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Views\Products\Kids\Bottoms\" />
-    <Folder Include="Views\Products\Kids\Tops\" />
   </ItemGroup>
 
 </Project>

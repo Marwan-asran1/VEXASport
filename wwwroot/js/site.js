@@ -51,17 +51,11 @@ function sendQuantityUpdate(productId) {
         updateTotals();
         return;
     }
-
-    fetch('/Cart/UpdateQuantity', {
+    fetch(`/Cart/UpdateQuantity?productId=${productId}&quantity=${quantity}`, {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json',
             'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]').value
-        },
-        body: JSON.stringify({
-            productId: parseInt(productId),
-            quantity: parseInt(quantity)
-        })
+        }
     });
 }
 
@@ -72,7 +66,58 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
 
+function updateCartCounter(count) {
+    let cartCounter = document.querySelector(".CartCounter"); 
+    if (count > 0) {
+        cartCounter.textContent = count;
+        cartCounter.style.display = 'block';
+    } else {
+        cartCounter.style.display = 'none';
+    }
+}
 
+function addToCart(productId) {
+    let URL = '/Cart/AddToCart/' + productId;
+    fetch(URL)
+        .then(response => response.json())
+        .then(data => {
+             
+            if (data.success) {
+                updateCartCounter(data.cartcounter);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+}
+const buttons = document.querySelectorAll('.addCart');
+const B = document.querySelectorAll('.add-to-cart-btn ');
+buttons.forEach(button => {
+    button.addEventListener('click', () => {
+        button.innerHTML = '✔ Added';
+        button.style.backgroundColor = 'green';
+        button.disabled = true;
+
+        setTimeout(() => {
+            button.innerHTML = '<i class="fa-solid fa-basket-shopping"></i>';
+            button.style.backgroundColor = '#212529';
+            button.disabled = false;
+        }, 2000);
+    });
+});
+B.forEach(B => {
+    B.addEventListener('click', () => {
+        B.innerHTML = '✔ Added';
+        B.style.backgroundColor = 'green';
+        B.disabled = true;
+
+        setTimeout(() => {
+            B.innerHTML = 'Add To Cart';
+            B.style.backgroundColor = '#333';
+            B.disabled = false;
+        }, 2000);
+    });
+});
 //function initializeSizeSelection() {
 //    const sizeBoxes = document.querySelectorAll('.size');
 //    const selectedSizeInput = document.getElementById('selectedSize');
