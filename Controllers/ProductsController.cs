@@ -12,6 +12,8 @@ namespace VEXA.Controllers
         {
             _context = context;
         }
+        
+        
         public IActionResult Details(int id)
         {
             var product = _context.Products

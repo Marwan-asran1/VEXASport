@@ -67,6 +67,7 @@ namespace VEXA.Models
 
 
          
+
             modelBuilder.Entity<CartItem>()
                 .HasOne(ci => ci.Product)
                 .WithMany()
@@ -78,7 +79,6 @@ namespace VEXA.Models
                 .WithMany()
                 .HasForeignKey(ci => ci.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
-
         }
     }
 }
