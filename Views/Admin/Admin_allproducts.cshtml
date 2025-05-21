@@ -1,54 +1,41 @@
 ﻿@model List<VEXA.Models.Product>
 @{
-    ViewBag.Title = "All products";
+    ViewBag.Title = "All Products";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 <link rel="stylesheet" href="~/AdminStyle/css/sb-admin-2.css" />
-<script asp-src-include="~/AdminStyle/js/sb-admin-2.js"></script>
-<style>
+<script src="~/AdminStyle/js/sb-admin-2.js"></script>
 
-    table {
-        width: 100%;
-        border-collapse: collapse;
-        margin: 20px 0;
-        font-size: 16px;
-        text-align: left;
+<style>
+    table thead tr {
+        background-color: rgb(30, 28, 28);
+        color: white;
+        text-align: center;
+        font-weight: bold;
     }
 
-        table thead tr {
-            background-color: rgb(30, 28, 28);
-            color: rgb(255, 255, 255);
-            text-align: center;
-            font-weight: bold;
-        }
+    table th, table td {
+        padding: 12px 15px;
+        border: 1px solid #ddd;
+        max-width: 150px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
 
-        table th, table td {
-            padding: 12px 15px;
-            border: 1px solid #ddd;
-            max-width: 150px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
+    table tbody tr:nth-of-type(even) {
+        background-color: #f3f3f3;
+    }
 
-        table tbody tr {
-            border-bottom: 1px solid #ddd;
-        }
-
-            table tbody tr:nth-of-type(even) {
-                background-color: #f3f3f3;
-            }
-
-            table tbody tr:hover {
-                background-color: #f1f1f1;
-            }
-
+    table tbody tr:hover {
+        background-color: #f1f1f1;
+    }
 
     .table-responsive {
         overflow-x: auto;
     }
 
-    .Add {
+    .btn-add {
         position: fixed;
         bottom: 40px;
         right: 30px;
@@ -60,7 +47,6 @@
         height: 50px;
         font-size: 24px;
         cursor: pointer;
-        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
     }
 
     .modal {
@@ -71,7 +57,7 @@
         top: 0;
         width: 100%;
         height: 100%;
-        background-color: rgba(0, 0, 0, 0.4); /* Black background with opacity */
+        background-color: rgba(0, 0, 0, 0.4);
     }
 
     .modal-content {
@@ -81,9 +67,8 @@
         border-radius: 8px;
         width: 50%;
         max-height: 80vh;
-        overflow-y: auto; /* scroll inside the modal */
+        overflow-y: auto;
     }
-
 
     .close {
         color: #aaa;
@@ -93,95 +78,43 @@
         cursor: pointer;
     }
 
-        .close:hover,
-        .close:focus {
+        .close:hover {
             color: black;
-            text-decoration: none;
-            cursor: pointer;
         }
 
-    .upload-btn {
-        border-radius: 5px;
-        margin-top: 10px;
-        background-color: #007bff;
-        color: white;
-        padding: 10px 15px;
+    .btn-edit,
+    .btn-delete {
+        padding: 3px 6px;
+        font-size: 13px;
+        border-radius: 3px;
         border: none;
         cursor: pointer;
-        display: inline-block;
     }
 
-    #imageUpload {
-        display: none;
-    }
-
-    .msg {
-        display: none; /* Hidden by default */
-        position: fixed;
-        z-index: 2;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        overflow: auto;
-        background-color: rgba(0, 0, 0, 0.4); /* Black background with opacity */
-    }
-
-    .msg-content {
-        background-color: #fff;
-        margin: 15% auto;
-        padding: 20px;
-        border-radius: 8px;
-        width: 40%;
-        text-align: center;
-    }
-
-    .close-popup {
-        color: #aaa;
-        float: right;
-        font-size: 28px;
-        font-weight: bold;
-        cursor: pointer;
-    }
-
-        .close-popup:hover,
-        .close-popup:focus {
-            color: black;
-            text-decoration: none;
-            cursor: pointer;
-        }
-
-    .edit {
+    .btn-edit {
         background-color: #007bff;
         color: white;
-        padding: 5px 10px;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
     }
 
-    .delete {
+    .btn-delete {
         background-color: #dc3545;
         color: white;
-        padding: 5px 10px;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
+    }
+
+    .form-control {
+        margin-bottom: 10px;
     }
 </style>
-<div class="container-fluid">
 
-    <!-- Page Heading -->
+<div class="container-fluid">
     <h1 class="h3 mb-2 text-gray-800">Product Manager</h1>
 
-    <!-- DataTable Example -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary">All Products</h6>
         </div>
         <div class="card-body">
             <div class="table-responsive">
-
                 <table>
                     <thead>
                         <tr>
@@ -213,93 +146,52 @@
                                 <td>@item.CreatedDate.ToString("yyyy-MM-dd")</td>
                                 <td>@item.CategoryId</td>
                                 <td>
-                                    <button class="btn btn-warning" onclick="openEditProductModal(@item.Id)">Edit</button>
-
-
+                                    <button class="btn-edit" onclick="openEditProductModal(@item.Id)">Edit</button>
                                     <form asp-controller="Products" asp-action="DeleteProduct" asp-route-id="@item.Id" method="post" style="display:inline;"
                                           onsubmit="return confirm('Are you sure you want to delete this product?');">
                                         @Html.AntiForgeryToken()
-                                        <button type="submit" class="btn btn-danger delete">Delete</button>
+                                        <button type="submit" class="btn-delete">Delete</button>
                                     </form>
-
                                 </td>
                             </tr>
                         }
                     </tbody>
                 </table>
 
-                <button class="btn btn-primary" onclick="openAddProductModal()">Add Product</button>
+                <button class="btn-add" onclick="openAddProductModal()">+</button>
 
-
-                <!-- Modal for Add/Edit Product -->
+                <!-- Add/Edit Product Modal -->
                 <div id="addProductModal" class="modal">
                     <div class="modal-content">
                         <span class="close">&times;</span>
                         <h2 id="modalTitle">Add New Product</h2>
 
-                        <form method="post">
+                        <form method="post" id="productForm">
                             @Html.AntiForgeryToken()
 
-                            <!-- Hidden ID for editing -->
                             <input type="hidden" id="productId" name="Id" />
 
-                            <div class="form-group">
-                                <label for="name">Name:</label>
-                                <input type="text" id="name" name="Name" class="form-control" required />
+                            <input type="text" id="name" name="Name" class="form-control" placeholder="Name" required />
+                            <textarea id="description" name="Description" class="form-control" placeholder="Description" required></textarea>
+                            <input type="number" id="price" name="Price" class="form-control" placeholder="Price" step="0.01" required />
+                            <input type="url" id="imageurl" name="ImageUrl" class="form-control" placeholder="Image URL" />
+                            <input type="number" id="categoryId" name="CategoryId" class="form-control" placeholder="Category ID" required />
+
+                            <div>
+                                <label>Stock:</label><br />
+                                S: <input type="number" id="Stock_S" name="StockS" style="width: 60px;" required />
+                                M: <input type="number" id="Stock_M" name="StockM" style="width: 60px;" required />
+                                L: <input type="number" id="Stock_L" name="StockL" style="width: 60px;" required />
                             </div>
 
-                            <div class="form-group">
-                                <label for="description">Description:</label>
-                                <textarea id="description" name="Description" class="form-control" required></textarea>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="price">Price:</label>
-                                <input type="number" id="price" name="Price" class="form-control" step="0.01" required />
-                            </div>
-
-                            <div class="form-group">
-                                <label for="imageurl">Image URL:</label>
-                                <input type="url" id="imageurl" name="ImageUrl" class="form-control" />
-                            </div>
-
-                            <div class="form-group">
-                                <label for="categoryId">Category ID:</label>
-                                <input type="number" id="categoryId" name="CategoryId" class="form-control" required />
-                            </div>
-
-                            <div class="form-group">
-                                <label>Stock Quantity:</label><br />
-
-                                <label for="Stock_S">S</label>
-                                <input type="number" id="Stock_S" name="StockS" class="form-control" required style="width: 60px; margin-right: 10px;" />
-
-                                <label for="Stock_M">M</label>
-                                <input type="number" id="Stock_M" name="StockM" class="form-control" required style="width: 60px; margin-right: 10px;" />
-
-                                <label for="Stock_L">L</label>
-                                <input type="number" id="Stock_L" name="StockL" class="form-control" required style="width: 60px;" />
-                            </div>
-
-                            <button type="submit" class="btn btn-success" id="submitButton">Submit</button>
+                            <button type="submit" class="btn btn-success mt-3" id="submitButton">Submit</button>
                         </form>
                     </div>
                 </div>
 
-
-                <!-- Popup message modal -->
-                <div id="popupMessageModal" class="msg">
-                    <div class="modal-content">
-                        <span class="close-popup">&times;</span>
-                        <h2 id="popupMessageTitle">Message</h2>
-                        <p id="popupMessageBody">This is a popup message.</p>
-                    </div>
-                </div>
-
                 <script>
-                                   
                     const modal = document.getElementById("addProductModal");
-                    const form = modal.querySelector("form");
+                    const form = document.getElementById("productForm");
                     const modalTitle = document.getElementById("modalTitle");
 
                     function openAddProductModal() {
@@ -315,7 +207,6 @@
                             .then(res => res.json())
                             .then(product => {
                                 modalTitle.textContent = "Edit Product";
-
                                 document.getElementById("productId").value = product.id;
                                 document.getElementById("name").value = product.name;
                                 document.getElementById("description").value = product.description;
@@ -325,25 +216,16 @@
                                 document.getElementById("Stock_S").value = product.stockS;
                                 document.getElementById("Stock_M").value = product.stockM;
                                 document.getElementById("Stock_L").value = product.stockL;
-
-                                form.action = `/Products/EditProduct/${product.id}`;
+                                form.action = "/Products/EditProduct";
                                 modal.style.display = "block";
                             });
                     }
 
-                    // Close modal
-                    document.querySelector(".close").onclick = () => {
-                        modal.style.display = "none";
-                    };
-                    window.onclick = (event) => {
-                        if (event.target == modal) {
-                            modal.style.display = "none";
-                        }
+                    document.querySelector(".close").onclick = () => modal.style.display = "none";
+                    window.onclick = event => {
+                        if (event.target == modal) modal.style.display = "none";
                     };
                 </script>
-
-             
-
             </div>
         </div>
     </div>

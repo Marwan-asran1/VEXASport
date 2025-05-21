@@ -1,6 +1,9 @@
-﻿using VEXA.Models;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Linq;
-using Microsoft.AspNetCore.Mvc;
+using VEXA.Models;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using AspNetCoreGeneratedDocument;
 
 namespace VEXA.Controllers
 {
@@ -13,30 +16,102 @@ namespace VEXA.Controllers
             _context = context;
         }
 
-        [HttpGet]
-        public IActionResult Login()
+        // GET: All Users
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var users = await _context.Users.ToListAsync();
+            return View("~/Views/Admin/Admin_users");
         }
 
-        [HttpPost]
-        public IActionResult Verify(User user)
+        // GET: Get User by ID (for modal)
+        [HttpGet]
+        public async Task<IActionResult> GetUser(int id)
         {
-          
-            var existingUser = _context.Users
-                .FirstOrDefault(u => u.Email == user.Email && u.Password == user.Password);
+            var user = await _context.Users.FindAsync(id);
+            if (user == null)
+                return NotFound();
 
-            if (existingUser != null)
+            return Json(new
             {
-                HttpContext.Session.SetInt32("UserId", existingUser.Id);
-                return RedirectToAction("Index","Home"); 
-            }
-            else
+                id = user.Id,
+                name = user.Name,
+                email = user.Email,
+                phoneNumber = user.PhoneNumber,
+                address = user.Address,
+                gender = user.Gender,
+                userRole = user.UserRole.ToString()
+            });
+        }
+
+        // POST: Edit User (AJAX)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditUser(int id, [Bind("Id,Name,Email,PhoneNumber,Address,Gender,UserRole")] User updatedUser)
+        {
+            if (id != updatedUser.Id)
             {
-               
-                ViewBag.ErrorMessage = "Invalid username or password.";
-                return View("User/Login");
+                return Json(new { success = false, message = "User ID mismatch." });
             }
+
+            if (!ModelState.IsValid)
+            {
+                var errors = ModelState.Values.SelectMany(v => v.Errors)
+                    .Select(e => e.ErrorMessage).ToList();
+                return Json(new { success = false, message = "Validation failed.", errors });
+            }
+
+            var existingUser = await _context.Users.FindAsync(id);
+            if (existingUser == null)
+            {
+                return Json(new { success = false, message = "User not found." });
+            }
+
+            existingUser.Name = updatedUser.Name;
+            existingUser.Email = updatedUser.Email;
+            existingUser.PhoneNumber = updatedUser.PhoneNumber;
+            existingUser.Address = updatedUser.Address;
+            existingUser.Gender = updatedUser.Gender;
+            existingUser.UserRole = updatedUser.UserRole;
+
+            try
+            {
+                _context.Update(existingUser);
+                await _context.SaveChangesAsync();
+                return Json(new
+                {
+                    success = true,
+                    message = "User updated successfully.",
+                    user = new
+                    {
+                        id = existingUser.Id,
+                        name = existingUser.Name,
+                        email = existingUser.Email,
+                        phoneNumber = existingUser.PhoneNumber,
+                        address = existingUser.Address,
+                        gender = existingUser.Gender,
+                        userRole = existingUser.UserRole.ToString()
+                    }
+                });
+            }
+            catch
+            {
+                return Json(new { success = false, message = "Failed to update user." });
+            }
+        }
+
+        // POST: Delete User
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteUser(int id)
+        {
+            var user = await _context.Users.FindAsync(id);
+            if (user == null)
+                return NotFound();
+
+            _context.Users.Remove(user);
+            await _context.SaveChangesAsync();
+
+            return View("~/Views/Admin/Amin_users.cshtml");
         }
     }
 }
