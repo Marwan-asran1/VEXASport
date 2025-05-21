@@ -182,10 +182,6 @@
         <div class="card-body">
             <div class="table-responsive">
 
-                <style>
-                    /* Your existing styles here (for brevity, omitted) */
-                </style>
-
                 <table>
                     <thead>
                         <tr>
@@ -219,20 +215,21 @@
                                 <td>
                                     <button class="edit">Edit</button>
 
-                                    <form asp-action="DeleteProduct" asp-route-id="@item.Id" method="post" style="display:inline;"
+                                    <form asp-controller="Products" asp-action="DeleteProduct" asp-route-id="@item.Id" method="post" style="display:inline;"
                                           onsubmit="return confirm('Are you sure you want to delete this product?');">
+                                        @Html.AntiForgeryToken()
                                         <button type="submit" class="btn btn-danger delete">Delete</button>
                                     </form>
+
                                 </td>
                             </tr>
                         }
-
                     </tbody>
                 </table>
 
                 <button id="addProductButton" class="Add">+</button>
 
-                <!-- Modal -->
+                <!-- Modal for Add Product -->
                 <div id="addProductModal" class="modal">
                     <div class="modal-content">
                         <span class="close">&times;</span>
