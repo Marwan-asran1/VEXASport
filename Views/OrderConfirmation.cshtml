@@ -1,0 +1,15 @@
+﻿@model VEXA.Models.Order
+@{
+    ViewData["Title"] = "OrderConfirmation";
+}
+<h2>Order Confirmed!</h2>
+<p>Your order number is <strong>@Model.OrderNumber</strong>.</p>
+<p>Thank you for your purchase. You will receive a confirmation email soon.</p>
+
+<h3>Order Details</h3>
+<ul>
+    @foreach (var item in Model.OrderItems)
+    {
+        <li>@item.Product.Name - Quantity: @item.Quantity</li>
+    }
+</ul>

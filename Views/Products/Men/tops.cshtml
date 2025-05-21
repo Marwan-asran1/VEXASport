@@ -1,5 +1,22 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@{
+	ViewData["Title"] = "Category-Men-Tops";
 }
+
+@model IEnumerable<VEXA.Models.Product>
+<h1 class="Cat-Title">Men-Tops</h1>
+
+<div class="product-container">
+	@foreach (var product in Model)
+	{
+		<div id="@product.Id" class="product">
+			<img src="@product.ImageUrl" onclick="location.href='/Products/Details/@product.Id'" />
+			<h4>@product.Name</h4>
+			<div class="info">
+				<p id="product-@product.Id" class="price">@product.Price EGP</p>
+				<button type="button" onclick="addToCart(@product.Id)" class="addCart">
+					<i class="fa-solid fa-basket-shopping"></i>
+				</button>
+			</div>
+		</div>
+	}
+</div>

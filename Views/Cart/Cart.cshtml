@@ -3,6 +3,10 @@
 }
 @model List<VEXA.Models.CartItem>
 
+@section Scripts {
+    <script src="~/js/site.js"></script>
+}
+
 <div class="cartpage">
     @if (Model.Count == 0)
     {
@@ -49,7 +53,9 @@
             <p>Subtotal <span class="subtotal"></span></p>
             <p>Delivery Fee <span>Free</span></p>
             <p>Grand Total <span class="grandtotal"></span></p>
-            <button class="checkout-btn">Proceed to Checkout</button>
+            <form action="/Order/Checkout" method="get">
+                <button type="submit" class="checkout-btn">Proceed to Checkout</button>
+            </form>
         </div>
     }
 </div>

@@ -21,7 +21,6 @@ namespace VEXA.Models
 
         public DateTime CreatedDate { get; set; } = DateTime.UtcNow;
 
-        // Category relationship
         public int CategoryId { get; set; }
         public Category? Category { get; set; }
 

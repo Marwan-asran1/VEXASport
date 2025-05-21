@@ -1,0 +1,69 @@
+﻿@model List<VEXA.Models.CartItem>
+@{
+	ViewData["Title"] = "Checkout";
+}
+
+<div class="container mt-4">
+	<h2>Checkout</h2>
+	<div class="row">
+		<div class="col-md-8">
+			<div class="card">
+				<div class="card-body">
+					<h5 class="card-title">Order Summary</h5>
+					<table class="table">
+						<thead>
+							<tr>
+								<th>Product</th>
+								<th>Quantity</th>
+								<th>Price</th>
+								<th>Total</th>
+							</tr>
+						</thead>
+						<tbody>
+							@foreach (var item in Model)
+							{
+								<tr>
+									<td>@item.Product.Name</td>
+									<td>@item.Quantity</td>
+									<td>@item.Product.Price.ToString("C")</td>
+									<td>@item.TotalPrice.ToString("C")</td>
+								</tr>
+							}
+						</tbody>
+						<tfoot>
+							<tr>
+								<td colspan="3" class="text-end"><strong>Total:</strong></td>
+								<td><strong>@Model.Sum(i => i.TotalPrice).ToString("C")</strong></td>
+							</tr>
+						</tfoot>
+					</table>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-4">
+			<div class="card">
+				<div class="card-body">
+					<h5 class="card-title">Delivery Information</h5>
+					<form asp-action="PlaceOrder" method="post">
+						<div class="mb-3">
+							<label for="shippingAddress" class="form-label">Shipping Address</label>
+							<textarea class="form-control" id="shippingAddress" name="shippingAddress" required></textarea>
+						</div>
+						<div class="mb-3">
+							<label for="billingAddress" class="form-label">Billing Address</label>
+							<textarea class="form-control" id="billingAddress" name="billingAddress" required></textarea>
+						</div>
+						<div class="mb-3">
+							<label for="contactPhone" class="form-label">Contact Phone</label>
+							<input type="tel" class="form-control" id="contactPhone" name="contactPhone" required>
+						</div>
+						<div class="alert alert-info">
+							<i class="fas fa-info-circle"></i> Payment Method: Cash on Delivery
+						</div>
+						<button type="submit" class="btn btn-primary w-100">Place Order</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

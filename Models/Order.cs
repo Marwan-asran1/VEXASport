@@ -49,19 +49,12 @@ namespace VEXA.Models
         public enum OrderStatus
         {
             Pending,
-            Processing,
-            Shipped,
-            Delivered,
-            Cancelled,
-            Returned
+            Confirmed
         }
 
         public enum PaymentMethod
         {
-            CashOnDelivery,
-            CreditCard,
-            PayPal,
-            BankTransfer
+            CashOnDelivery
         }
     }
 }

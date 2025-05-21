@@ -35,7 +35,29 @@ namespace VEXA.Controllers
             var womenP = _context.Products.Where(p => p.CategoryId == 2).ToList();
             return View("Women/women", womenP);
         }
+        public IActionResult MenTops()
+        {
+            var menTops = _context.Products.Where(p => p.CategoryId == 3).ToList();
+            return View("Men/men", menTops);
+        }
 
+        public IActionResult MenBottoms()
+        {
+            var menBottoms = _context.Products.Where(p => p.CategoryId == 4).ToList();
+            return View("Men/men", menBottoms);
+        }
+
+        public IActionResult WomenTops()
+        {
+            var womenTops = _context.Products.Where(p => p.CategoryId == 5).ToList();
+            return View("Women/women", womenTops);
+        }
+
+        public IActionResult WomenBottoms()
+        {
+            var womenBottoms = _context.Products.Where(p => p.CategoryId == 6).ToList();
+            return View("Women/women", womenBottoms);
+        }
         public IActionResult AllProducts()
         {
             var products = _context.Products
