@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace VEXA.Models
 {
@@ -13,6 +15,13 @@ namespace VEXA.Models
         public string? Name { get; set; }
         public string? Description { get; set; }
         public string? ImageUrl { get; set; }
+        
+        
+        public int? ParentCategoryId { get; set; }
+        [ForeignKey("ParentCategoryId")]
+        public Category? ParentCategory { get; set; }
+        public ICollection<Category>? SubCategories { get; set; }
+        
         public ICollection<Product>? Products { get; set; }
     }
 }

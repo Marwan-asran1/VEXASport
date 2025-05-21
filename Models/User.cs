@@ -9,6 +9,10 @@ namespace VEXA.Models
 {
     public class User
     {
+        //public enum Gender
+        //{
+        //    Male,Female
+        //}
 
         public enum Role
         {
@@ -25,7 +29,7 @@ namespace VEXA.Models
         public string? Address { get; set; }
         public DateTime RegistrationDate { get; set; } = DateTime.UtcNow;
         public Role UserRole { get; set; }
-
+        //public Gender UserGender { get; set; }
         public ICollection<Order>? Orders { get; set; }
         public ICollection<Review>? Reviews { get; set; }
     }

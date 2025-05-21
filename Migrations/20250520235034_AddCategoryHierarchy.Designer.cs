@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using VEXA.Models;
 
@@ -11,9 +12,11 @@ using VEXA.Models;
 namespace VEXA.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250520235034_AddCategoryHierarchy")]
+    partial class AddCategoryHierarchy
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -73,42 +76,6 @@ namespace VEXA.Migrations
                     b.HasIndex("ParentCategoryId");
 
                     b.ToTable("Categories");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Men"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Women"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "Tops",
-                            ParentCategoryId = 1
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Name = "Bottoms",
-                            ParentCategoryId = 1
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Name = "Tops",
-                            ParentCategoryId = 2
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Name = "Bottoms",
-                            ParentCategoryId = 2
-                        });
                 });
 
             modelBuilder.Entity("VEXA.Models.Order", b =>
@@ -189,9 +156,6 @@ namespace VEXA.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("Size")
-                        .HasColumnType("int");
-
                     b.Property<int>("StockQuantity")
                         .HasColumnType("int");
 
@@ -227,9 +191,6 @@ namespace VEXA.Migrations
 
                     b.Property<DateTime>("RegistrationDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<int>("UserGender")
-                        .HasColumnType("int");
 
                     b.Property<int>("UserRole")
                         .HasColumnType("int");

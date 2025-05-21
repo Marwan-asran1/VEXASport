@@ -4,6 +4,10 @@
 @model IEnumerable<VEXA.Models.Product>
 
 <h1 class="Cat-Title">All Products</h1>
+<div class="category-nav">
+    <a href="@Url.Action("Men")" class="category-link">Men</a>
+    <a href="@Url.Action("Women")" class="category-link">Women</a>
+</div>
 <div class="product-container">
     @foreach(var product in Model){
         <div id="product-@product.Id" class="product">

@@ -21,14 +21,16 @@ namespace VEXA.Models
         public DbSet<Payment> Payments { get; set; }
         public DbSet<CartItem> CartItems { get; set; }
 
-
-      protected override void OnConfiguring(DbContextOptionsBuilder options)
-{
-    options.UseSqlServer("Server=db18623.public.databaseasp.net; Database=db18623; User Id=db18623; Password=k_8J3oM=K%b2; Encrypt=True; TrustServerCertificate=True; MultipleActiveResultSets=True; ");
-}
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Category>().HasData(
+                new Category { Id = 1, Name = "Men", ParentCategoryId = null },
+                new Category { Id = 2, Name = "Women", ParentCategoryId = null },
+                new Category { Id = 3, Name = "Tops", ParentCategoryId = 1 },
+                new Category { Id = 4, Name = "Bottoms", ParentCategoryId = 1 },
+                new Category { Id = 5, Name = "Tops", ParentCategoryId = 2 },
+                new Category { Id = 6, Name = "Bottoms", ParentCategoryId = 2 }
+            );
 
             modelBuilder.Entity<Product>()
                 .HasOne(p => p.Category)
