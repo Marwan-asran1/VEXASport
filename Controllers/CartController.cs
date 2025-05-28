@@ -35,15 +35,22 @@ namespace VEXA.Controllers
             return RedirectToAction("Cart");
         }
 
-        public IActionResult AddToCart(int id/*, string size="M"*/)
+        public IActionResult AddToCart(int id, string size)
         {
+            if (string.IsNullOrEmpty(size))
+            {
+                return Json(new { success = false, message = "Please select a size" });
+            }
+
             var product = _context.Products.FirstOrDefault(p => p.Id == id);
             if (product == null) { 
                 return NotFound();
             }
+
             var cart = HttpContext.Session.GetObjectFromJson<List<CartItem>>("Cart");
             if (cart == null) { cart = new List<CartItem>(); }
-            var existItem = cart.FirstOrDefault(item => item.ProductId == product.Id/* && item.Size==size*/);
+
+            var existItem = cart.FirstOrDefault(item => item.ProductId == product.Id && item.Size == size);
             if (existItem != null) {
                 existItem.Quantity++;
             }
@@ -52,16 +59,17 @@ namespace VEXA.Controllers
                 cart.Add(new CartItem
                 {
                     ProductId = product.Id,
-                    //Size = size,
+                    Size = size,
                     Product = product,
                     Quantity = 1
                 });
             }
+
             HttpContext.Session.SetObjectAsJson("Cart", cart);
-            int totalItemsInCart=cart.Sum(x => x.Quantity);
+            int totalItemsInCart = cart.Sum(x => x.Quantity);
             return Json(new {
                 success = true,
-                cartcounter=totalItemsInCart,
+                cartcounter = totalItemsInCart,
             });
         }
         [HttpPost]

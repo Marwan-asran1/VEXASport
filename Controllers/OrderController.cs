@@ -27,7 +27,7 @@ namespace VEXA.Controllers
             return View(cart);
         }
 
-        [HttpPost]
+        
         [HttpPost]
         public IActionResult PlaceOrder(string shippingAddress, string billingAddress, string contactPhone)
         {
@@ -36,20 +36,26 @@ namespace VEXA.Controllers
             if (cart == null || !cart.Any())
                 return RedirectToAction("Cart", "Cart");
 
-            int userId = cart.First().UserId;
-
-            // Ensure the user exists
-            var userExists = _context.Users.Any(u => u.Id == userId);
-            if (!userExists)
+            // Temporarily commenting out login check
+            /*
+            int? userId = HttpContext.Session.GetInt32("UserId");
+            if (userId == null)
             {
-                // Optionally, clear the cart if user is invalid
                 HttpContext.Session.Remove("Cart");
                 return RedirectToAction("Login", "User");
+            }
+            */
+
+            // Get the existing user 'karem'
+            var user = _context.Users.FirstOrDefault(u => u.Email == "karem@karem");
+            if (user == null)
+            {
+                return RedirectToAction("Cart", "Cart");
             }
 
             var order = new Order
             {
-                UserId = userId,
+                UserId = user.Id, // Use karem's user ID
                 OrderDate = DateTime.UtcNow,
                 ShippingAddress = shippingAddress,
                 BillingAddress = billingAddress,
@@ -68,7 +74,6 @@ namespace VEXA.Controllers
                     Quantity = item.Quantity,
                     UnitPrice = item.Product.Price
                 };
-
                 order.OrderItems.Add(orderItem);
             }
 
@@ -84,7 +89,7 @@ namespace VEXA.Controllers
         public IActionResult OrderConfirmation(int id)
         {
             var order = _context.Orders
-                .Include(o => o.OrderItems)
+                .Include(o => o.OrderItems!)
                 .ThenInclude(oi => oi.Product)
                 .FirstOrDefault(o => o.Id == id);
 

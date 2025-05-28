@@ -58,6 +58,10 @@ namespace VEXA.Controllers
             var womenBottoms = _context.Products.Where(p => p.CategoryId == 6).ToList();
             return View("Women/women", womenBottoms);
         }
+        public IActionResult Kids()
+        {
+            return View();
+        }
         public IActionResult AllProducts()
         {
             var products = _context.Products

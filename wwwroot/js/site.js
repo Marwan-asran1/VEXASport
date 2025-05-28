@@ -77,19 +77,42 @@ function updateCartCounter(count) {
 }
 
 function addToCart(productId) {
-    let URL = '/Cart/AddToCart/' + productId;
+    const sizeInput = document.getElementById('selectedSize');
+    if (!sizeInput || !sizeInput.value) {
+        alert('Please select a size before adding to cart');
+        return;
+    }
+
+    const size = sizeInput.value;
+    const URL = `/Cart/AddToCart?id=${productId}&size=${size}`;
+    
     fetch(URL)
         .then(response => response.json())
         .then(data => {
-             
             if (data.success) {
                 updateCartCounter(data.cartcounter);
+                const button = document.querySelector('.add-to-cart-btn');
+                if (button) {
+                    button.innerHTML = '✔ Added';
+                    button.style.backgroundColor = 'green';
+                    button.disabled = true;
+
+                    setTimeout(() => {
+                        button.innerHTML = 'Add To Cart';
+                        button.style.backgroundColor = '#00105c';
+                        button.disabled = false;
+                    }, 2000);
+                }
+            } else {
+                alert(data.message || 'Failed to add to cart');
             }
         })
         .catch(error => {
             console.error('Error:', error);
+            alert('Failed to add to cart');
         });
 }
+
 const buttons = document.querySelectorAll('.addCart');
 const B = document.querySelectorAll('.add-to-cart-btn ');
 buttons.forEach(button => {

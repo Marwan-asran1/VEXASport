@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using VEXA.Models;
 
@@ -11,9 +12,11 @@ using VEXA.Models;
 namespace VEXA.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250521204039_CleanOrderItemProductId1")]
+    partial class CleanOrderItemProductId1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -259,6 +262,9 @@ namespace VEXA.Migrations
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("ProductId1")
+                        .HasColumnType("int");
+
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
@@ -270,6 +276,8 @@ namespace VEXA.Migrations
                     b.HasIndex("OrderId");
 
                     b.HasIndex("ProductId");
+
+                    b.HasIndex("ProductId1");
 
                     b.ToTable("OrderItems");
                 });
@@ -404,6 +412,10 @@ namespace VEXA.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("VEXA.Models.Product", null)
+                        .WithMany("OrderItems")
+                        .HasForeignKey("ProductId1");
+
                     b.Navigation("Order");
 
                     b.Navigation("Product");
@@ -455,6 +467,8 @@ namespace VEXA.Migrations
 
             modelBuilder.Entity("VEXA.Models.Product", b =>
                 {
+                    b.Navigation("OrderItems");
+
                     b.Navigation("Reviews");
                 });
 

@@ -12,21 +12,43 @@
         <div class="product-description">
             <p class="D">@Model.Description</p>
             <p><strong>Category:</strong> @if (Model.Category != null && Model.Category.Name != null) {@Model.Category.Name}else{<text>uncategorized</text> }</p>
-
         </div>
-<<<<<<< HEAD
-        <button onclick="addToCart(@Model.Id)" class="add-to-cart-btn ">
+        
+        <div class="T1-sizes">
+            <h3>Select Size</h3>
+            <div class="sizes">
+                <div class="size" data-size="S">S</div>
+                <div class="size" data-size="M">M</div>
+                <div class="size" data-size="L">L</div>
+                
+            </div>
+            <input type="hidden" id="selectedSize" value="" />
+        </div>
+
+        <button onclick="addToCart(@Model.Id)" class="add-to-cart-btn">
             Add To Cart
         </button>
     </div>
 </div>
-=======
-        <form asp-action="AddToCart" asp-controller="Cart" method="post">
-            <input type="hidden" name="id" value="@Model.Id" />
-           
-            <button type="submit" class="add-to-cart-btn">Add to cart</button>
-        </form>
-    </div>
 
-```
->>>>>>> admin controller/view and linking to database
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const sizeBoxes = document.querySelectorAll('.size');
+            const selectedSizeInput = document.getElementById('selectedSize');
+
+            sizeBoxes.forEach(box => {
+                box.addEventListener('click', function() {
+                    // Remove selected class from all sizes
+                    sizeBoxes.forEach(b => b.classList.remove('selected'));
+                    // Add selected class to clicked size
+                    this.classList.add('selected');
+                    // Update hidden input value
+                    selectedSizeInput.value = this.dataset.size;
+                });
+            });
+        });
+    </script>
+}
+
+
