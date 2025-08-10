@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
 
 namespace VEXA.Models
 {
@@ -17,25 +18,14 @@ namespace VEXA.Models
         public string? ImageUrl { get; set; }
         public DateTime CreatedDate { get; set; } = DateTime.UtcNow;
 
-        //public string? Size { get; set; } = "S,M,L";
-
-        
-        //public List<string> SizeList =>
-    public int StockS { get; set; }
-    public int StockM { get; set; }
-    public int StockL { get; set; }
-        //    Size?.Split(',').Select(s => s.Trim()).ToList() ?? new List<string> { "S", "M", "L" };
+        public int StockS { get; set; }
+        public int StockM { get; set; }
+        public int StockL { get; set; }
 
         public int CategoryId { get; set; }
         public Category? Category { get; set; }
 
-
-<<<<<<< HEAD
         public ICollection<Review>? Reviews { get; set; }
-        //public ICollection<OrderItem>? OrderItems { get; set; }
+        public ICollection<OrderItem>? OrderItems { get; set; }
     }
-=======
-    public ICollection<OrderItem>? OrderItems { get; set; }
->>>>>>> admin
-}
 }

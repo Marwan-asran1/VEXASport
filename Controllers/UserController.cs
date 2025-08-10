@@ -1,9 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System.Linq;
 using VEXA.Models;
-using System.Threading.Tasks;
+using System.Linq;
 using Microsoft.EntityFrameworkCore;
-using AspNetCoreGeneratedDocument;
 
 namespace VEXA.Controllers
 {
@@ -16,102 +14,112 @@ namespace VEXA.Controllers
             _context = context;
         }
 
-        // GET: All Users
-        public async Task<IActionResult> Index()
+        public IActionResult Profile(int id)
         {
-            var users = await _context.Users.ToListAsync();
-            return View("~/Views/Admin/Admin_users");
-        }
-
-        // GET: Get User by ID (for modal)
-        [HttpGet]
-        public async Task<IActionResult> GetUser(int id)
-        {
-            var user = await _context.Users.FindAsync(id);
+            var user = _context.Users.Find(id);
             if (user == null)
-                return NotFound();
-
-            return Json(new
             {
-                id = user.Id,
-                name = user.Name,
-                email = user.Email,
-                phoneNumber = user.PhoneNumber,
-                address = user.Address,
-                gender = user.Gender,
-                userRole = user.UserRole.ToString()
-            });
+                TempData["Error"] = "User not found.";
+                return RedirectToAction("Index", "Home");
+            }
+            return View(user);
         }
 
-        // POST: Edit User (AJAX)
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditUser(int id, [Bind("Id,Name,Email,PhoneNumber,Address,Gender,UserRole")] User updatedUser)
+        public IActionResult UpdateProfile(User user)
         {
-            if (id != updatedUser.Id)
-            {
-                return Json(new { success = false, message = "User ID mismatch." });
-            }
-
             if (!ModelState.IsValid)
             {
-                var errors = ModelState.Values.SelectMany(v => v.Errors)
-                    .Select(e => e.ErrorMessage).ToList();
-                return Json(new { success = false, message = "Validation failed.", errors });
+                TempData["Error"] = "Please check the form and try again.";
+                return View("Profile", user);
             }
-
-            var existingUser = await _context.Users.FindAsync(id);
-            if (existingUser == null)
-            {
-                return Json(new { success = false, message = "User not found." });
-            }
-
-            existingUser.Name = updatedUser.Name;
-            existingUser.Email = updatedUser.Email;
-            existingUser.PhoneNumber = updatedUser.PhoneNumber;
-            existingUser.Address = updatedUser.Address;
-            existingUser.Gender = updatedUser.Gender;
-            existingUser.UserRole = updatedUser.UserRole;
 
             try
             {
-                _context.Update(existingUser);
-                await _context.SaveChangesAsync();
-                return Json(new
+                var existingUser = _context.Users.Find(user.Id);
+                if (existingUser == null)
                 {
-                    success = true,
-                    message = "User updated successfully.",
-                    user = new
-                    {
-                        id = existingUser.Id,
-                        name = existingUser.Name,
-                        email = existingUser.Email,
-                        phoneNumber = existingUser.PhoneNumber,
-                        address = existingUser.Address,
-                        gender = existingUser.Gender,
-                        userRole = existingUser.UserRole.ToString()
-                    }
-                });
+                    TempData["Error"] = "User not found.";
+                    return RedirectToAction("Index", "Home");
+                }
+
+                // Update only allowed fields
+                existingUser.Name = user.Name;
+                existingUser.Email = user.Email;
+                existingUser.PhoneNumber = user.PhoneNumber;
+                existingUser.Address = user.Address;
+                existingUser.Gender = user.Gender;
+
+                // Only update password if provided
+                if (!string.IsNullOrEmpty(user.Password) && user.Password.Length >= 6)
+                {
+                    existingUser.Password = user.Password;
+                }
+
+                _context.SaveChanges();
+                TempData["Success"] = "Profile updated successfully!";
+                return RedirectToAction("Profile", new { id = user.Id });
             }
-            catch
+            catch (Exception ex)
             {
-                return Json(new { success = false, message = "Failed to update user." });
+                TempData["Error"] = "An error occurred while updating your profile. Please try again.";
+                return View("Profile", user);
             }
         }
 
-        // POST: Delete User
+        public IActionResult ChangePassword(int id)
+        {
+            var user = _context.Users.Find(id);
+            if (user == null)
+            {
+                TempData["Error"] = "User not found.";
+                return RedirectToAction("Index", "Home");
+            }
+            return View(user);
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteUser(int id)
+        public IActionResult ChangePassword(int id, string currentPassword, string newPassword, string confirmPassword)
         {
-            var user = await _context.Users.FindAsync(id);
+            var user = _context.Users.Find(id);
             if (user == null)
-                return NotFound();
+            {
+                TempData["Error"] = "User not found.";
+                return RedirectToAction("Index", "Home");
+            }
 
-            _context.Users.Remove(user);
-            await _context.SaveChangesAsync();
+            if (user.Password != currentPassword)
+            {
+                TempData["Error"] = "Current password is incorrect.";
+                return View(user);
+            }
 
-            return View("~/Views/Admin/Amin_users.cshtml");
+            if (newPassword != confirmPassword)
+            {
+                TempData["Error"] = "New passwords do not match.";
+                return View(user);
+            }
+
+            if (newPassword.Length < 6)
+            {
+                TempData["Error"] = "New password must be at least 6 characters long.";
+                return View(user);
+            }
+
+            try
+            {
+                user.Password = newPassword;
+                _context.SaveChanges();
+                TempData["Success"] = "Password changed successfully!";
+                return RedirectToAction("Profile", new { id = id });
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = "An error occurred while changing password. Please try again.";
+                return View(user);
+            }
         }
     }
 }

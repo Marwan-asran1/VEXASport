@@ -14,16 +14,18 @@
         <h2 class="Cat-Title">EXPLORE BEST OF MEN CLOTHES</h2>
         <div class="product-container-pluse">
             @foreach(var product in Model){
-                <div id="@product.Id" class="product">
-                    <img src="@product.ImageUrl" onclick="location.href='/Products/Details/@product.Id'" />
-                    <h4>@product.Name</h4>
-                    <div class="info">
-                        <p id="product-@product.Id" class="price">@product.Price EGP</p>
-                        <button type="button" onclick="addToCart(@product.Id)" class="addCart ">
-                            <i class="fa-solid fa-basket-shopping"></i>
-                        </button>
+                if(product.CategoryId == 1) {
+                    <div id="@product.Id" class="product">
+                        <img src="@product.ImageUrl" onclick="location.href='/Products/Details/@product.Id'" />
+                        <h4>@product.Name</h4>
+                        <div class="info">
+                            <p id="product-@product.Id" class="price">@product.Price EGP</p>
+                            <button type="button" onclick="addToCart(@product.Id)" class="addCart ">
+                                <i class="fa-solid fa-basket-shopping"></i>
+                            </button>
+                        </div>
                     </div>
-                </div>
+                }
             }
         </div>
     </div>

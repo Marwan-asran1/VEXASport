@@ -61,7 +61,8 @@ namespace VEXA.Controllers
         }
         public IActionResult Kids()
         {
-            return View();
+            var kidsP = _context.Products.Where(p => p.CategoryId == 3).ToList();
+            return View("Kids/kids", kidsP);
         }
         public IActionResult AllProducts()
         {
