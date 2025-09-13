@@ -1,0 +1,101 @@
+@{
+    ViewData["Title"] = ViewBag.CategoryName ?? "Category";
+}
+
+@model IEnumerable<VEXA.Models.Product>
+
+<div class="category-header">
+    <h1 class="Cat-Title">@ViewBag.CategoryName</h1>
+    <div class="filter-container">
+        @if (ViewBag.SubCategoryName == null)
+        {
+            <!-- Filter for main categories (Men, Women, Kids) -->
+            <select id="productTypeFilter" class="filter-dropdown">
+                <option value="">All Products</option>
+                <option value="Tops">Tops</option>
+                <option value="Bottoms">Bottoms</option>
+            </select>
+        }
+        else
+        {
+            <!-- Filter for subcategories -->
+            <select id="productTypeFilter" class="filter-dropdown">
+                <option value="">All @ViewBag.CategoryName</option>
+                <option value="Tops" selected="@(ViewBag.SubCategoryName == "Tops")">Tops</option>
+                <option value="Bottoms" selected="@(ViewBag.SubCategoryName == "Bottoms")">Bottoms</option>
+            </select>
+        }
+    </div>
+</div>
+
+<div class="product-container">
+    @if (Model.Any())
+    {
+        @foreach (var product in Model)
+        {
+            var productStock = product.Variants?.Sum(v => v.StockQuantity) ?? 0;
+            var isSoldOut = productStock <= 0;
+            <div id="@product.Id" class="product @(isSoldOut ? "sold-out-product" : "")">
+                @if (isSoldOut)
+                {
+                    <div class="sold-out-overlay">
+                        <span class="sold-out-badge">SOLD OUT</span>
+                    </div>
+                }
+                <img src="@product.ImageUrl" onclick="location.href='/Products/Details/@product.Id'" 
+                     class="@(isSoldOut ? "sold-out-image" : "")" />
+                <h4>@product.Name</h4>
+                <div class="info">
+                    <p id="product-@product.Id" class="price">@product.Price EGP</p>
+                    @if (isSoldOut)
+                    {
+                        <button type="button" class="addCart sold-out-btn" disabled>
+                            <i class="fa-solid fa-times"></i>
+                        </button>
+                    }
+                    else
+                    {
+                        <button type="button" onclick="location.href='/Products/Details/@product.Id'" class="addCart" title="View Details">
+                            <i class="fa-solid fa-eye"></i>
+                        </button>
+                    }
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <div class="no-products">
+            <h3>No products found</h3>
+            <p>Check back later for new items!</p>
+        </div>
+    }
+</div>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const filterDropdown = document.getElementById('productTypeFilter');
+    
+    if (filterDropdown) {
+        filterDropdown.addEventListener('change', function() {
+            const selectedValue = this.value;
+            const currentGender = '@ViewBag.CategoryName';
+            
+            console.log('Filter changed:', selectedValue, 'Current gender:', currentGender);
+            
+            if (selectedValue === '') {
+                // Navigate to main category
+                const mainCategoryUrl = `/Products/Category?gender=${currentGender}`;
+                console.log('Navigating to main category:', mainCategoryUrl);
+                window.location.href = mainCategoryUrl;
+            } else {
+                // Navigate to subcategory
+                const subCategoryUrl = `/Products/SubCategory?gender=${currentGender}&productType=${selectedValue}`;
+                console.log('Navigating to subcategory:', subCategoryUrl);
+                window.location.href = subCategoryUrl;
+            }
+        });
+    }
+});
+</script>

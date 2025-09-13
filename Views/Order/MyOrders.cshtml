@@ -4,60 +4,73 @@
     ViewData["Title"] = "My Orders";
 }
 
-<div class="container mt-4">
-    <h2>My Orders</h2>
-    
-    @if (!Model.Any())
-    {
-        <div class="alert alert-info">
-            You haven't placed any orders yet.
-            <a asp-controller="Home" asp-action="Index" class="alert-link">Start shopping</a>
-        </div>
-    }
-    else
-    {
-        <div class="row">
-            @foreach (var order in Model)
-            {
-                <div class="col-md-6 mb-4">
-                    <div class="card">
-                        <div class="card-header d-flex justify-content-between align-items-center">
-                            <span>Order #@order.OrderNumber</span>
-                            <span class="badge bg-success">@order.Status</span>
-                        </div>
-                        <div class="card-body">
-                            <div class="row mb-3">
-                                <div class="col-6">
-                                    <small class="text-muted">Order Date</small>
-                                    <div>@order.OrderDate.ToString("g")</div>
-                                </div>
-                                <div class="col-6">
-                                    <small class="text-muted">Total Amount</small>
-                                    <div>@order.OrderTotal.ToString("C")</div>
-                                </div>
+<div class="my-orders-container">
+    <div class="container">
+        <h2 class="my-orders-title">My Orders</h2>
+        
+        @if (Model == null || !Model.Any())
+        {
+            <div class="my-orders-empty">
+                <i class="fas fa-shopping-bag my-orders-empty-icon"></i>
+                <h3 class="my-orders-empty-title">No Orders Yet</h3>
+                <p class="my-orders-empty-text">You haven't placed any orders yet. Start shopping to see your orders here.</p>
+                <a asp-controller="Home" asp-action="Index" class="my-orders-empty-btn">Start Shopping</a>
+            </div>
+        }
+        else
+        {
+            <div class="row">
+                @foreach (var order in Model)
+                {
+                    <div class="col-md-6 mb-4">
+                        <div class="my-orders-card">
+                            <div class="my-orders-card-header">
+                                <h5 class="my-orders-order-number">Order #@(order.OrderNumber ?? "N/A")</h5>
+                                <span class="my-orders-status-badge">@order.Status</span>
                             </div>
-                            
-                            <h6>Items:</h6>
-                            <ul class="list-group list-group-flush">
-                                @foreach (var item in order.OrderItems)
-                                {
-                                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                                        @item.Product.Name
-                                        <span class="badge bg-primary rounded-pill">
-                                            @item.Quantity x @item.UnitPrice.ToString("C")
-                                        </span>
-                                    </li>
-                                }
-                            </ul>
+                            <div class="my-orders-card-body">
+                                <div class="my-orders-info-row">
+                                    <div class="my-orders-info-item">
+                                        <span class="my-orders-info-label">Order Date</span>
+                                        <div class="my-orders-info-value">@order.OrderDate.ToString("g")</div>
+                                    </div>
+                                    <div class="my-orders-info-item">
+                                        <span class="my-orders-info-label">Total Amount</span>
+                                        <div class="my-orders-info-value">@order.OrderTotal.ToString("C")</div>
+                                    </div>
+                                </div>
+                                
+                                <h6 class="my-orders-items-title">Items</h6>
+                                <ul class="my-orders-items-list">
+                                    @if (order.OrderItems != null)
+                                    {
+                                        @foreach (var item in order.OrderItems)
+                                        {
+                                            <li class="my-orders-item">
+                                                <span class="my-orders-item-name">@(item.Product?.Name ?? "Unknown Product")</span>
+                                                <span class="my-orders-item-badge">
+                                                    @item.Quantity x @item.UnitPrice.ToString("C")
+                                                </span>
+                                            </li>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <li class="my-orders-item">
+                                            <span class="my-orders-item-name text-muted">No items found</span>
+                                        </li>
+                                    }
+                                </ul>
 
-                            <div class="mt-3">
-                                <small class="text-muted">Shipping Address:</small>
-                                <div>@order.ShippingAddress</div>
+                                <div class="my-orders-shipping">
+                                    <span class="my-orders-shipping-label">Shipping Address</span>
+                                    <div class="my-orders-shipping-address">@(order.ShippingAddress ?? "Not specified")</div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            }
-        </div>
-    }
+                }
+            </div>
+        }
+    </div>
 </div> 

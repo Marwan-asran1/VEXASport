@@ -4,279 +4,6 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<style>
-    /* Simple Table Styling */
-    table {
-        width: 100%;
-        border-collapse: collapse;
-        background: white;
-        margin-bottom: 20px;
-        font-family: Arial, sans-serif;
-    }
-
-    table thead tr {
-        background: #f8f9fa;
-        color: #333;
-        text-align: center;
-        font-weight: bold;
-        font-size: 14px;
-        text-transform: uppercase;
-    }
-
-    table th {
-        padding: 15px 10px;
-        border: 1px solid #dee2e6;
-        border-bottom: 2px solid #dee2e6;
-    }
-
-    table td {
-        padding: 12px 10px;
-        border: 1px solid #dee2e6;
-        font-size: 14px;
-        color: #333;
-        word-wrap: break-word;
-        word-break: break-word;
-        vertical-align: top;
-    }
-
-    /* Responsive column widths that fit screen */
-    table th:nth-child(1), table td:nth-child(1) { /* ID */
-        width: 5%;
-        min-width: 50px;
-    }
-
-    table th:nth-child(2), table td:nth-child(2) { /* Name */
-        width: 15%;
-        min-width: 120px;
-    }
-
-    table th:nth-child(3), table td:nth-child(3) { /* Email */
-        width: 25%;
-        min-width: 200px;
-    }
-
-    table th:nth-child(4), table td:nth-child(4) { /* Phone */
-        width: 12%;
-        min-width: 100px;
-    }
-
-    table th:nth-child(5), table td:nth-child(5) { /* Address */
-        width: 25%;
-        min-width: 200px;
-    }
-
-    table th:nth-child(6), table td:nth-child(6) { /* Registration Date */
-        width: 10%;
-        min-width: 120px;
-    }
-
-    table th:nth-child(7), table td:nth-child(7) { /* Role */
-        width: 8%;
-        min-width: 80px;
-        text-align: center;
-    }
-
-    table th:nth-child(8), table td:nth-child(8) { /* Gender */
-        width: 4%;
-        min-width: 60px;
-        text-align: center;
-    }
-
-    table th:nth-child(9), table td:nth-child(9) { /* Action */
-        width: 10%;
-        min-width: 120px;
-        white-space: nowrap;
-        text-align: center;
-    }
-
-    table tbody tr:nth-of-type(even) {
-        background: #f8f9fa;
-    }
-
-    table tbody tr:hover {
-        background: #e9ecef;
-    }
-
-    .table-responsive {
-        overflow-x: hidden;
-        max-width: 100%;
-    }
-
-    /* Simple Button Styling */
-    .btn-add {
-        position: fixed;
-        bottom: 40px;
-        right: 30px;
-        background: #28a745;
-        color: white;
-        border: none;
-        border-radius: 50%;
-        width: 60px;
-        height: 60px;
-        font-size: 28px;
-        cursor: pointer;
-        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-        transition: all 0.3s ease;
-        z-index: 1000;
-    }
-
-    .btn-add:hover {
-        background: #218838;
-        transform: scale(1.05);
-    }
-
-    .btn-edit,
-    .btn-delete {
-        padding: 6px 12px;
-        font-size: 12px;
-        border-radius: 4px;
-        border: none;
-        cursor: pointer;
-        font-weight: 500;
-        margin: 2px;
-        transition: all 0.3s ease;
-    }
-
-    .btn-edit {
-        background: #007bff;
-        color: white;
-    }
-
-    .btn-edit:hover {
-        background: #0056b3;
-    }
-
-    .btn-delete {
-        background: #dc3545;
-        color: white;
-    }
-
-    .btn-delete:hover {
-        background: #c82333;
-    }
-
-    /* Simple Modal Styling */
-    .modal {
-        display: none;
-        position: fixed;
-        z-index: 1000;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.5);
-    }
-
-    .modal-content {
-        background: white;
-        margin: 5% auto;
-        padding: 20px;
-        border-radius: 8px;
-        width: 60%;
-        max-height: 80vh;
-        overflow-y: auto;
-        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-    }
-
-    .close {
-        color: #aaa;
-        float: right;
-        font-size: 28px;
-        font-weight: bold;
-        cursor: pointer;
-    }
-
-    .close:hover {
-        color: #333;
-    }
-
-    /* Simple Form Styling */
-    .form-group {
-        margin-bottom: 15px;
-    }
-
-    .form-group label {
-        display: block;
-        margin-bottom: 5px;
-        font-weight: 600;
-        color: #333;
-    }
-
-    .form-control {
-        width: 100%;
-        padding: 8px 12px;
-        border: 1px solid #ced4da;
-        border-radius: 4px;
-        font-size: 14px;
-    }
-
-    .form-control:focus {
-        outline: none;
-        border-color: #007bff;
-        box-shadow: 0 0 0 2px rgba(0,123,255,0.25);
-    }
-
-    /* Simple Alert Styling */
-    .alert {
-        border-radius: 4px;
-        padding: 12px 16px;
-        margin-bottom: 20px;
-        border: 1px solid transparent;
-    }
-
-    .alert-success {
-        background: #d4edda;
-        color: #155724;
-        border-color: #c3e6cb;
-    }
-
-    .alert-danger {
-        background: #f8d7da;
-        color: #721c24;
-        border-color: #f5c6cb;
-    }
-
-    /* Simple Card Styling */
-    .card {
-        border: 1px solid #dee2e6;
-        border-radius: 8px;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    }
-
-    .card-header {
-        background: #f8f9fa;
-        border-bottom: 1px solid #dee2e6;
-        padding: 15px 20px;
-    }
-
-    .card-header h6 {
-        margin: 0;
-        font-weight: 600;
-        color: #333;
-    }
-
-    .card-body {
-        padding: 20px;
-    }
-
-    /* Responsive Design */
-    @@media (max-width: 768px) {
-        .modal-content {
-            width: 90%;
-            margin: 10% auto;
-        }
-        
-        table th, table td {
-            padding: 8px 6px;
-            font-size: 12px;
-        }
-        
-        .btn-edit, .btn-delete {
-            padding: 4px 8px;
-            font-size: 11px;
-        }
-    }
-</style>
 
 <div class="container-fluid">
     <h1 class="h3 mb-2 text-gray-800">Users Management</h1>
@@ -302,8 +29,8 @@
             <h6 class="m-0 font-weight-bold text-primary">All Users</h6>
         </div>
         <div class="card-body">
-            <div class="table-responsive">
-                <table>
+            <div class="table-responsive users-table">
+                <table class="admin-table">
                     <thead>
                         <tr>
                             <th>ID</th>
@@ -346,12 +73,14 @@
                 <button class="btn-add" onclick="openAddUserModal()">+</button>
 
                 <!-- User Modal -->
-                <div id="userModal" class="modal">
+                <div id="userModal" class="modal user-form-modal">
                     <div class="modal-content">
-                        <span class="close">&times;</span>
-                        <h2 id="modalTitle">Add New User</h2>
-
-                        <form id="userForm" method="post" asp-controller="Admin" asp-action="TestCreateUser">
+                        <div class="modal-header">
+                            <h2 id="modalTitle">Add New User</h2>
+                            <span class="close">&times;</span>
+                        </div>
+                        <div class="modal-body">
+                            <form id="userForm" method="post" asp-controller="Admin" asp-action="CreateUser">
                             @Html.AntiForgeryToken()
                             <input type="hidden" id="userId" name="Id" value="0" />
                             
@@ -366,13 +95,13 @@
                             </div>
                             
                             <div class="form-group">
-                                <label for="userPassword">Password</label>
-                                <input type="password" class="form-control" id="userPassword" name="Password" placeholder="Enter password (min 6 characters)" minlength="6" required />
+                                <label for="userPassword">Temporary Password (optional)</label>
+                                <input type="password" class="form-control" id="userPassword" name="Password" placeholder="Leave blank to auto-generate" />
                             </div>
                             
                             <div class="form-group">
                                 <label for="userPhone">Phone Number</label>
-                                <input type="text" class="form-control" id="userPhone" name="PhoneNumber" placeholder="Enter phone number" required />
+                                <input type="text" class="form-control" id="userPhone" name="PhoneNumber" placeholder="Enter 11-digit phone number" maxlength="11" required />
                             </div>
                             
                             <div class="form-group">
@@ -392,144 +121,36 @@
                             <div class="form-group">
                                 <label for="userGender">Gender</label>
                                 <select class="form-control" id="userGender" name="Gender" required>
-                                    <option value="">Select Gender</option>
-                                    <option value="Male">Male</option>
-                                    <option value="Female">Female</option>
+                                    <option value="0">Select Gender</option>
+                                    <option value="1">Male</option>
+                                    <option value="2">Female</option>
+                                    <option value="3">Other</option>
                                 </select>
                             </div>
 
                             <button type="submit" class="btn btn-success mt-3" id="userSubmitButton">Save User</button>
-                        </form>
+                            </form>
+                        </div>
                     </div>
                 </div>
 
-                <script>
-                    const modal = document.getElementById("userModal");
-                    const form = document.getElementById("userForm");
-                    const modalTitle = document.getElementById("modalTitle");
-
-                    function openAddUserModal() {
-                        modalTitle.textContent = "Add New User";
-                        form.reset();
-                        document.getElementById("userId").value = "0";
-                        form.action = "/Admin/TestCreateUser";
-                        form.method = "post";
-                        modal.style.display = "block";
-                    }
-
-                    function openEditUserModal(userId) {
-                        fetch(`/Admin/GetUser/${userId}`)
-                            .then(response => {
-                                if (!response.ok) {
-                                    throw new Error('Network response was not ok');
-                                }
-                                return response.json();
-                            })
-                            .then(user => {
-                                modalTitle.textContent = "Edit User";
-                                document.getElementById("userId").value = user.id;
-                                document.getElementById("userName").value = user.name || "";
-                                document.getElementById("userEmail").value = user.email || "";
-                                document.getElementById("userPhone").value = user.phoneNumber || "";
-                                document.getElementById("userAddress").value = user.address || "";
-                                document.getElementById("userRole").value = user.userRole || "";
-                                document.getElementById("userGender").value = user.gender || "";
-                                document.getElementById("userPassword").required = false;
-                                document.getElementById("userPassword").disabled = true;
-                                document.getElementById("userPassword").value = "";
-                                form.action = "/Admin/UpdateUser";
-                                form.method = "post";
-                                modal.style.display = "block";
-                            })
-                            .catch(error => {
-                                console.error('Error:', error);
-                                alert('Error loading user data. Please try again.');
-                            });
-                    }
-
-                    function closeModal() {
-                        modal.style.display = "none";
-                    }
-
-                    document.querySelector(".close").onclick = closeModal;
-                    window.onclick = event => {
-                        if (event.target == modal) closeModal();
-                    };
-
-                    // Form submission handling
-                    form.addEventListener('submit', function(e) {
-                        // Debug: Log form data
-                        const formData = new FormData(form);
-                        console.log('User form data being sent:');
-                        for (let [key, value] of formData.entries()) {
-                            console.log(key + ': ' + value);
-                        }
-
-                        // Validate form before submission
-                        const name = document.getElementById('userName').value.trim();
-                        const email = document.getElementById('userEmail').value.trim();
-                        const password = document.getElementById('userPassword').value;
-                        const phone = document.getElementById('userPhone').value.trim();
-                        const address = document.getElementById('userAddress').value.trim();
-                        const role = document.getElementById('userRole').value;
-                        const gender = document.getElementById('userGender').value;
-
-                        if (!name) {
-                            e.preventDefault();
-                            alert('Please enter a full name');
-                            return false;
-                        }
-
-                        if (!email) {
-                            e.preventDefault();
-                            alert('Please enter an email address');
-                            return false;
-                        }
-
-                        if (!password || password.length < 6) {
-                            e.preventDefault();
-                            alert('Please enter a password with at least 6 characters');
-                            return false;
-                        }
-
-                        if (!phone) {
-                            e.preventDefault();
-                            alert('Please enter a phone number');
-                            return false;
-                        }
-
-                        if (!address) {
-                            e.preventDefault();
-                            alert('Please enter an address');
-                            return false;
-                        }
-
-                        if (!role) {
-                            e.preventDefault();
-                            alert('Please select a role');
-                            return false;
-                        }
-
-                        if (!gender) {
-                            e.preventDefault();
-                            alert('Please select a gender');
-                            return false;
-                        }
-
-                        const submitButton = document.getElementById('userSubmitButton');
-                        submitButton.disabled = true;
-                        submitButton.textContent = 'Saving...';
-                    });
-
-                    // Auto-hide alerts after 5 seconds
-                    setTimeout(function() {
-                        const alerts = document.querySelectorAll('.alert');
-                        alerts.forEach(alert => {
-                            alert.style.display = 'none';
-                        });
-                    }, 5000);
-                </script>
             </div>
         </div>
+    </div>
+</div>
+
+<div class="pagination-controls">
+    <form method="get" action="/Admin/Users" style="display:flex;gap:8px;align-items:center;justify-content:flex-end;margin-top:10px;">
+        <input type="number" name="page" min="1" value="@(Context.Request.Query["page"].FirstOrDefault() ?? "1")" placeholder="Page" style="width:80px;"/>
+        <input type="number" name="pageSize" min="5" max="100" value="@(Context.Request.Query["pageSize"].FirstOrDefault() ?? "20")" placeholder="Page Size" style="width:110px;"/>
+        <button type="submit" class="btn btn-secondary">Go</button>
+    </form>
+    <div style="text-align:right;margin-top:6px;">
+        @{
+            var currentPage = int.TryParse(Context.Request.Query["page"].FirstOrDefault(), out var page) ? page : 1;
+            var currentPageSize = int.TryParse(Context.Request.Query["pageSize"].FirstOrDefault(), out var pageSize) ? pageSize : 20;
+        }
+        <a class="btn btn-light" href="/Admin/Users?page=@(Math.Max(1, currentPage - 1))&pageSize=@currentPageSize">Prev</a>
+        <a class="btn btn-light" href="/Admin/Users?page=@(currentPage + 1)&pageSize=@currentPageSize">Next</a>
     </div>
 </div>

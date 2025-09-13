@@ -38,17 +38,16 @@ namespace VEXA.Models
         [Phone]
         public string? ContactPhone { get; set; }
 
-        public OrderStatus Status { get; set; } = OrderStatus.Pending;
+        public OrderStatus Status { get; set; } = OrderStatus.Confirmed;
 
         public PaymentMethod Method { get; set; }
 
 
-        public ICollection<OrderItem>? OrderItems { get; set; }
+        public ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
         public Payment? Payment { get; set; }
 
         public enum OrderStatus
         {
-            Pending,
             Confirmed
         }
 

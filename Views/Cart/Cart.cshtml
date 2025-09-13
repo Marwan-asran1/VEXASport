@@ -1,62 +1,83 @@
 ﻿@{
-    ViewData["Title"] = "Shopping Cart";
+    ViewData["Title"] = "Cart";
 }
 @model List<VEXA.Models.CartItem>
 
-@section Scripts {
-    <script src="~/js/site.js"></script>
-}
-
-<div class="cartpage">
+<div class="minimal-cart">
     @if (Model.Count == 0)
     {
-        <div class="empty-cart">
-            <i class="fa-solid fa-cart-shopping"></i>
+        <div class="empty-state">
+            <div class="empty-icon">🛒</div>
             <h2>Your cart is empty</h2>
-            <p>Looks like you haven't added anything yet.</p>
-            <a href="/Products/AllProducts" class="continue-shopping ">Continue Shopping</a>
+            <p>Add some items to get started</p>
+            <a href="/Products/AllProducts" class="btn-primary">Continue Shopping</a>
         </div>
     }
     else
     {
-        <div class="cartitems">
-            @foreach (var item in Model)
-            {
-                <div class="cartitem">
-                    <div class="productincart">
-                        <img src="@item.Product.ImageUrl" />
-                        <div class="itemdetails">
-                            <p>@item.Product.Name</p>
-                            <span class="itemsize">Size: @item.Size</span>
-                        </div>
-                    </div>
-                    <span class="itemprice">EGP @item.Product.Price</span>
-                    <div class="quantity">
-                        <input type="number" class="qty" value="@item.Quantity" data-price="@item.Product.Price" min="1" />
-                        <input type="hidden" name="productId" value="@item.ProductId" />
-                        <input type="hidden" name="size" value="@item.Size" />
-                    </div>
-                    <span class="totalprice"></span>
-                    <form asp-action="RemoveFromCart" method="post">
-                        <input type="hidden" name="ProductId" value="@item.ProductId" />
-                        <input type="hidden" name="size" value="@item.Size" />
-                        <button class="remove" type="submit">
-                            <i class="fa-solid fa-xmark"></i>
-                        </button>
-                    </form>
-                </div>
-            }
-        </div>
+        <div class="cart-container">
+            <!-- Header -->
+            <div class="cart-header">
+                <h1>Cart (@Model.Count)</h1>
+                <button class="clear-btn" onclick="clearCart()">Clear All</button>
+            </div>
 
-        <div class="cart-total">
-            <h3>Cart Total</h3>
-            <p>Subtotal <span class="subtotal"></span></p>
-            <p>Delivery Fee <span>Free</span></p>
-            <p>Grand Total <span class="grandtotal"></span></p>
+            <!-- Items -->
+            <div class="cart-items">
+                @foreach (var item in Model)
+                {
+                    <div class="cart-item">
+                        <img src="@item.Product?.ImageUrl" alt="@item.Product?.Name" class="item-image" />
+                        <div class="item-details">
+                            <h3>@item.Product?.Name</h3>
+                            <p class="item-size">Size: @item.Size</p>
+                            <p class="item-price">EGP @(item.Product?.Price ?? 0)</p>
+                        </div>
+                        <form asp-action="RemoveFromCart" method="post" class="remove-form">
+                            <input type="hidden" name="ProductId" value="@item.ProductId" />
+                            <input type="hidden" name="size" value="@item.Size" />
+                            <button type="submit" class="remove-btn">×</button>
+                        </form>
+                    </div>
+                }
+            </div>
+
+            <!-- Summary -->
+            <div class="cart-summary">
+                @{
+                    var subtotal = Model.Sum(item => (item.Product?.Price ?? 0) * item.Quantity);
+                    var delivery = 50.00m;
+                    var total = subtotal + delivery;
+                }
+                <div class="summary-row">
+                    <span>Subtotal</span>
+                    <span>EGP @subtotal.ToString("F2")</span>
+                </div>
+                <div class="summary-row">
+                    <span>Delivery</span>
+                    <span>EGP @delivery.ToString("F2")</span>
+                </div>
+                <div class="summary-row total">
+                    <span>Total</span>
+                    <span>EGP @total.ToString("F2")</span>
+                </div>
+            </div>
+
+            <!-- Checkout -->
             <form action="/Order/Checkout" method="get">
-                <button type="submit" class="checkout-btn">Proceed to Checkout</button>
+                <button type="submit" class="checkout-btn">Checkout</button>
             </form>
         </div>
     }
 </div>
+
+@section Scripts {
+    <script src="~/js/site.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var cartCount = @ViewBag.CartCount;
+            updateCartCounter(cartCount);
+        });
+    </script>
+}
 

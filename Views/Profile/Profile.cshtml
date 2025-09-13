@@ -1,6 +1,9 @@
-﻿@{
+﻿@model VEXA.Models.User
+@{
     ViewData["Title"] = "Profile";
 }
+
+@Html.AntiForgeryToken()
 
 <div class="profile-container">
     <div class="profile-header">
@@ -18,7 +21,7 @@
                     </button>
                 </div>
                 <div class="field-content">
-                    <p class="field-value">Kareem Gamal</p>
+                    <p class="field-value">@Model.Name</p>
                     <input type="text" class="field-input" style="display: none;" />
                 </div>
             </div>
@@ -27,13 +30,26 @@
                 <div class="field-header">
                     <i class="fa-solid fa-envelope"></i>
                     <h4>Email</h4>
-                    <button class="edit-btn" data-field="email">
+                    <button class="edit-btn disabled" data-field="email" disabled title="Email cannot be changed">
+                        <i class="fa-solid fa-lock"></i>
+                    </button>
+                </div>
+                <div class="field-content">
+                    <p class="field-value">@Model.Email</p>
+                </div>
+            </div>
+
+            <div class="profile-field">
+                <div class="field-header">
+                    <i class="fa-solid fa-phone"></i>
+                    <h4>Phone Number</h4>
+                    <button class="edit-btn" data-field="phone">
                         <i class="fa-solid fa-pencil"></i>
                     </button>
                 </div>
                 <div class="field-content">
-                    <p class="field-value">kareemgamal@gmail.com</p>
-                    <input type="email" class="field-input" style="display: none;" />
+                    <p class="field-value">@Model.PhoneNumber</p>
+                    <input type="tel" class="field-input" style="display: none;" maxlength="11" placeholder="Enter 11-digit phone number" />
                 </div>
             </div>
 
@@ -46,10 +62,199 @@
                     </button>
                 </div>
                 <div class="field-content">
-                    <p class="field-value">51 Cairo Egypt</p>
+                    <p class="field-value">@Model.Address</p>
                     <textarea class="field-input" style="display: none;" rows="3"></textarea>
                 </div>
             </div>
         </div>
+        
+        <!-- Action Buttons -->
+        <div class="profile-actions">
+            <button id="saveBtn" class="btn btn-primary" style="display: none;">
+                <i class="fa-solid fa-save"></i> Save Changes
+            </button>
+            <button id="cancelBtn" class="btn btn-secondary" style="display: none;">
+                <i class="fa-solid fa-times"></i> Cancel
+            </button>
+        </div>
     </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const editButtons = document.querySelectorAll('.edit-btn:not(.disabled)');
+    const saveBtn = document.getElementById('saveBtn');
+    const cancelBtn = document.getElementById('cancelBtn');
+    let currentEditingField = null;
+    let originalValue = '';
+
+    editButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const field = this.getAttribute('data-field');
+            startEditing(field);
+        });
+    });
+
+    function startEditing(field) {
+        // Cancel any current editing
+        if (currentEditingField) {
+            cancelEditing();
+        }
+
+        currentEditingField = field;
+        const fieldContainer = document.querySelector(`[data-field="${field}"]`).closest('.profile-field');
+        const fieldValue = fieldContainer.querySelector('.field-value');
+        const fieldInput = fieldContainer.querySelector('.field-input');
+        
+        // Store original value
+        originalValue = fieldValue.textContent.trim();
+        
+        // Set input value and show input
+        fieldInput.value = originalValue;
+        fieldValue.style.display = 'none';
+        fieldInput.style.display = 'block';
+        fieldInput.focus();
+        
+        // Show action buttons
+        saveBtn.style.display = 'inline-block';
+        cancelBtn.style.display = 'inline-block';
+        
+        // Disable other edit buttons
+        editButtons.forEach(btn => btn.disabled = true);
+    }
+
+    function cancelEditing() {
+        if (!currentEditingField) return;
+        
+        const fieldContainer = document.querySelector(`[data-field="${currentEditingField}"]`).closest('.profile-field');
+        const fieldValue = fieldContainer.querySelector('.field-value');
+        const fieldInput = fieldContainer.querySelector('.field-input');
+        
+        // Restore original value
+        fieldValue.textContent = originalValue;
+        fieldValue.style.display = 'block';
+        fieldInput.style.display = 'none';
+        
+        // Hide action buttons
+        saveBtn.style.display = 'none';
+        cancelBtn.style.display = 'none';
+        
+        // Enable other edit buttons
+        editButtons.forEach(btn => btn.disabled = false);
+        
+        currentEditingField = null;
+        originalValue = '';
+    }
+
+    function saveChanges() {
+        if (!currentEditingField) return;
+        
+        const fieldContainer = document.querySelector(`[data-field="${currentEditingField}"]`).closest('.profile-field');
+        const fieldValue = fieldContainer.querySelector('.field-value');
+        const fieldInput = fieldContainer.querySelector('.field-input');
+        const newValue = fieldInput.value.trim();
+        
+        // Validate phone number if it's the phone field
+        if (currentEditingField === 'phone' && newValue.length !== 11) {
+            alert('Phone number must be exactly 11 digits');
+            return;
+        }
+        
+        // Validate name if it's the name field
+        if (currentEditingField === 'name' && !newValue) {
+            alert('Name cannot be empty');
+            return;
+        }
+        
+        // Validate address if it's the address field
+        if (currentEditingField === 'address' && !newValue) {
+            alert('Address cannot be empty');
+            return;
+        }
+        
+        // Update the display value
+        fieldValue.textContent = newValue;
+        fieldValue.style.display = 'block';
+        fieldInput.style.display = 'none';
+        
+        // Send update to server
+        updateProfileField(currentEditingField, newValue);
+        
+        // Hide action buttons
+        saveBtn.style.display = 'none';
+        cancelBtn.style.display = 'none';
+        
+        // Enable other edit buttons
+        editButtons.forEach(btn => btn.disabled = false);
+        
+        currentEditingField = null;
+        originalValue = '';
+    }
+
+    function updateProfileField(field, value) {
+        const formData = new FormData();
+        formData.append('field', field);
+        formData.append('value', value);
+        formData.append('__RequestVerificationToken', document.querySelector('input[name="__RequestVerificationToken"]').value);
+        
+        fetch('/Profile/UpdateField', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Show success message
+                showMessage('Profile updated successfully!', 'success');
+            } else {
+                // Show error message and revert changes
+                showMessage('Error updating profile: ' + data.message, 'error');
+                cancelEditing();
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            showMessage('Error updating profile. Please try again.', 'error');
+            cancelEditing();
+        });
+    }
+
+    function showMessage(message, type) {
+        // Create a temporary message element
+        const messageDiv = document.createElement('div');
+        messageDiv.className = `alert alert-${type === 'success' ? 'success' : 'danger'} alert-dismissible fade show`;
+        messageDiv.style.position = 'fixed';
+        messageDiv.style.top = '20px';
+        messageDiv.style.right = '20px';
+        messageDiv.style.zIndex = '9999';
+        messageDiv.innerHTML = `
+            ${message}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        `;
+        
+        document.body.appendChild(messageDiv);
+        
+        // Auto-remove after 3 seconds
+        setTimeout(() => {
+            if (messageDiv.parentNode) {
+                messageDiv.parentNode.removeChild(messageDiv);
+            }
+        }, 3000);
+    }
+
+    // Event listeners for action buttons
+    saveBtn.addEventListener('click', saveChanges);
+    cancelBtn.addEventListener('click', cancelEditing);
+    
+    // Handle Enter key to save
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' && currentEditingField) {
+            e.preventDefault();
+            saveChanges();
+        } else if (e.key === 'Escape' && currentEditingField) {
+            e.preventDefault();
+            cancelEditing();
+        }
+    });
+});
+</script>

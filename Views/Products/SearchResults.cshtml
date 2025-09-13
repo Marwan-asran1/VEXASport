@@ -1,0 +1,236 @@
+@{
+    ViewData["Title"] = "Search Results";
+}
+@model IEnumerable<VEXA.Models.Product>
+
+<div class="category-header">
+    <h1 class="Cat-Title">Search Results for "@ViewBag.SearchQuery"</h1>
+    <div class="search-info">
+        <p>Found @ViewBag.ResultsCount result(s)</p>
+    </div>
+</div>
+
+<div class="product-container">
+    @if (Model != null && Model.Any())
+    {
+        @foreach(var product in Model){
+            var productStock = product.Variants?.Sum(v => v.StockQuantity) ?? 0;
+            var isSoldOut = productStock <= 0;
+            <div id="product-@product.Id" class="product @(isSoldOut ? "sold-out-product" : "")">
+                @if (isSoldOut)
+                {
+                    <div class="sold-out-badge">SOLD OUT</div>
+                }
+                <img id="img-@product.Id" onclick="location.href='/Products/Details/@product.Id'" 
+                     src="@product.ImageUrl" alt="@product.Name" class="@(isSoldOut ? "sold-out-image" : "")" />
+                <h4>@product.Name</h4>
+                <div class="info">
+                    <p id="price-@product.Id" class="price">@product.Price EGP</p>
+                    @if (isSoldOut)
+                    {
+                        <button type="button" class="addCart sold-out-btn" disabled>
+                            <i class="fa-solid fa-times"></i>
+                        </button>
+                    }
+                    else
+                    {
+                        <button type="button" onclick="location.href='/Products/Details/@product.Id'" class="addCart" title="View Details">
+                            <i class="fa-solid fa-eye"></i>
+                        </button>
+                    }
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <div class="no-products">
+            <h3>No products found</h3>
+            <p>Try searching with different keywords or browse our categories</p>
+            <a href="@Url.Action("AllProducts", "Products")" class="btn btn-primary">View All Products</a>
+        </div>
+    }
+</div>
+
+<style>
+.category-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    padding: 20px 0;
+    border-bottom: 2px solid #ff5e00;
+}
+
+.Cat-Title {
+    color: #212529;
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin: 0;
+    text-align: center;
+}
+
+.search-info {
+    text-align: right;
+}
+
+.search-info p {
+    color: #6c757d;
+    font-size: 1.1rem;
+    margin: 0;
+}
+
+.product-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 80px;
+    justify-content: center;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    cursor: pointer;
+}
+
+.product {
+    background-color: aliceblue;
+    border-radius: 30px;
+    padding: 15px;
+    text-align: center;
+    box-shadow: 0 4px 5px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+    width: 100%;
+    max-width: 280px;
+    justify-self: center;
+    border-bottom: 1px solid black;
+    position: relative;
+}
+
+.product:hover {
+    transform: translateY(-5px);
+}
+
+.product img {
+    padding: 10px;
+    width: 250px;
+    height: 300px;
+    border: 1px solid black;
+    border-radius: 40px;
+    object-fit: cover;
+    cursor: pointer;
+}
+
+.product h4 {
+    margin-top:5px;
+        padding:15px;
+        color: #212529;
+        font-size: 25px;
+        font-weight: bold;
+        margin: 0;  
+}
+
+.info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10px;
+}
+
+.price {
+    font-weight: bold;
+    margin: 0;
+    color: #ff5e00;
+    font-size: 1.3rem;
+}
+
+.addCart {
+    background-color: #212529;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    padding: 8px 12px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.addCart:hover {
+    background-color: darkgrey;
+    color: #212529;
+}
+
+.no-products {
+    text-align: center;
+    padding: 60px 20px;
+    grid-column: 1 / -1;
+}
+
+.no-products h3 {
+    color: #212529;
+    font-size: 2rem;
+    margin-bottom: 15px;
+}
+
+.no-products p {
+    color: #6c757d;
+    font-size: 1.1rem;
+    margin-bottom: 25px;
+}
+
+.btn {
+    display: inline-block;
+    padding: 12px 30px;
+    background: #ff5e00;
+    color: white;
+    text-decoration: none;
+    border-radius: 25px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.btn:hover {
+    background: #e55a00;
+    
+    text-decoration: none;
+    color: white;
+}
+
+.sold-out-product {
+    position: relative;
+    opacity: 0.7;
+}
+
+.sold-out-badge {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #dc3545;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-weight: bold;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    z-index: 3;
+}
+
+.sold-out-image {
+    filter: grayscale(100%);
+}
+
+.sold-out-btn {
+    background-color: #dc3545 !important;
+    color: white !important;
+    cursor: not-allowed !important;
+    opacity: 0.8;
+    border: none;
+    border-radius: 25px;
+    padding: 8px 12px;
+}
+
+.sold-out-btn:hover {
+    background-color: #dc3545 !important;
+    transform: none !important;
+    color: white !important;
+}
+</style>

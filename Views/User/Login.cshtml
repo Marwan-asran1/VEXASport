@@ -4,7 +4,8 @@
 <div class="login-container">
 	<div class="login-formbox">
 		<h2>Login</h2>
-		<form id="loginform" class="login-form" novalidate>
+		<form id="loginform" class="login-form" method="post" asp-controller="User" asp-action="Login" novalidate>
+			@Html.AntiForgeryToken()
 			<div class="formGroup">
 				<label for="email">Email</label>
 				<input name="email" id="email" type="email" class="form-control" required />
@@ -12,7 +13,7 @@
 			</div>
 			<div class="formGroup">
 				<label for="password">Password</label>
-				<input name="Password" id="Password" type="Password" class="form-control" required minlenght="6"/>
+				<input name="password" id="Password" type="Password" class="form-control" required minlength="6"/>
 				<span class="errormessage">Password must be at least 6 characters</span>
 			</div>
 			<button type="submit" class="loginbtn">Login</button>

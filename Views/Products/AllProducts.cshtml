@@ -3,24 +3,78 @@
 }
 @model IEnumerable<VEXA.Models.Product>
 
-<h1 class="Cat-Title">All Products</h1>
-<div class="category-nav">
-    <a href="@Url.Action("Men")" class="category-link">Men</a>
-    <a href="@Url.Action("Women")" class="category-link">Women</a>
+<div class="category-header">
+    <h1 class="Cat-Title">All Products</h1>
+    <div class="filter-container">
+        <select id="genderFilter" class="filter-dropdown">
+            <option value="">ALL</option>
+            <option value="Men">Men</option>
+            <option value="Women">Women</option>
+            <option value="Kids">Kids</option>
+        </select>
+    </div>
 </div>
 <div class="product-container">
-    @foreach(var product in Model){
-        <div id="product-@product.Id" class="product">
-            <img id="img-@product.Id" onclick="location.href='/Products/Details/@product.Id'" 
-                 src="@product.ImageUrl" alt="@product.Name" />
-            <h4>@product.Name</h4>
-            <div class="info">
-                <p id="price-@product.Id" class="price">@product.Price EGP</p>
-                <button type="button" onclick="addToCart(@product.Id)" class="addCart">
-                    <i class="fa-solid fa-basket-shopping"></i>
-                </button>
+    @if (Model != null && Model.Any())
+    {
+        @foreach(var product in Model){
+            var productStock = product.Variants?.Sum(v => v.StockQuantity) ?? 0;
+            var isSoldOut = productStock <= 0;
+            <div id="product-@product.Id" class="product @(isSoldOut ? "sold-out-product" : "")">
+                @if (isSoldOut)
+                {
+                    <div class="sold-out-overlay">
+                        <span class="sold-out-badge">SOLD OUT</span>
+                    </div>
+                }
+                <img id="img-@product.Id" onclick="location.href='/Products/Details/@product.Id'" 
+                     src="@product.ImageUrl" alt="@product.Name" class="@(isSoldOut ? "sold-out-image" : "")" />
+                <h4>@product.Name</h4>
+                <div class="info">
+                    <p id="price-@product.Id" class="price">@product.Price EGP</p>
+                    @if (isSoldOut)
+                    {
+                        <button type="button" class="addCart sold-out-btn" disabled>
+                            <i class="fa-solid fa-times"></i>
+                        </button>
+                    }
+                    else
+                    {
+                        <button type="button" onclick="location.href='/Products/Details/@product.Id'" class="addCart" title="View Details">
+                            <i class="fa-solid fa-eye"></i>
+                        </button>
+                    }
+                </div>
             </div>
+        }
+    }
+    else
+    {
+        <div class="no-products">
+            <h3>No products found</h3>
+            <p>Check back later for new items!</p>
         </div>
     }
 </div>
-```
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const filterDropdown = document.getElementById('genderFilter');
+    
+    if (filterDropdown) {
+        filterDropdown.addEventListener('change', function() {
+            const selectedValue = this.value;
+            
+            if (selectedValue === '') {
+                // Navigate to all products
+                window.location.href = '@Url.Action("AllProducts", "Products")';
+            } else {
+                // Navigate to specific gender category
+                const url = '@Url.Action("Category", "Products", new { gender = "PLACEHOLDER" })';
+                window.location.href = url.replace('PLACEHOLDER', selectedValue);
+            }
+        });
+    }
+});
+</script>

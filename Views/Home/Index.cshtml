@@ -1,4 +1,4 @@
-﻿@{
+@{
     ViewData["Title"] = "Home";
 }
 <div class="homebody">
@@ -11,40 +11,72 @@
         </div>
     </div>
     <div class="productsInMain">
-        <h2 class="Cat-Title">EXPLORE BEST OF MEN CLOTHES</h2>
-        <div class="product-container-pluse">
+        <h2 class="Cat-Title">EXPLORE THE BEST SELLERS </h2>
+        <div class="product-container">
+            @{int index = 0;}
             @foreach(var product in Model){
-                if(product.CategoryId == 1) {
-                    <div id="@product.Id" class="product">
-                        <img src="@product.ImageUrl" onclick="location.href='/Products/Details/@product.Id'" />
-                        <h4>@product.Name</h4>
-                        <div class="info">
-                            <p id="product-@product.Id" class="price">@product.Price EGP</p>
-                            <button type="button" onclick="addToCart(@product.Id)" class="addCart ">
-                                <i class="fa-solid fa-basket-shopping"></i>
-                            </button>
-                        </div>
-                    </div>
+                var productStock = 0;
+                if (product.Variants != null)
+                {
+                    foreach (var variant in product.Variants)
+                    {
+                        productStock += variant.StockQuantity;
+                    }
                 }
+                var isSoldOut = productStock <= 0;
+                var isBestSeller = index < 3; // Top 3 are best sellers
+                <div id="@product.Id" class="product @(isSoldOut ? "sold-out-product" : "")">
+                    @if (isSoldOut)
+                    {
+                        <div class="sold-out-overlay">
+                            <span class="sold-out-badge">SOLD OUT</span>
+                        </div>
+                    }
+                    @if (isBestSeller && !isSoldOut)
+                    {
+                        <div class="best-seller-badge">
+                            <span class="best-seller-text">BEST SELLER</span>
+                        </div>
+                    }
+                    <img src="@product.ImageUrl" onclick="location.href='/Products/Details/@product.Id'" 
+                         class="@(isSoldOut ? "sold-out-image" : "")" />
+                    <h4>@product.Name</h4>
+                    <div class="info">
+                        <p id="product-@product.Id" class="price">@product.Price EGP</p>
+                        @if (isSoldOut)
+                        {
+                            <button type="button" class="addCart sold-out-btn" disabled>
+                                <i class="fa-solid fa-times"></i>
+                            </button>
+                        }
+                        else
+                        {
+                            <button type="button" onclick="location.href='/Products/Details/@product.Id'" class="addCart" title="View Details">
+                                <i class="fa-solid fa-eye"></i>
+                            </button>
+                        }
+                    </div>
+                </div>
+                index++;
             }
         </div>
     </div>
     <h2 class="Cat-Title">EXPLORE CATEGORIES</h2>
     <div class="HomeCategories">
-        <div class="category-item" onclick="location.href='/Products/Women'">
+        <div class="category-item" onclick="location.href='@Url.Action("Category", "Products", new { gender = "Women" })'">
 			<img src="~/images/women2.jpg" />
             <div class="category-name">
                 <h2>Women</h2>
             </div>
         </div>
-		<div class="category-item" onclick="location.href='/Products/Men'">
+		<div class="category-item" onclick="location.href='@Url.Action("Category", "Products", new { gender = "Men" })'">
 			<img src="~/images/men1.jpg" />
             
             <div class="category-name">
                 <h2>Men</h2>
             </div>
         </div>
-        <div class="category-item" onclick="location.href='/Products/Kids'">
+        <div class="category-item" onclick="location.href='@Url.Action("Category", "Products", new { gender = "Kids" })'">
             <img src="~/images/kids.webp" />
             <div class="category-name">
                 <h2>Kids</h2>
@@ -53,3 +85,75 @@
     </div>
 </div>
 
+<style>
+/* Sold out styles for home page - matching AllProducts page */
+.sold-out-product {
+    position: relative;
+    opacity: 0.7;
+}
+
+.sold-out-badge {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #dc3545;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-weight: bold;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    z-index: 3;
+}
+
+.sold-out-image {
+    filter: grayscale(100%);
+}
+
+.sold-out-btn {
+    background: #dc3545 !important;
+    color: white !important;
+    cursor: not-allowed !important;
+    opacity: 0.8;
+}
+
+.sold-out-btn:hover {
+    background: #dc3545 !important;
+    transform: none !important;
+}
+
+/* Best Seller Badge Styles */
+.best-seller-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 3;
+}
+
+.best-seller-text {
+    background: linear-gradient(45deg, #ff5e00, #ff8c00);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-weight: bold;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 2px 8px rgba(255, 94, 0, 0.3);
+    animation: pulse 2s infinite;
+}
+
+@@keyframes pulse {
+    0% {
+        box-shadow: 0 2px 8px rgba(255, 94, 0, 0.3);
+    }
+    50% {
+        box-shadow: 0 4px 16px rgba(255, 94, 0, 0.5);
+    }
+    100% {
+        box-shadow: 0 2px 8px rgba(255, 94, 0, 0.3);
+    }
+}
+</style>

@@ -1,16 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System;
-using System.ComponentModel.DataAnnotations;
-using VEXA.Models;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace VEXA
+namespace VEXA.Models
 {
-
-
     public class Payment
     {
         public int Id { get; set; }
@@ -20,15 +11,20 @@ namespace VEXA
         public Order? Order { get; set; }
 
         [Required]
+        [Range(0.01, double.MaxValue)]
         public decimal Amount { get; set; }
 
         public DateTime PaymentDate { get; set; } = DateTime.UtcNow;
 
         public PaymentStatus Status { get; set; } = PaymentStatus.Pending;
 
+        [StringLength(100)]
         public string? TransactionId { get; set; }
 
-        public string? PaymentMethod { get; set; }
+        [Required]
+        [StringLength(50)]
+        public string PaymentMethod { get; set; } = string.Empty;
+        
         public enum PaymentStatus
         {
             Pending,

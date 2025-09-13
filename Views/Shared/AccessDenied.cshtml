@@ -1,0 +1,16 @@
+@{
+    ViewBag.Title = "Access Denied";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container" style="padding:40px 0;">
+    <h2>Access Denied</h2>
+    <p>You do not have permission to access this resource.</p>
+    <a href="/" class="btn btn-primary">Back to Home</a>
+    @if (User?.Identity?.IsAuthenticated == false)
+    {
+        <a href="/User/Login" class="btn btn-secondary" style="margin-left:10px;">Login</a>
+    }
+</div>
+
+

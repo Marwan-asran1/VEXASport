@@ -10,10 +10,20 @@ namespace VEXA.Helper
             session.SetString(key, JsonSerializer.Serialize(value));
         }
 
-        public static T GetObjectFromJson<T>(this ISession session, string key)
+        public static T? GetObjectFromJson<T>(this ISession session, string key)
         {
             var jsonData = session.GetString(key);
-            return jsonData == null ? default : JsonSerializer.Deserialize<T>(jsonData);
+            if (jsonData == null)
+                return default;
+                
+            try
+            {
+                return JsonSerializer.Deserialize<T>(jsonData);
+            }
+            catch
+            {
+                return default;
+            }
         }
     }
 }

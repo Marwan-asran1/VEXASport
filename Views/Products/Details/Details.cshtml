@@ -11,42 +11,90 @@
         </div>
         <div class="product-description">
             <p class="D">@Model.Description</p>
-            <p><strong>Category:</strong> @if (Model.Category != null && Model.Category.Name != null) {@Model.Category.Name}else{<text>uncategorized</text> }</p>
+            <p><strong>Gender:</strong> @Model.Gender</p>
+            <p><strong>Type:</strong> @Model.ProductType</p>
+            
         </div>
         
         <div class="T1-sizes">
             <h3>Select Size</h3>
             <div class="sizes">
-                <div class="size" data-size="S">S</div>
-                <div class="size" data-size="M">M</div>
-                <div class="size" data-size="L">L</div>
-                
+                @if (Model.Variants != null && Model.Variants.Any())
+                {
+                    var totalStock = Model.Variants.Sum(v => v.StockQuantity);
+                    var isSoldOut = totalStock <= 0;
+                    
+                    @if (isSoldOut)
+                    {
+                        <div class="sold-out-message">
+                            <span class="sold-out-text">SOLD OUT</span>
+                        </div>
+                    }
+                    else
+                    {
+                        foreach (var v in Model.Variants.OrderBy(v => v.Size))
+                        {
+                            var isDisabled = v.StockQuantity <= 0;
+                            <button type="button" class="size @(isDisabled ? "disabled" : "")" data-size="@v.Size" @(isDisabled ? "disabled" : "")>
+                                @v.Size @(isDisabled ? "(Sold Out)" : "")
+                            </button>
+                        }
+                    }
+                }
+                else
+                {
+                    <span>No sizes available</span>
+                }
             </div>
             <input type="hidden" id="selectedSize" value="" />
         </div>
 
-        <button onclick="addToCart(@Model.Id)" class="add-to-cart-btn">
-            Add To Cart
-        </button>
+        @{
+            var productStock = Model.Variants?.Sum(v => v.StockQuantity) ?? 0;
+            var isProductSoldOut = productStock <= 0;
+        }
+        
+        @if (isProductSoldOut)
+        {
+            <button class="add-to-cart-btn sold-out-btn" disabled>
+                SOLD OUT
+            </button>
+        }
+        else
+        {
+            <button onclick="addToCart(@Model.Id)" class="add-to-cart-btn">
+                Add To Cart
+            </button>
+        }
     </div>
 </div>
+
 
 @section Scripts {
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const sizeBoxes = document.querySelectorAll('.size');
             const selectedSizeInput = document.getElementById('selectedSize');
+            const addToCartBtn = document.querySelector('.add-to-cart-btn');
 
             sizeBoxes.forEach(box => {
                 box.addEventListener('click', function() {
+                    if (this.classList.contains('disabled')) return;
+                    
                     // Remove selected class from all sizes
                     sizeBoxes.forEach(b => b.classList.remove('selected'));
                     // Add selected class to clicked size
                     this.classList.add('selected');
                     // Update hidden input value
                     selectedSizeInput.value = this.dataset.size;
+                    
+                    // Enable add to cart button
+                    addToCartBtn.disabled = false;
                 });
             });
+            
+            // Initially disable add to cart button
+            addToCartBtn.disabled = true;
         });
     </script>
 }

@@ -35,11 +35,10 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link text-light" asp-action="#" data-bs-toggle="dropdown" aria-expanded="false">Categories</a>
                             <ul class="dropdown-menu">
-
                                 <li><a class="dropdown-item" asp-controller="Products" asp-action="AllProducts">All</a></li>
-                                <li><a class="dropdown-item" asp-controller="Products" asp-action="Men">Men</a></li>
-                                <li><a class="dropdown-item" asp-controller="Products" asp-action="Women">Women</a></li>
-                                <li><a class="dropdown-item" asp-controller="Products" asp-action="Kids">Kids</a></li>
+                                <li><a class="dropdown-item" asp-controller="Products" asp-action="Category" asp-route-gender="Men">Men</a></li>
+                                <li><a class="dropdown-item" asp-controller="Products" asp-action="Category" asp-route-gender="Women">Women</a></li>
+                                <li><a class="dropdown-item" asp-controller="Products" asp-action="Category" asp-route-gender="Kids">Kids</a></li>
                             </ul>
                         </li>
                         <li class="nav-item">
@@ -48,22 +47,36 @@
                     </ul>
 
                     
-                    <form  class="d-flex me-1 " role="search">
-                        
-                        <input id="search" class="form-control me-2" type="search" placeholder="Search..." />
+                    <form asp-controller="Products" asp-action="Search" method="get" class="d-flex me-1" role="search">
+                        <input id="search" name="query" class="form-control me-2" type="search" placeholder="Search..." required />
                         <button id="SearchButton" class="btn btn-outline-light" type="submit">
                             <i class="fa-solid fa-magnifying-glass"></i>
                         </button>
-                        
                     </form>
 
                     <ul  class="icons">
                         <li class="nav-item dropdown">
                             <a class="text-light me-3 dropdown-item " asp-controller="Home" asp-action="#" data-bs-toggle="dropdown" aria-expanded="false"><i id="c" class="fa-regular fa-user"></i></a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" asp-controller="User" asp-action="Login">Login</a></li>
-                                <li><a class="dropdown-item" asp-controller="Profile" asp-action="Profile">Profile</a></li>
-                                <li><a class="dropdown-item" asp-controller="User" asp-action="#">Log Out</a></li>
+                                @if (!User.Identity?.IsAuthenticated ?? true)
+                                {
+                                    <li><a class="dropdown-item" asp-controller="User" asp-action="Login">Login</a></li>
+                                    <li><a class="dropdown-item" asp-controller="User" asp-action="Register">Signup</a></li>
+                                }
+                                else
+                                {
+                                    <li><a class="dropdown-item" asp-controller="Profile" asp-action="Profile">Profile</a></li>
+                                    @if (User.IsInRole("Admin"))
+                                    {
+                                        <li><a class="dropdown-item" asp-controller="Admin" asp-action="Admin">Admin Panel</a></li>
+                                    }
+                                    <li>
+                                        <form asp-controller="User" asp-action="Logout" method="post" class="px-3 py-1">
+                                            @Html.AntiForgeryToken()
+                                            <button type="submit" class="dropdown-item">Logout</button>
+                                        </form>
+                                    </li>
+                                }
                             </ul>
                             </li>
                         <li><a class="cart-icon text-light " asp-controller="Cart" asp-action="Cart">
@@ -90,6 +103,19 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script>
+        // Load cart count on every page
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch('/Cart/GetCartCount')
+                .then(response => response.json())
+                .then(data => {
+                    updateCartCounter(data.count);
+                })
+                .catch(error => {
+                    console.error('Error loading cart count:', error);
+                });
+        });
+    </script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

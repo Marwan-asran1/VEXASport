@@ -3,14 +3,17 @@
 	ViewData["Title"] = "Checkout";
 }
 
-<div class="container mt-4">
-	<h2>Checkout</h2>
-	<div class="row">
-		<div class="col-md-8">
-			<div class="card">
-				<div class="card-body">
-					<h5 class="card-title">Order Summary</h5>
-					<table class="table">
+<div class="checkout-container">
+	<div class="container">
+		<h2 class="checkout-title">Checkout</h2>
+		<div class="row">
+			<div class="col-md-8">
+				<div class="checkout-card">
+					<div class="checkout-card-header">
+						<h5 class="checkout-card-title">Order Summary</h5>
+					</div>
+					<div class="card-body">
+						<table class="table checkout-table">
 						<thead>
 							<tr>
 								<th>Product</th>
@@ -20,20 +23,33 @@
 							</tr>
 						</thead>
 						<tbody>
-							@foreach (var item in Model)
+							@foreach (var item in Model ?? new List<VEXA.Models.CartItem>())
 							{
 								<tr>
-									<td>@item.Product.Name</td>
+									<td>@(item.Product?.Name ?? "Unknown Product")</td>
 									<td>@item.Quantity</td>
-									<td>@item.Product.Price.ToString("C")</td>
+									<td>@((item.Product?.Price ?? 0).ToString("C"))</td>
 									<td>@item.TotalPrice.ToString("C")</td>
 								</tr>
 							}
 						</tbody>
 						<tfoot>
-							<tr>
+							@{
+								var subtotal = (Model ?? new List<VEXA.Models.CartItem>()).Sum(i => i.TotalPrice);
+								var deliveryFee = 50.00m;
+								var total = subtotal + deliveryFee;
+							}
+							<tr class="subtotal-row">
+								<td colspan="3" class="text-end"><strong>Subtotal:</strong></td>
+								<td><strong>@subtotal.ToString("C")</strong></td>
+							</tr>
+							<tr class="delivery-row">
+								<td colspan="3" class="text-end"><strong>Delivery Fee:</strong></td>
+								<td><strong>@deliveryFee.ToString("C")</strong></td>
+							</tr>
+							<tr class="total-row">
 								<td colspan="3" class="text-end"><strong>Total:</strong></td>
-								<td><strong>@Model.Sum(i => i.TotalPrice).ToString("C")</strong></td>
+								<td><strong>@total.ToString("C")</strong></td>
 							</tr>
 						</tfoot>
 					</table>
@@ -41,29 +57,179 @@
 			</div>
 		</div>
 		<div class="col-md-4">
-			<div class="card">
-				<div class="card-body">
-					<h5 class="card-title">Delivery Information</h5>
-					<form asp-action="PlaceOrder" method="post">
+			<div class="delivery-card">
+				<div class="delivery-card-header">
+					<h5 class="delivery-card-title">Delivery Information</h5>
+				</div>
+				<div class="delivery-form">
+					<form asp-action="PlaceOrder" method="post" class="checkout-form">
+						<!-- Address Selection -->
 						<div class="mb-3">
-							<label for="shippingAddress" class="form-label">Shipping Address</label>
-							<textarea class="form-control" id="shippingAddress" name="shippingAddress" required></textarea>
+							<label class="form-label">Delivery Address</label>
+							<div class="mb-2">
+								<div class="form-check">
+									<input class="form-check-input" type="radio" name="addressOption" id="useSavedAddress" value="saved" checked>
+									<label class="form-check-label" for="useSavedAddress">
+										Use my saved address
+									</label>
+								</div>
+								<div class="form-check">
+									<input class="form-check-input" type="radio" name="addressOption" id="useNewAddress" value="new">
+									<label class="form-check-label" for="useNewAddress">
+										Enter new address for this order
+									</label>
+								</div>
+							</div>
+							
+							<!-- Saved Address Display -->
+							<div id="savedAddressDisplay" class="alert alert-info">
+								<strong>Your saved address:</strong><br>
+								<span id="savedAddressText">@ViewBag.UserAddress</span>
+							</div>
+							
+							<!-- New Address Input -->
+							<div id="newAddressInput" style="display: none;">
+								<textarea class="form-control" id="newAddress" name="newAddress" rows="3" placeholder="Enter your complete delivery address"></textarea>
+							</div>
+							
+							<!-- Hidden field for the actual address value -->
+							<input type="hidden" id="address" name="address" value="@ViewBag.UserAddress">
 						</div>
+
+						<!-- Phone Selection -->
 						<div class="mb-3">
-							<label for="billingAddress" class="form-label">Billing Address</label>
-							<textarea class="form-control" id="billingAddress" name="billingAddress" required></textarea>
+							<label class="form-label">Contact Phone</label>
+							<div class="mb-2">
+								<div class="form-check">
+									<input class="form-check-input" type="radio" name="phoneOption" id="useSavedPhone" value="saved" checked>
+									<label class="form-check-label" for="useSavedPhone">
+										Use my saved phone number
+									</label>
+								</div>
+								<div class="form-check">
+									<input class="form-check-input" type="radio" name="phoneOption" id="useNewPhone" value="new">
+									<label class="form-check-label" for="useNewPhone">
+										Enter new phone number for this order
+									</label>
+								</div>
+							</div>
+							
+							<!-- Saved Phone Display -->
+							<div id="savedPhoneDisplay" class="alert alert-info">
+								<strong>Your saved phone:</strong> <span id="savedPhoneText">@ViewBag.UserPhone</span>
+							</div>
+							
+							<!-- New Phone Input -->
+							<div id="newPhoneInput" style="display: none;">
+								<input type="tel" class="form-control" id="newPhone" name="newPhone" placeholder="Enter 11-digit phone number" maxlength="11">
+							</div>
+							
+							<!-- Hidden field for the actual phone value -->
+							<input type="hidden" id="contactPhone" name="contactPhone" value="@ViewBag.UserPhone">
 						</div>
-						<div class="mb-3">
-							<label for="contactPhone" class="form-label">Contact Phone</label>
-							<input type="tel" class="form-control" id="contactPhone" name="contactPhone" required>
-						</div>
-						<div class="alert alert-info">
+						<div class="payment-info">
 							<i class="fas fa-info-circle"></i> Payment Method: Cash on Delivery
 						</div>
-						<button type="submit" class="btn btn-primary w-100">Place Order</button>
+						<button type="submit" class="checkout-btn">Place Order</button>
 					</form>
 				</div>
 			</div>
 		</div>
 	</div>
+	</div>
 </div>
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Address radio button handlers
+            const useSavedAddress = document.getElementById('useSavedAddress');
+            const useNewAddress = document.getElementById('useNewAddress');
+            const savedAddressDisplay = document.getElementById('savedAddressDisplay');
+            const newAddressInput = document.getElementById('newAddressInput');
+            const addressHiddenField = document.getElementById('address');
+            const newAddressField = document.getElementById('newAddress');
+
+            // Phone radio button handlers
+            const useSavedPhone = document.getElementById('useSavedPhone');
+            const useNewPhone = document.getElementById('useNewPhone');
+            const savedPhoneDisplay = document.getElementById('savedPhoneDisplay');
+            const newPhoneInput = document.getElementById('newPhoneInput');
+            const phoneHiddenField = document.getElementById('contactPhone');
+            const newPhoneField = document.getElementById('newPhone');
+
+            // Address option change handlers
+            useSavedAddress.addEventListener('change', function() {
+                if (this.checked) {
+                    savedAddressDisplay.style.display = 'block';
+                    newAddressInput.style.display = 'none';
+                    addressHiddenField.value = document.getElementById('savedAddressText').textContent;
+                    newAddressField.required = false;
+                }
+            });
+
+            useNewAddress.addEventListener('change', function() {
+                if (this.checked) {
+                    savedAddressDisplay.style.display = 'none';
+                    newAddressInput.style.display = 'block';
+                    newAddressField.required = true;
+                    newAddressField.focus();
+                }
+            });
+
+            // Phone option change handlers
+            useSavedPhone.addEventListener('change', function() {
+                if (this.checked) {
+                    savedPhoneDisplay.style.display = 'block';
+                    newPhoneInput.style.display = 'none';
+                    phoneHiddenField.value = document.getElementById('savedPhoneText').textContent;
+                    newPhoneField.required = false;
+                }
+            });
+
+            useNewPhone.addEventListener('change', function() {
+                if (this.checked) {
+                    savedPhoneDisplay.style.display = 'none';
+                    newPhoneInput.style.display = 'block';
+                    newPhoneField.required = true;
+                    newPhoneField.focus();
+                }
+            });
+
+            // Update hidden fields when new values are entered
+            newAddressField.addEventListener('input', function() {
+                if (useNewAddress.checked) {
+                    addressHiddenField.value = this.value;
+                }
+            });
+
+            newPhoneField.addEventListener('input', function() {
+                if (useNewPhone.checked) {
+                    phoneHiddenField.value = this.value;
+                }
+            });
+
+            // Form submission validation
+            document.querySelector('form').addEventListener('submit', function(e) {
+                if (useNewAddress.checked && !newAddressField.value.trim()) {
+                    e.preventDefault();
+                    alert('Please enter a delivery address');
+                    newAddressField.focus();
+                    return false;
+                }
+                if (useNewPhone.checked && !newPhoneField.value.trim()) {
+                    e.preventDefault();
+                    alert('Please enter a phone number');
+                    newPhoneField.focus();
+                    return false;
+                }
+                if (useNewPhone.checked && newPhoneField.value.length !== 11) {
+                    e.preventDefault();
+                    alert('Phone number must be exactly 11 digits');
+                    newPhoneField.focus();
+                    return false;
+                }
+            });
+        });
+    </script>
+}

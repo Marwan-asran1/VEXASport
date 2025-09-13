@@ -1,9 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace VEXA.Models
 {
@@ -12,6 +7,7 @@ namespace VEXA.Models
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
         }
+        
         public DbSet<Category> Categories { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<User> Users { get; set; }
@@ -20,31 +16,43 @@ namespace VEXA.Models
         public DbSet<Review> Reviews { get; set; }
         public DbSet<Payment> Payments { get; set; }
         public DbSet<CartItem> CartItems { get; set; }
+        public DbSet<ProductVariant> ProductVariants { get; set; }
+        public DbSet<AdminAuditLog> AdminAuditLogs { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Category>().HasData(
-                new Category { Id = 1, Name = "Men", ParentCategoryId = null },
-                new Category { Id = 2, Name = "Women", ParentCategoryId = null },
-                new Category { Id = 3, Name = "Tops", ParentCategoryId = 1 },
-                new Category { Id = 4, Name = "Bottoms", ParentCategoryId = 1 },
-                new Category { Id = 5, Name = "Tops", ParentCategoryId = 2 },
-                new Category { Id = 6, Name = "Bottoms", ParentCategoryId = 2 }
-            );
+            modelBuilder.Entity<User>()
+                .HasIndex(u => u.Email)
+                .IsUnique();
+
+            // Configure decimal precision for monetary values (fixes EF warnings)
+            modelBuilder.Entity<Order>()
+                .Property(o => o.OrderTotal)
+                .HasPrecision(18, 2);
+
+            modelBuilder.Entity<OrderItem>()
+                .Property(oi => oi.UnitPrice)
+                .HasPrecision(18, 2);
+
+            modelBuilder.Entity<Payment>()
+                .Property(p => p.Amount)
+                .HasPrecision(18, 2);
 
             modelBuilder.Entity<Product>()
-                .HasOne(p => p.Category)
-                .WithMany(c => c.Products)
-                .HasForeignKey(p => p.CategoryId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .Property(p => p.Price)
+                .HasPrecision(18, 2);
 
+            modelBuilder.Entity<ProductVariant>()
+                .HasIndex(v => new { v.ProductId, v.Size })
+                .IsUnique();
+
+            // No category seeding needed - using direct enum fields instead
 
             modelBuilder.Entity<Order>()
                 .HasOne(o => o.User)
                 .WithMany(u => u.Orders)
                 .HasForeignKey(o => o.UserId)
                 .OnDelete(DeleteBehavior.Restrict);
-
 
             modelBuilder.Entity<OrderItem>()
                 .HasOne(oi => oi.Order)
@@ -54,19 +62,15 @@ namespace VEXA.Models
 
             modelBuilder.Entity<OrderItem>()
                 .HasOne(oi => oi.Product)
-                .WithMany()
+                .WithMany(p => p.OrderItems)
                 .HasForeignKey(oi => oi.ProductId)
-                .OnDelete(DeleteBehavior.Restrict);
-
+                .OnDelete(DeleteBehavior.SetNull);
 
             modelBuilder.Entity<Payment>()
                 .HasOne(p => p.Order)
                 .WithOne(o => o.Payment)
                 .HasForeignKey<Payment>(p => p.OrderId)
                 .OnDelete(DeleteBehavior.Cascade);
-
-
-         
 
             modelBuilder.Entity<CartItem>()
                 .HasOne(ci => ci.Product)
@@ -79,6 +83,23 @@ namespace VEXA.Models
                 .WithMany()
                 .HasForeignKey(ci => ci.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            // Configure Review relationships (fixes the ProductId1 shadow property issue)
+            modelBuilder.Entity<Review>()
+                .HasOne(r => r.Product)
+                .WithMany(p => p.Reviews)
+                .HasForeignKey(r => r.ProductId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Review>()
+                .HasOne(r => r.User)
+                .WithMany(u => u.Reviews)
+                .HasForeignKey(r => r.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<AdminAuditLog>()
+                .Property(a => a.Action)
+                .HasMaxLength(100);
         }
     }
 }

@@ -1,17 +1,78 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using VEXA.Models;
-using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Identity;
 
 namespace VEXA.Controllers
 {
     public class UserController : Controller
     {
         private readonly AppDbContext _context;
+        private readonly ILogger<UserController> _logger;
+        private readonly IPasswordHasher<User> _passwordHasher;
 
-        public UserController(AppDbContext context)
+        public UserController(AppDbContext context, ILogger<UserController> logger, IPasswordHasher<User> passwordHasher)
         {
             _context = context;
+            _logger = logger;
+            _passwordHasher = passwordHasher;
+        }
+
+        public IActionResult Login()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Login(string email, string password)
+        {
+            var user = _context.Users.FirstOrDefault(u => u.Email == email);
+            if (user == null)
+            {
+                TempData["Error"] = "Invalid credentials";
+                return View();
+            }
+            // Verify hashed password; support legacy plaintext migration on successful match
+            var verification = _passwordHasher.VerifyHashedPassword(user, user.Password, password);
+            if (verification == PasswordVerificationResult.Failed)
+            {
+                // Legacy path: user.Password stores plaintext
+                if (user.Password == password)
+                {
+                    user.Password = _passwordHasher.HashPassword(user, password);
+                    _context.SaveChanges();
+                }
+                else
+                {
+                    TempData["Error"] = "Invalid credentials";
+                    return View();
+                }
+            }
+
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                new Claim(ClaimTypes.Name, user.Name),
+                new Claim(ClaimTypes.Email, user.Email),
+                new Claim(ClaimTypes.Role, user.UserRole == 1 ? "Admin" : "Customer")
+            };
+            var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+            var principal = new ClaimsPrincipal(identity);
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return RedirectToAction("Index", "Home");
         }
 
         public IActionResult Profile(int id)
@@ -23,6 +84,63 @@ namespace VEXA.Controllers
                 return RedirectToAction("Index", "Home");
             }
             return View(user);
+        }
+
+        [HttpGet]
+        public IActionResult Register()
+        {
+            var hasAdmin = _context.Users.Any(u => u.UserRole == 1);
+            ViewBag.HasAdmin = hasAdmin;
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Register(User user, int accountType)
+        {
+            if (string.IsNullOrWhiteSpace(user.Name)) ModelState.AddModelError("Name", "Name is required");
+            if (string.IsNullOrWhiteSpace(user.Email)) ModelState.AddModelError("Email", "Email is required");
+            if (string.IsNullOrWhiteSpace(user.Password) || user.Password.Length < 6) ModelState.AddModelError("Password", "Password must be at least 6 characters");
+            if (string.IsNullOrWhiteSpace(user.PhoneNumber)) ModelState.AddModelError("PhoneNumber", "Phone is required");
+            if (string.IsNullOrWhiteSpace(user.Address)) ModelState.AddModelError("Address", "Address is required");
+            // Gender validation is handled by the enum default value
+
+            if (_context.Users.Any(u => u.Email == user.Email))
+            {
+                ModelState.AddModelError("Email", "Email already registered");
+            }
+
+            // Check if admin already exists and prevent creating another admin
+            if (accountType == 1 && _context.Users.Any(u => u.UserRole == 1))
+            {
+                ModelState.AddModelError("", "Admin account already exists. Only one admin is allowed.");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return View(user);
+            }
+
+            user.RegistrationDate = DateTime.UtcNow;
+            user.UserRole = accountType; // Use the selected account type
+            // Hash password before saving
+            user.Password = _passwordHasher.HashPassword(user, user.Password);
+            _context.Users.Add(user);
+            _context.SaveChanges();
+
+            var roleName = accountType == 1 ? "Admin" : "Customer";
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                new Claim(ClaimTypes.Name, user.Name),
+                new Claim(ClaimTypes.Email, user.Email),
+                new Claim(ClaimTypes.Role, roleName)
+            };
+            var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+            var principal = new ClaimsPrincipal(identity);
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
+
+            return RedirectToAction("Index", "Home");
         }
 
         [HttpPost]
@@ -54,7 +172,7 @@ namespace VEXA.Controllers
                 // Only update password if provided
                 if (!string.IsNullOrEmpty(user.Password) && user.Password.Length >= 6)
                 {
-                    existingUser.Password = user.Password;
+                    existingUser.Password = _passwordHasher.HashPassword(existingUser, user.Password);
                 }
 
                 _context.SaveChanges();
@@ -63,6 +181,7 @@ namespace VEXA.Controllers
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "Error updating profile for user {UserId}", user.Id);
                 TempData["Error"] = "An error occurred while updating your profile. Please try again.";
                 return View("Profile", user);
             }
@@ -90,7 +209,8 @@ namespace VEXA.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            if (user.Password != currentPassword)
+            var verification = _passwordHasher.VerifyHashedPassword(user, user.Password, currentPassword);
+            if (verification == PasswordVerificationResult.Failed && user.Password != currentPassword)
             {
                 TempData["Error"] = "Current password is incorrect.";
                 return View(user);
@@ -110,16 +230,19 @@ namespace VEXA.Controllers
 
             try
             {
-                user.Password = newPassword;
+                user.Password = _passwordHasher.HashPassword(user, newPassword);
                 _context.SaveChanges();
                 TempData["Success"] = "Password changed successfully!";
                 return RedirectToAction("Profile", new { id = id });
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "Error changing password for user {UserId}", id);
                 TempData["Error"] = "An error occurred while changing password. Please try again.";
                 return View(user);
             }
         }
+
+        // DebugUser endpoint removed for security
     }
 }

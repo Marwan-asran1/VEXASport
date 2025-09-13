@@ -1,0 +1,1140 @@
+/* ========================================
+   VEXA Admin Panel - Complete Styles
+   ======================================== */
+
+/* ========================================
+   CSS RESET & BASE STYLES
+   ======================================== */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background-color: #f8f9fc;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+/* Fix for dropdown menus in navbar */
+.navbar {
+    overflow: visible !important;
+}
+
+.topbar {
+    overflow: visible !important;
+}
+
+/* ========================================
+   ADMIN LAYOUT STRUCTURE
+   ======================================== */
+
+#wrapper {
+    display: flex;
+    width: 100%;
+    overflow-x: hidden;
+}
+
+/* ========================================
+   SIDEBAR STYLES
+   ======================================== */
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+    padding: 0;
+    box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+    background: linear-gradient(180deg, #4e73df 10%, #224abe 100%);
+    width: 224px;
+    height: 100vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    display: block !important;
+    visibility: visible !important;
+}
+
+.sidebar-brand {
+    height: 4.375rem;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 800;
+    padding: 1.5rem 1rem;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 0.05rem;
+    z-index: 1;
+    color: #fff !important;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+.sidebar-brand:hover {
+    color: #fff !important;
+    text-decoration: none;
+}
+
+.sidebar-divider {
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+    margin: 0 1rem 1rem;
+}
+
+.sidebar .nav-item {
+    margin: 0;
+}
+
+.sidebar .nav-item .nav-link {
+    color: rgba(255, 255, 255, 0.8) !important;
+    padding: 1rem;
+    display: flex !important;
+    align-items: center;
+    text-decoration: none;
+    transition: all 0.3s;
+    border: none;
+    background: none;
+    width: 100%;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+.sidebar .nav-item .nav-link:hover {
+    color: #fff;
+    background-color: rgba(255, 255, 255, 0.1);
+    text-decoration: none;
+}
+
+.sidebar .nav-item .nav-link i {
+    font-size: 0.85rem;
+    margin-right: 0.25rem;
+    width: 1rem;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.sidebar .nav-item.active .nav-link {
+    color: #fff;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* ========================================
+   CONTENT WRAPPER
+   ======================================== */
+
+#content-wrapper {
+    background-color: #f8f9fc;
+    width: calc(100% - 224px);
+    margin-left: 224px;
+    min-height: 100vh;
+    overflow-x: hidden;
+    overflow-y: visible;
+}
+
+#content {
+    flex: 1 0 auto;
+    padding: 0;
+}
+
+/* ========================================
+   TOPBAR STYLES
+   ======================================== */
+
+.topbar {
+    height: 4.375rem;
+    box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+    background-color: #fff;
+    border-bottom: 1px solid #e3e6f0;
+    position: relative;
+    z-index: 999;
+    overflow: visible;
+}
+
+.topbar .navbar {
+    padding: 0.5rem 1rem;
+    height: 100%;
+}
+
+.topbar .navbar-search {
+    width: 25rem;
+    max-width: 100%;
+}
+
+.topbar .navbar-search .input-group {
+    width: 100%;
+}
+
+.topbar .navbar-search input {
+    font-size: 0.85rem;
+    height: 2.5rem;
+    border: 1px solid #d1d3e2;
+    border-radius: 0.35rem;
+    padding: 0.5rem 0.75rem;
+}
+
+.topbar .navbar-search input:focus {
+    border-color: #bac8f3;
+    box-shadow: 0 0 0 0.2rem rgba(78, 115, 223, 0.25);
+}
+
+.topbar .navbar-search .btn {
+    height: 2.5rem;
+    padding: 0.5rem 0.75rem;
+}
+
+.topbar .topbar-divider {
+    width: 0;
+    border-right: 1px solid #e3e6f0;
+    height: calc(4.375rem - 2rem);
+    margin: auto 1rem;
+}
+
+.topbar .nav-item .nav-link {
+    height: 4.375rem;
+    display: flex;
+    align-items: center;
+    padding: 0 0.75rem;
+    color: #d1d3e2;
+    text-decoration: none;
+}
+
+.topbar .nav-item .nav-link:hover {
+    color: #b7b9cc;
+    text-decoration: none;
+}
+
+.topbar .dropdown-list {
+    padding: 0;
+    border: none;
+    overflow: visible;
+    width: 20rem;
+    max-width: 90vw;
+}
+
+/* Fix dropdown menu positioning and visibility */
+.dropdown-menu {
+    position: absolute !important;
+    top: 100% !important;
+    left: auto !important;
+    right: 0 !important;
+    z-index: 1050 !important;
+    display: none;
+    float: left;
+    min-width: 10rem;
+    padding: 0.5rem 0;
+    margin: 0.125rem 0 0;
+    font-size: 1rem;
+    color: #212529;
+    text-align: left;
+    list-style: none;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid rgba(0,0,0,.15);
+    border-radius: 0.25rem;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.175);
+    transform: translateY(0) !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+.dropdown-menu.show {
+    display: block !important;
+}
+
+.dropdown-item {
+    display: block;
+    width: 100%;
+    padding: 0.25rem 1rem;
+    clear: both;
+    font-weight: 400;
+    color: #212529;
+    text-align: inherit;
+    text-decoration: none;
+    white-space: nowrap;
+    background-color: transparent;
+    border: 0;
+    transition: all 0.3s ease;
+}
+
+.dropdown-item:hover {
+    color: #16181b;
+    background-color: #f8f9fa;
+}
+
+/* Ensure navbar items can show dropdowns */
+.nav-item.dropdown {
+    position: relative;
+    overflow: visible !important;
+}
+
+.nav-item.dropdown .dropdown-menu {
+    position: absolute !important;
+    top: 100% !important;
+    right: 0 !important;
+    left: auto !important;
+    z-index: 1050 !important;
+    overflow: visible !important;
+}
+
+/* Fix for Bootstrap dropdown positioning */
+.navbar-nav .dropdown-menu {
+    position: absolute !important;
+    top: 100% !important;
+    right: 0 !important;
+    left: auto !important;
+    z-index: 1050 !important;
+    overflow: visible !important;
+    transform: none !important;
+}
+
+/* Ensure the entire navbar structure allows dropdowns */
+.navbar-expand .navbar-nav {
+    overflow: visible !important;
+}
+
+.navbar-expand .navbar-nav .nav-item {
+    overflow: visible !important;
+}
+
+/* Fix for the specific user dropdown */
+#userDropdown + .dropdown-menu {
+    position: absolute !important;
+    top: 100% !important;
+    right: 0 !important;
+    left: auto !important;
+    z-index: 1050 !important;
+    overflow: visible !important;
+    transform: none !important;
+}
+
+/* Override any Bootstrap or other CSS that might be clipping dropdowns */
+.dropdown-menu[aria-labelledby="userDropdown"] {
+    position: absolute !important;
+    top: 100% !important;
+    right: 0 !important;
+    left: auto !important;
+    z-index: 1050 !important;
+    overflow: visible !important;
+    transform: none !important;
+    display: none;
+}
+
+.dropdown-menu[aria-labelledby="userDropdown"].show {
+    display: block !important;
+    position: absolute !important;
+    top: 100% !important;
+    right: 0 !important;
+    left: auto !important;
+    z-index: 1050 !important;
+    overflow: visible !important;
+    transform: none !important;
+}
+
+/* Force all dropdown menus to be visible when shown */
+.dropdown-menu.show {
+    display: block !important;
+    position: absolute !important;
+    top: 100% !important;
+    right: 0 !important;
+    left: auto !important;
+    z-index: 1050 !important;
+    overflow: visible !important;
+    transform: none !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+.topbar .dropdown-list .dropdown-header {
+    background-color: #4e73df;
+    border: 1px solid #4e73df;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+    color: #fff;
+}
+
+/* ========================================
+   MAIN CONTENT AREA
+   ======================================== */
+
+.container-fluid {
+    padding: 1.5rem;
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+/* Fix for navbar container to allow dropdowns */
+.navbar .container-fluid {
+    overflow: visible !important;
+    position: relative;
+}
+
+/* ========================================
+   CARDS AND CONTENT
+   ======================================== */
+
+.card {
+    border: 1px solid #e3e6f0;
+    border-radius: 0.35rem;
+    box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+    background-color: #fff;
+    margin-bottom: 1.5rem;
+}
+
+.card-header {
+    background-color: #f8f9fc;
+    border-bottom: 1px solid #e3e6f0;
+    padding: 0.75rem 1.25rem;
+    margin-bottom: 0;
+}
+
+.card-header h6 {
+    margin: 0;
+    font-weight: 600;
+    color: #5a5c69;
+}
+
+.card-body {
+    padding: 1.25rem;
+}
+
+/* ========================================
+   ADMIN TABLE STYLES
+   ======================================== */
+
+.admin-table {
+    width: 100%;
+    max-width: 100%;
+    border-collapse: collapse;
+    background: white;
+    margin-bottom: 0;
+    font-family: 'Nunito', Arial, sans-serif;
+    border-radius: 0.35rem;
+    overflow: hidden;
+    table-layout: auto;
+}
+
+.admin-table thead tr {
+    background: #f8f9fa;
+    color: #333;
+    text-align: center;
+    font-weight: bold;
+    font-size: 14px;
+    text-transform: uppercase;
+}
+
+.admin-table th {
+    padding: 15px 10px;
+    border: 1px solid #dee2e6;
+    border-bottom: 2px solid #dee2e6;
+    font-weight: 600;
+    color: #5a5c69;
+    white-space: nowrap;
+}
+
+.admin-table td {
+    padding: 12px 10px;
+    border: 1px solid #dee2e6;
+    font-size: 14px;
+    color: #333;
+    word-wrap: break-word;
+    vertical-align: top;
+}
+
+.admin-table tbody tr:nth-of-type(even) {
+    background: #f8f9fa;
+}
+
+.admin-table tbody tr:hover {
+    background: #e9ecef;
+    transition: background-color 0.3s ease;
+}
+
+/* ========================================
+   TABLE RESPONSIVE
+   ======================================== */
+
+.table-responsive {
+    overflow-x: auto;
+    max-width: 100%;
+    -webkit-overflow-scrolling: touch;
+}
+
+.products-table .table-responsive,
+.orders-table .table-responsive,
+.users-table .table-responsive {
+    overflow-x: auto;
+    max-width: 100%;
+}
+
+/* ========================================
+   BUTTON STYLES
+   ======================================== */
+
+.btn-edit,
+.btn-delete,
+.view-order-btn {
+    padding: 6px 12px;
+    font-size: 12px;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    font-weight: 500;
+    margin: 2px;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn-edit {
+    background: #007bff;
+    color: white;
+}
+
+.btn-edit:hover {
+    background: #0056b3;
+    transform: translateY(-1px);
+    color: white;
+    text-decoration: none;
+}
+
+.btn-delete {
+    background: #dc3545;
+    color: white;
+}
+
+.btn-delete:hover {
+    background: #c82333;
+    transform: translateY(-1px);
+    color: white;
+    text-decoration: none;
+}
+
+.view-order-btn {
+    background: #4e73df;
+    color: white;
+    padding: 8px 16px;
+    font-size: 14px;
+}
+
+.view-order-btn:hover {
+    background: #375a7f;
+    transform: translateY(-1px);
+    color: white;
+    text-decoration: none;
+}
+
+/* Floating Add Button */
+.btn-add {
+    position: fixed;
+    bottom: 40px;
+    right: 30px;
+    background: #28a745;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    font-size: 28px;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
+    z-index: 1000;
+}
+
+.btn-add:hover {
+    background: #218838;
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+    color: white;
+    text-decoration: none;
+}
+
+/* ========================================
+   MODAL STYLES
+   ======================================== */
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1050;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    backdrop-filter: blur(2px);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 3% auto;
+    padding: 0;
+    border: none;
+    width: 90%;
+    max-width: 800px;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    max-height: 90vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-header {
+    background: #4e73df;
+    color: white;
+    padding: 15px 20px;
+    border-radius: 8px 8px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.modal-header h2 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.close {
+    color: white;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    line-height: 1;
+    transition: opacity 0.3s ease;
+    background: none;
+    border: none;
+    padding: 0;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.close:hover {
+    opacity: 0.7;
+}
+
+.modal-body {
+    padding: 25px;
+    flex: 1;
+    overflow-y: auto;
+    background-color: #f8f9fc;
+    max-height: calc(90vh - 80px);
+}
+
+/* ========================================
+   FORM STYLES
+   ======================================== */
+
+.product-form-modal .modal-content,
+.user-form-modal .modal-content {
+    max-width: 700px;
+    width: 90%;
+    max-height: 90vh;
+}
+
+.product-form-modal .modal-body,
+.user-form-modal .modal-body {
+    padding: 20px;
+    background-color: #ffffff;
+}
+
+/* Two-column form layout for product form */
+.product-form-modal .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+/* Single column layout for user form */
+.user-form-modal .form-row {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+/* Form group styling for both forms */
+.product-form-modal .form-group,
+.user-form-modal .form-group {
+    margin-bottom: 15px;
+    padding: 10px;
+    background-color: #ffffff;
+    border-radius: 6px;
+    border: 1px solid #e3e6f0;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+/* Full-width form groups */
+.product-form-modal .form-group-full {
+    grid-column: 1 / -1;
+    margin-bottom: 15px;
+}
+
+/* Label styling for both forms */
+.product-form-modal .form-group label,
+.user-form-modal .form-group label {
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #4e73df;
+    font-size: 14px;
+    display: block;
+}
+
+/* Form control styling for both forms */
+.product-form-modal .form-control,
+.user-form-modal .form-control {
+    font-size: 14px;
+    padding: 10px 12px;
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+    width: 100%;
+    background-color: #fff;
+    transition: all 0.3s ease;
+}
+
+.product-form-modal .form-control:focus,
+.user-form-modal .form-control:focus {
+    outline: none;
+    border-color: #4e73df;
+    box-shadow: 0 0 0 3px rgba(78, 115, 223, 0.25);
+    transform: translateY(-1px);
+}
+
+/* Button styling for both forms */
+.product-form-modal .btn,
+.user-form-modal .btn {
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+}
+
+.product-form-modal .btn-success,
+.user-form-modal .btn-success {
+    background: #28a745;
+    color: white;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.product-form-modal .btn-success:hover,
+.user-form-modal .btn-success:hover {
+    background: #218838;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(40, 167, 69, 0.3);
+}
+
+.product-form-modal .btn-secondary,
+.user-form-modal .btn-secondary {
+    background: #6c757d;
+    color: white;
+}
+
+.product-form-modal .btn-secondary:hover,
+.user-form-modal .btn-secondary:hover {
+    background: #5a6268;
+    transform: translateY(-1px);
+}
+
+.product-form-modal .btn-danger,
+.user-form-modal .btn-danger {
+    background: #dc3545;
+    color: white;
+}
+
+.product-form-modal .btn-danger:hover,
+.user-form-modal .btn-danger:hover {
+    background: #c82333;
+    transform: translateY(-1px);
+}
+
+/* Variant row styling for product form */
+.variant-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr auto;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: #f8f9fc;
+    border-radius: 6px;
+    border: 1px solid #e3e6f0;
+}
+
+.variant-size,
+.variant-stock {
+    font-size: 14px;
+    padding: 8px 10px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    background-color: #fff;
+}
+
+.remove-variant {
+    padding: 6px 12px;
+    font-size: 12px;
+    background: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.remove-variant:hover {
+    background: #c82333;
+    transform: translateY(-1px);
+}
+
+/* ========================================
+   STATUS BADGES
+   ======================================== */
+
+.status-badge {
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: uppercase;
+    display: inline-block;
+}
+
+.status-confirmed {
+    background: #d4edda;
+    color: #155724;
+}
+
+.status-pending {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.status-cancelled {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+/* ========================================
+   FOOTER
+   ======================================== */
+
+.sticky-footer {
+    position: sticky;
+    top: 100%;
+    height: 3rem;
+    line-height: 3rem;
+    text-align: center;
+    background-color: #fff;
+    border-top: 1px solid #e3e6f0;
+    margin-top: auto;
+}
+
+/* ========================================
+   RESPONSIVE DESIGN
+   ======================================== */
+
+/* Tablet and below */
+@media (max-width: 1200px) {
+    .admin-table th,
+    .admin-table td {
+        padding: 10px 8px;
+        font-size: 13px;
+    }
+    
+    .btn-edit,
+    .btn-delete,
+    .view-order-btn {
+        padding: 5px 10px;
+        font-size: 11px;
+    }
+    
+    .modal-content {
+        width: 95%;
+        margin: 5% auto;
+    }
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        width: 0;
+        overflow: hidden;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+    }
+    
+    .sidebar.show {
+        transform: translateX(0);
+        width: 224px;
+    }
+    
+    #content-wrapper {
+        margin-left: 0;
+        width: 100%;
+    }
+    
+    .topbar .navbar-search {
+        width: 100%;
+        margin-bottom: 1rem;
+    }
+    
+    .admin-table th,
+    .admin-table td {
+        padding: 8px 6px;
+        font-size: 12px;
+    }
+    
+    .btn-edit,
+    .btn-delete,
+    .view-order-btn {
+        padding: 4px 8px;
+        font-size: 10px;
+    }
+    
+    .btn-add {
+        width: 50px;
+        height: 50px;
+        font-size: 24px;
+        bottom: 30px;
+        right: 20px;
+    }
+    
+    .modal-content {
+        width: 98%;
+        margin: 2% auto;
+    }
+    
+    .product-form-modal .form-row,
+    .user-form-modal .form-row {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+    
+    .variant-row {
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+    
+    .variant-row .remove-variant {
+        width: 100%;
+        margin-top: 5px;
+    }
+    
+    .container-fluid {
+        padding: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .admin-table th,
+    .admin-table td {
+        padding: 6px 4px;
+        font-size: 11px;
+    }
+    
+    .btn-edit,
+    .btn-delete,
+    .view-order-btn {
+        padding: 3px 6px;
+        font-size: 9px;
+    }
+    
+    .modal-content {
+        width: 100%;
+        margin: 1% auto;
+        max-height: 95vh;
+    }
+    
+    .product-form-modal .modal-body {
+        padding: 15px;
+    }
+    
+    .container-fluid {
+        padding: 0.5rem;
+    }
+}
+
+/* ========================================
+   UTILITY CLASSES
+   ======================================== */
+
+.text-center { text-align: center; }
+.text-left { text-align: left; }
+.text-right { text-align: right; }
+
+.mb-0 { margin-bottom: 0; }
+.mb-1 { margin-bottom: 0.25rem; }
+.mb-2 { margin-bottom: 0.5rem; }
+.mb-3 { margin-bottom: 1rem; }
+.mb-4 { margin-bottom: 1.5rem; }
+
+.mt-0 { margin-top: 0; }
+.mt-1 { margin-top: 0.25rem; }
+.mt-2 { margin-top: 0.5rem; }
+.mt-3 { margin-top: 1rem; }
+
+.d-none { display: none; }
+.d-block { display: block; }
+.d-inline { display: inline; }
+.d-inline-block { display: inline-block; }
+.d-flex { display: flex; }
+
+.justify-content-center { justify-content: center; }
+.justify-content-between { justify-content: space-between; }
+.align-items-center { align-items: center; }
+
+.w-100 { width: 100%; }
+.h-100 { height: 100%; }
+
+/* ========================================
+   SIDEBAR VISIBILITY FIXES
+   ======================================== */
+
+/* Force sidebar visibility */
+#accordionSidebar {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+#accordionSidebar .nav-item {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+#accordionSidebar .nav-item .nav-link {
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    color: rgba(255, 255, 255, 0.8) !important;
+}
+
+#accordionSidebar .nav-item .nav-link i {
+    display: inline-block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+#accordionSidebar .nav-item .nav-link span {
+    display: inline-block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+/* Sidebar dividers */
+.sidebar-divider {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.15) !important;
+    margin: 0 1rem 1rem !important;
+}
+
+/* ========================================
+   FIXES FOR BOOTSTRAP CONFLICTS
+   ======================================== */
+
+/* Override Bootstrap navbar-nav for sidebar */
+.sidebar.navbar-nav {
+    flex-direction: column !important;
+    display: block !important;
+    visibility: visible !important;
+}
+
+.admin-panel .navbar-nav {
+    flex-direction: row;
+}
+
+/* Override any Bootstrap hiding classes */
+.sidebar .d-none,
+.sidebar .d-sm-none,
+.sidebar .d-md-none,
+.sidebar .d-lg-none,
+.sidebar .d-xl-none {
+    display: block !important;
+    visibility: visible !important;
+}
+
+.admin-panel .nav-item {
+    position: relative;
+}
+
+.admin-panel .dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1000;
+    display: none;
+    float: left;
+    min-width: 10rem;
+    padding: 0.5rem 0;
+    margin: 0.125rem 0 0;
+    font-size: 1rem;
+    color: #212529;
+    text-align: left;
+    list-style: none;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid rgba(0,0,0,.15);
+    border-radius: 0.25rem;
+}
+
+.admin-panel .dropdown-menu.show {
+    display: block;
+}
+
+.admin-panel .dropdown-item {
+    display: block;
+    width: 100%;
+    padding: 0.25rem 1rem;
+    clear: both;
+    font-weight: 400;
+    color: #212529;
+    text-align: inherit;
+    text-decoration: none;
+    white-space: nowrap;
+    background-color: transparent;
+    border: 0;
+}
+
+.admin-panel .dropdown-item:hover {
+    color: #16181b;
+    background-color: #f8f9fa;
+}
+
+/* ========================================
+   SCROLLBAR STYLING
+   ======================================== */
+
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
+}

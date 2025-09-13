@@ -1,4 +1,257 @@
 ﻿@{
     ViewData["Title"] = "Contact Us";
 }
-تواصل معانا 
+
+<div class="contact-container">
+    <div class="contact-header">
+        <h1>Contact Us</h1>
+        <p>Get in touch with VEXASPORT - We're here to help!</p>
+    </div>
+
+    <div class="contact-content">
+        <div class="contact-info">
+            <div class="contact-card">
+                <div class="contact-icon">
+                    <i class="fa-solid fa-phone"></i>
+                </div>
+                <h3>Phone</h3>
+                <p>+20 123 456 7890</p>
+                <p>+20 987 654 3210</p>
+            </div>
+
+            <div class="contact-card">
+                <div class="contact-icon">
+                    <i class="fa-solid fa-envelope"></i>
+                </div>
+                <h3>Email</h3>
+                <p>info@vexasport.com</p>
+                <p>support@vexasport.com</p>
+            </div>
+
+            <div class="contact-card">
+                <div class="contact-icon">
+                    <i class="fa-solid fa-location-dot"></i>
+                </div>
+                <h3>Address</h3>
+                <p>123 Sports Street</p>
+                <p>Cairo, Egypt 12345</p>
+            </div>
+
+            <div class="contact-card">
+                <div class="contact-icon">
+                    <i class="fa-solid fa-clock"></i>
+                </div>
+                <h3>Business Hours</h3>
+                <p>Monday - Friday: 9:00 AM - 6:00 PM</p>
+                <p>Saturday: 10:00 AM - 4:00 PM</p>
+                <p>Sunday: Closed</p>
+            </div>
+        </div>
+
+        <div class="social-section">
+            <h2>Follow Us</h2>
+            <div class="social-links">
+                <a href="#" class="social-link facebook">
+                    <i class="fa-brands fa-facebook"></i>
+                    <span>Facebook</span>
+                </a>
+                <a href="#" class="social-link instagram">
+                    <i class="fa-brands fa-instagram"></i>
+                    <span>Instagram</span>
+                </a>
+                <a href="#" class="social-link twitter">
+                    <i class="fa-brands fa-twitter"></i>
+                    <span>Twitter</span>
+                </a>
+                <a href="#" class="social-link youtube">
+                    <i class="fa-brands fa-youtube"></i>
+                    <span>YouTube</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="map-section">
+            <h2>Find Us</h2>
+            <div class="map-placeholder">
+                <i class="fa-solid fa-map-location-dot"></i>
+                <p>Interactive Map Coming Soon</p>
+                <p>123 Sports Street, Cairo, Egypt</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.contact-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+.contact-header {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.contact-header h1 {
+    font-size: 3rem;
+    color: #212529;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+.contact-header p {
+    font-size: 1.2rem;
+    color: #6c757d;
+    margin: 0;
+}
+
+.contact-content {
+    display: grid;
+    gap: 40px;
+}
+
+.contact-info {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    margin-bottom: 40px;
+}
+
+.contact-card {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.contact-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.contact-icon {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(45deg, #ff5e00, #ff8c00);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    color: white;
+    font-size: 2rem;
+}
+
+.contact-card h3 {
+    color: #212529;
+    margin-bottom: 15px;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.contact-card p {
+    color: #6c757d;
+    margin: 8px 0;
+    font-size: 1rem;
+}
+
+.social-section {
+    text-align: center;
+    background: #f8f9fa;
+    padding: 40px;
+    border-radius: 15px;
+}
+
+.social-section h2 {
+    color: #212529;
+    margin-bottom: 30px;
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.social-links {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.social-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 15px 25px;
+    background: white;
+    border-radius: 25px;
+    text-decoration: none;
+    color: #212529;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+}
+
+.social-link:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    text-decoration: none;
+    color: white;
+}
+
+.social-link.facebook:hover {
+    background: #1877f2;
+}
+
+.social-link.instagram:hover {
+    background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+}
+
+.social-link.twitter:hover {
+    background: #1da1f2;
+}
+
+.social-link.youtube:hover {
+    background: #ff0000;
+}
+
+.social-link i {
+    font-size: 1.2rem;
+}
+
+.map-section {
+    text-align: center;
+}
+
+.map-section h2 {
+    color: #212529;
+    margin-bottom: 30px;
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.map-placeholder {
+    background: #f8f9fa;
+    border: 2px dashed #dee2e6;
+    border-radius: 15px;
+    padding: 60px 20px;
+    color: #6c757d;
+}
+
+.map-placeholder i {
+    font-size: 3rem;
+    color: #ff5e00;
+    margin-bottom: 20px;
+}
+
+.map-placeholder p {
+    margin: 10px 0;
+    font-size: 1.1rem;
+}
+
+.map-placeholder p:first-of-type {
+    font-weight: bold;
+    color: #212529;
+}
+</style>

@@ -1,5 +1,89 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model VEXA.Models.User
 @{
+    ViewData["Title"] = "Register";
+}
+
+<div class="login-container">
+    <div class="login-formbox">
+        <h2>Sign up</h2>
+        <form id="registerform" class="login-form" method="post" asp-controller="User" asp-action="Register" novalidate>
+            @Html.AntiForgeryToken()
+
+            <div class="formGroup">
+                <label for="Name">Name</label>
+                <input name="Name" id="Name" class="form-control" required />
+                <span class="errormessage">Please enter your name</span>
+            </div>
+
+            <div class="formGroup">
+                <label for="Email">Email</label>
+                <input name="Email" id="Email" type="email" class="form-control" required />
+                <span class="errormessage">Please enter a valid email</span>
+            </div>
+
+            <div class="formGroup">
+                <label for="Password">Password</label>
+                <input name="Password" id="Password" type="password" class="form-control" required minlength="6" />
+                <span class="errormessage">Password must be at least 6 characters</span>
+            </div>
+
+            <div class="formGroup">
+                <label for="PhoneNumber">Phone Number</label>
+                <input name="PhoneNumber" id="PhoneNumber" class="form-control" placeholder="Enter 11-digit phone number" maxlength="11" required />
+                <span class="errormessage">Please enter a valid 11-digit phone number</span>
+            </div>
+
+            <div class="formGroup">
+                <label for="Address">Address</label>
+                <input name="Address" id="Address" class="form-control" required />
+                <span class="errormessage">Please enter your address</span>
+            </div>
+
+            <div class="formGroup">
+                <label for="Gender">Gender</label>
+                <select name="Gender" id="Gender" class="form-control" required>
+                    <option value="0">Select Gender</option>
+                    <option value="1">Male</option>
+                    <option value="2">Female</option>
+                    <option value="3">Other</option>
+                </select>
+                <span class="errormessage">Please select your gender</span>
+            </div>
+
+            @if (!ViewBag.HasAdmin)
+            {
+                <div class="formGroup">
+                    <label for="accountType">Account Type</label>
+                    <select name="accountType" id="accountType" class="form-control" required>
+                        <option value="0">Customer</option>
+                        <option value="1">Admin</option>
+                    </select>
+                    <small style="color: #6c757d; font-size: 0.875rem; margin-top: 5px; display: block;">Note: Admin accounts have full access to manage the system.</small>
+                </div>
+            }
+            else
+            {
+                <input type="hidden" name="accountType" value="0" />
+            }
+
+            <button type="submit" class="loginbtn">Create account</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const form = document.getElementById('registerform');
+
+        form.addEventListener('submit', function (e) {
+            if (!form.checkValidity()) {
+                e.preventDefault();
+                alert("Please fill in the form correctly.");
+            }
+        });
+    });
+</script>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
 }
